@@ -10,6 +10,6 @@ public class Window extends JFrame {
         this.setResizable(false);
         this.setSize(1200, 680);
         this.setVisible(true);
-        this.getContentPane().setBackground(new Color(0x3a3b3c));
+        this.getContentPane().setBackground(new Color(0x2a2b2d));
     }
 }

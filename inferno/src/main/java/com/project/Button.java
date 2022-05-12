@@ -3,10 +3,9 @@ package com.project;
 import javax.swing.*;
 import java.awt.*;
 
-public class Label extends JLabel {
+public class Button extends JButton {
 
-    Label(String text,int size, Color color){
-        super(text,SwingConstants.CENTER);
+    Button(String text, int size, Color color){
         this.setText(text);
         this.setFont(new Font("",Font.PLAIN,size));
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
