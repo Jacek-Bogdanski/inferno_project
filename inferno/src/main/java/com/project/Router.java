@@ -20,6 +20,12 @@ public class Router {
         this.window.validate();
     }
 
+    public void showSimulationView() {
+        JPanel simulationView = new SimulationView(this);
+        this.window.setContentPane(simulationView);
+        this.window.validate();
+    }
+
     Router() {
         this.window = new Window();
         this.showMainView();

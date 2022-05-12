@@ -27,7 +27,7 @@ public class OptionsView extends JPanel {
         Button backButton = new Button("Powrót", 20, Colors.darkGrey);
         backButton.addActionListener(e -> parent.showMainView());
         Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
-        startButton.addActionListener(e -> description.setText("Nie tak szybko ;)  Symulacja jeszcze nie jest gotowa."));
+        startButton.addActionListener(e -> parent.showSimulationView());
 
         /*
          * Edytowalne pola: Rozmiar mapy, losowość itemków
