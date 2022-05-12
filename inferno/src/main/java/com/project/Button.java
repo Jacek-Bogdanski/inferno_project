@@ -10,5 +10,6 @@ public class Button extends JButton {
         this.setFont(new Font("",Font.PLAIN,size));
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setForeground(color);
+
     }
 }
