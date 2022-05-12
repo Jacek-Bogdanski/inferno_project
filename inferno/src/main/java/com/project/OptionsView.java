@@ -6,13 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OptionsView extends JPanel {
-    OptionsView(){
+    OptionsView(Router parent){
         this.setBackground(new Color(0x2a2b2d));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         Label hello = new Label("Widok konfiguracji symulacji",25,new Color(0xffffff));
         Label description = new Label("Tutaj znajdą się pola konfiguracyjne",20,new Color(0xcccccc));
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved",10,new Color(0xcccccc));
+
+        Button backButton = new Button("Powrót",20,new Color(0x333333));
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.showMainView();
+            }
+        });
 
         Button startButton = new Button("Rozpocznij symulację",20,new Color(0x000000));
         startButton.addActionListener(new ActionListener() {
@@ -22,6 +29,8 @@ public class OptionsView extends JPanel {
         });
 
         this.add(Box.createVerticalGlue());
+        this.add(backButton);
+        this.add(Box.createRigidArea(new Dimension(0,40)));
         this.add(hello);
         this.add(Box.createRigidArea(new Dimension(0,20)));
         this.add(description);
