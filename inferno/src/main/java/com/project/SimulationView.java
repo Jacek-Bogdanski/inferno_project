@@ -11,11 +11,18 @@ import java.util.Map;
 public class SimulationView extends JPanel {
 
     /**
-     * Tablica zawierająca dane konfiguracyjne
+     * Tablica zawierająca dane konfiguracyjne.
+     * Dostępne pola:
+     * mapSize, buildingCount, iterationCount,
+     * tankCountA, tankCountB,
+     * soldierCountA, soldierCountB,
+     * gunnerCountA, gunnerCountB,
+     * fuelProbability, ammunitionProbability, foodProbability
      */
-    private Map<String,Integer> config = new HashMap<>();
+    private Map<String,Number> config = new HashMap<>();
 
-    SimulationView(Router parent) {
+    SimulationView(Router parent,Map<String,Number> config) {
+        this.config = config;
         /*
          * Konfiguracja panelu
          */

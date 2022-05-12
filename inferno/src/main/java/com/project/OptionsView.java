@@ -2,6 +2,10 @@ package com.project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Klasa odpowiadająca za wyświetlenie widoku konfiguracji symulacji
@@ -20,14 +24,6 @@ public class OptionsView extends JPanel {
         Label title = new Label("Konfiguracja symulacji", 25, Colors.white);
         Label description = new Label("Zmień parametry lub pozostaw domyślne", 15, Colors.veryLightGrey);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
-
-        /*
-         * Przyciski
-         */
-        Button backButton = new Button("Powrót", 20, Colors.darkGrey);
-        backButton.addActionListener(e -> parent.showMainView());
-        Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
-        startButton.addActionListener(e -> parent.showSimulationView());
 
         /*
          * Edytowalne pola: Rozmiar mapy, losowość itemków
@@ -56,6 +52,30 @@ public class OptionsView extends JPanel {
          */
         NumberField C1CountField = new NumberField(10);
         NumberField C2CountField = new NumberField(10);
+
+        /*
+         * Przyciski
+         */
+        Button backButton = new Button("Powrót", 20, Colors.darkGrey);
+        backButton.addActionListener(e -> parent.showMainView());
+        Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
+        startButton.addActionListener(e -> {
+            Map<String,Number> data = new HashMap<>();
+            data.put("mapSize",parseInt(sizeField.getText()));
+            data.put("buildingCount",parseInt(buildingCountField.getText()));
+            data.put("iterationCount",parseInt(iterationCountField.getText()));
+            data.put("tankCountA",parseInt(A1CountField.getText()));
+            data.put("tankCountB",parseInt(A2CountField.getText()));
+            data.put("soldierCountA",parseInt(B1CountField.getText()));
+            data.put("soldierCountB",parseInt(B2CountField.getText()));
+            data.put("gunnerCountA",parseInt(C1CountField.getText()));
+            data.put("gunnerCountB",parseInt(C2CountField.getText()));
+            data.put("fuelProbability",parseInt(GParameterField.getText()));
+            data.put("ammunitionProbability",parseInt(EParameterField.getText()));
+            data.put("foodProbability",parseInt(FParameterField.getText()));
+
+            parent.showSimulationView(data);
+        });
 
         /*
          * Utworzenie panelu z formularzem

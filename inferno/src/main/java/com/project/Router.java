@@ -1,6 +1,7 @@
 package com.project;
 
 import javax.swing.*;
+import java.util.Map;
 
 /**
  * Klasa odpowiedzialna za wyświetlenie odpowiedniego widoku w danym momencie działania programu
@@ -20,8 +21,8 @@ public class Router {
         this.window.validate();
     }
 
-    public void showSimulationView() {
-        JPanel simulationView = new SimulationView(this);
+    public void showSimulationView(Map<String,Number> config) {
+        JPanel simulationView = new SimulationView(this,config);
         this.window.setContentPane(simulationView);
         this.window.validate();
     }
