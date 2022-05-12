@@ -33,6 +33,8 @@ public class OptionsView extends JPanel {
          * Edytowalne pola: Rozmiar mapy, losowość itemków
          */
         NumberField sizeField = new NumberField(100);
+        NumberField buildingCountField = new NumberField(20);
+        NumberField iterationCountField = new NumberField(1000);
         NumberField EParameterField = new NumberField(50);
         NumberField FParameterField = new NumberField(50);
         NumberField GParameterField = new NumberField(50);
@@ -54,12 +56,6 @@ public class OptionsView extends JPanel {
          */
         NumberField C1CountField = new NumberField(10);
         NumberField C2CountField = new NumberField(10);
-
-        /*
-         * Edytowalne pola: Liczby zwiadowców w danych drużynach
-         */
-        NumberField D1CountField = new NumberField(5);
-        NumberField D2CountField = new NumberField(5);
 
         /*
          * Utworzenie panelu z formularzem
@@ -84,18 +80,18 @@ public class OptionsView extends JPanel {
                 new Label("Liczba artylerzystów B", 15, Colors.white),
                 C1CountField,
                 C2CountField,
-                new Label("Liczba zwiadowców A", 15, Colors.white),
-                new Label("Liczba zwiadowców B", 15, Colors.white),
-                D1CountField,
-                D2CountField,
                 new Label("Rozmiar mapy", 15, Colors.white),
-                new Label("Szybkość dostaw amunicji", 15, Colors.white),
+                new Label("Liczba budynków", 15, Colors.white),
                 sizeField,
-                EParameterField,
-                new Label("Szybkość dostaw jedzenia", 15, Colors.white),
-                new Label("Szybkość dostaw paliwa", 15, Colors.white),
+                buildingCountField,
+                new Label("Szybkość dostaw jedzenia [%]", 15, Colors.white),
+                new Label("Szybkość dostaw paliwa [%]", 15, Colors.white),
                 FParameterField,
                 GParameterField,
+                new Label("Szybkość dostaw amunicji [%]", 15, Colors.white),
+                new Label("Liczba iteracji", 15, Colors.white),
+                EParameterField,
+                iterationCountField,
         };
 
         for (java.awt.Component item : panelItems) {
