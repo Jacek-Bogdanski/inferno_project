@@ -1,109 +1,129 @@
 package com.project;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
 
+/**
+ * Klasa odpowiadająca za wyświetlenie widoku konfiguracji symulacji
+ */
 public class OptionsView extends JPanel {
-    OptionsView(Router parent){
-        this.setBackground(new Color(0x2a2b2d));
+    OptionsView(Router parent) {
+        /*
+         * Konfiguracja panelu
+         */
+        this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Label title = new Label("Widok konfiguracji symulacji",25,new Color(0xffffff));
-        Label description = new Label("Tutaj znajdą się pola konfiguracyjne",20,new Color(0xcccccc));
-        Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.",10,new Color(0xcccccc));
+        /*
+         * Napisy na ekranie
+         */
+        Label title = new Label("Konfiguracja symulacji", 25, Colors.white);
+        Label description = new Label("Zmień parametry lub pozostaw domyślne", 15, Colors.veryLightGrey);
+        Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
-        Button backButton = new Button("Powrót",20,new Color(0x333333));
+        /*
+         * Przyciski
+         */
+        Button backButton = new Button("Powrót", 20, Colors.darkGrey);
         backButton.addActionListener(e -> parent.showMainView());
+        Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
+        startButton.addActionListener(e -> description.setText("Nie tak szybko ;)  Symulacja jeszcze nie jest gotowa."));
 
-        Button startButton = new Button("Rozpocznij symulację",20,new Color(0x000000));
-        startButton.addActionListener(e -> description.setText("Nie tak szybko ;)  Symulacja jeszcze nie jest gotowa"));
+        /*
+         * Edytowalne pola: Rozmiar mapy, losowość itemków
+         */
+        NumberField sizeField = new NumberField(100);
+        NumberField EParameterField = new NumberField(50);
+        NumberField FParameterField = new NumberField(50);
+        NumberField GParameterField = new NumberField(50);
 
-//        NumberFormat longFormat = NumberFormat.getIntegerInstance();
-//        NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-//        numberFormatter.setValueClass(Long.class); //optional, ensures you will always get a long value
-//        numberFormatter.setAllowsInvalid(false); //this is the key!!
-//        numberFormatter.setMinimum(0l); //Optional
+        /*
+         * Edytowalne pola: Liczby czołgów w danych drużynach
+         */
+        NumberField A1CountField = new NumberField(20);
+        NumberField A2CountField = new NumberField(20);
 
-        // Te wszystkie pola poniżej zamienić na tablicę
+        /*
+         * Edytowalne pola: Liczby piechurów w danych drużynach
+         */
+        NumberField B1CountField = new NumberField(40);
+        NumberField B2CountField = new NumberField(40);
 
-        JTextField sizeField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField EParameterField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField FParameterField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField GParameterField = new JTextField(100);
-        sizeField.setSize(200,40);
+        /*
+         * Edytowalne pola: Liczby artylerzystów w danych drużynach
+         */
+        NumberField C1CountField = new NumberField(10);
+        NumberField C2CountField = new NumberField(10);
 
-        JTextField A1CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField A2CountField = new JTextField(100);
-        sizeField.setSize(200,40);
+        /*
+         * Edytowalne pola: Liczby zwiadowców w danych drużynach
+         */
+        NumberField D1CountField = new NumberField(5);
+        NumberField D2CountField = new NumberField(5);
 
-        JTextField B1CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField B2CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-
-        JTextField C1CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField C2CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-
-        JTextField D1CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-        JTextField D2CountField = new JTextField(100);
-        sizeField.setSize(200,40);
-
-
+        /*
+         * Utworzenie panelu z formularzem
+         */
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0,2));
-        panel.setBackground(new Color(0x2a2b2d));
+        panel.setLayout(new GridLayout(0, 2));
+        panel.setBackground(Colors.darkerGrey);
         panel.setPreferredSize(new Dimension(800, 300));
         panel.setMaximumSize(panel.getPreferredSize());
         panel.setMinimumSize(panel.getPreferredSize());
 
-        panel.add(new Label("Liczba czołgów A",15,new Color(0xffffff)));
-        panel.add(new Label("Liczba czołgów B",15,new Color(0xffffff)));
-        panel.add(A1CountField);
-        panel.add(A2CountField);
-        panel.add(new Label("Liczba piechurów A",15,new Color(0xffffff)));
-        panel.add(new Label("Liczba piechurów B",15,new Color(0xffffff)));
-        panel.add(B1CountField);
-        panel.add(B2CountField);
-        panel.add(new Label("Liczba artylerzystów A",15,new Color(0xffffff)));
-        panel.add(new Label("Liczba artylerzystów B",15,new Color(0xffffff)));
-        panel.add(C1CountField);
-        panel.add(C2CountField);
-        panel.add(new Label("Liczba zwiadowców A",15,new Color(0xffffff)));
-        panel.add(new Label("Liczba zwiadowców B",15,new Color(0xffffff)));
-        panel.add(D1CountField);
-        panel.add(D2CountField);
+        java.awt.Component[] panelItems = {
+                new Label("Liczba czołgów A", 15, Colors.white),
+                new Label("Liczba czołgów B", 15, Colors.white),
+                A1CountField,
+                A2CountField,
+                new Label("Liczba piechurów A", 15, Colors.white),
+                new Label("Liczba piechurów B", 15, Colors.white),
+                B1CountField,
+                B2CountField,
+                new Label("Liczba artylerzystów A", 15, Colors.white),
+                new Label("Liczba artylerzystów B", 15, Colors.white),
+                C1CountField,
+                C2CountField,
+                new Label("Liczba zwiadowców A", 15, Colors.white),
+                new Label("Liczba zwiadowców B", 15, Colors.white),
+                D1CountField,
+                D2CountField,
+                new Label("Rozmiar mapy", 15, Colors.white),
+                new Label("Szybkość dostaw amunicji", 15, Colors.white),
+                sizeField,
+                EParameterField,
+                new Label("Szybkość dostaw jedzenia", 15, Colors.white),
+                new Label("Szybkość dostaw paliwa", 15, Colors.white),
+                FParameterField,
+                GParameterField,
+        };
 
-        panel.add(new Label("Rozmiar mapy",15,new Color(0xffffff)));
-        panel.add(new Label("Szybkość dostaw amunicji",15,new Color(0xffffff)));
-        panel.add(sizeField);
-        panel.add(EParameterField);
-        panel.add(new Label("Szybkość dostaw jedzenia",15,new Color(0xffffff)));
-        panel.add(new Label("Szybkość dostaw paliwa",15,new Color(0xffffff)));
-        panel.add(FParameterField);
-        panel.add(GParameterField);
+        for (java.awt.Component item : panelItems) {
+            panel.add(item);
+        }
 
-        this.add(Box.createVerticalGlue());
-        this.add(backButton);
-        this.add(Box.createRigidArea(new Dimension(0,40)));
-        this.add(title);
-        this.add(Box.createRigidArea(new Dimension(0,20)));
-        this.add(description);
-        this.add(Box.createRigidArea(new Dimension(0,20)));
-        this.add(panel);
-        this.add(Box.createRigidArea(new Dimension(0,40)));
-        this.add(startButton);
-        this.add(Box.createVerticalGlue());
-        this.add(copyright);
-        this.add(Box.createRigidArea(new Dimension(0,20)));
+        /*
+         * Utworzenie widoku
+         */
+        java.awt.Component[] viewItems = {
+                Box.createVerticalGlue(),
+                backButton,
+                Box.createRigidArea(new Dimension(0, 40)),
+                title,
+                Box.createRigidArea(new Dimension(0, 20)),
+                description,
+                Box.createRigidArea(new Dimension(0, 20)),
+                panel,
+                Box.createRigidArea(new Dimension(0, 40)),
+                startButton,
+                Box.createVerticalGlue(),
+                copyright,
+                Box.createRigidArea(new Dimension(0, 20)),
+        };
+
+        for (java.awt.Component item : viewItems) {
+            this.add(item);
+        }
     }
 
 }
