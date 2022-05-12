@@ -2,11 +2,19 @@ package com.project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Klasa odpowiadająca za wyświetlenie symulacji
  */
 public class SimulationView extends JPanel {
+
+    /**
+     * Tablica zawierająca dane konfiguracyjne
+     */
+    private Map<String,Integer> config = new HashMap<>();
+
     SimulationView(Router parent) {
         /*
          * Konfiguracja panelu
