@@ -26,6 +26,8 @@ public class OptionsView extends JPanel {
 //        numberFormatter.setAllowsInvalid(false); //this is the key!!
 //        numberFormatter.setMinimum(0l); //Optional
 
+        // Te wszystkie pola poniżej zamienić na tablicę
+
         JTextField sizeField = new JTextField(100);
         sizeField.setSize(200,40);
         JTextField EParameterField = new JTextField(100);
