@@ -1,7 +1,6 @@
 package com.project;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Klasa odpowiedzialna za formatowanie okna
