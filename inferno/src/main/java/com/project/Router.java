@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.util.Map;
 
 /**
- * Klasa odpowiedzialna za wyświetlenie odpowiedniego widoku w danym momencie działania programu
+ * Klasa odpowiedzialna za wyświetlenie odpowiedniego widoku w danym momencie
+ * działania programu
  */
 public class Router {
     private final Window window;
@@ -21,14 +22,13 @@ public class Router {
         this.window.validate();
     }
 
-    public void showSimulationView(Map<String,Number> config) {
-        JPanel simulationView = new SimulationView(this,config);
+    public void showSimulationView(Map<String, Number> config) {
+        JPanel simulationView = new SimulationView(this, config);
         this.window.setContentPane(simulationView);
         this.window.validate();
     }
 
     Router() {
         this.window = new Window();
-        this.showMainView();
     }
 }
