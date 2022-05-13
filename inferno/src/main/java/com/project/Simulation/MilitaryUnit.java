@@ -4,14 +4,20 @@ package com.project.Simulation;
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
  */
 public abstract class MilitaryUnit {
-    private Integer hp;
-    private Integer dmg;
-    private Integer ammo;
-    private Integer velocity;
-    private Integer attackRange;
+    public Integer hp=0;
+    public Integer dmg=0;
+    public Integer ammo=0;
+    public Integer speed=0;
+    public Integer attackRange=0;
 
     public boolean isAlive=true;
     public char team;
+    public Position position;
+
+    public MilitaryUnit(char team, Position position){
+        this.team = team;
+        this.position = position;
+    }
 
     public void move(){}
 
