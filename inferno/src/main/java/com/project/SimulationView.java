@@ -35,6 +35,7 @@ public class SimulationView extends JPanel {
 
         Field[][] map = generateMap(config.get("mapSize").intValue(), config);
 
+
         /*
          * Napisy na ekranie
          */
@@ -87,19 +88,16 @@ public class SimulationView extends JPanel {
         Tank[] tanksB =new Tank[config.get("tankCountB").intValue()];
 
 
-
+        Random rand = new Random();
         for (int x = 0 ; x<mapSize; x++)
         {
-            for (int y = 0 ; y<mapSize; y++)           //Fill with dirt
+            for (int y = 0 ; y<mapSize; y++)
             {
                 map[x][y] = new Field(null,0);
             }
-
-            for (int z = 0; z < mapSize/50;z++){               // jeden budynek generowany na 50 pol
-                Random rand = new Random(mapSize-1);              // problem z zamiana 2 na rand.nextInt()
-                map[x][2].type = 1;
+            for (int z = 0; z < mapSize/10;z++){               // jeden budynek generowany na 10 pol
+                map[x][rand.nextInt(mapSize-1)].type = 1;
             }
-
         }
 
         return map;
