@@ -6,6 +6,7 @@ import com.project.Simulation.Tank;
 import javax.swing.*;
 import java.awt.*;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,41 +15,25 @@ import java.util.Random;
  * Klasa odpowiadająca za wyświetlenie symulacji
  */
 public class SimulationView extends JPanel {
-
+    /**
+     * Map config:
+     * Tablica zawierająca dane konfiguracyjne.
+     * Dostępne pola:
+     * mapSize, buildingCount, iterationCount,
+     * tankCountA, tankCountB,
+     * soldierCountA, soldierCountB,
+     * gunnerCountA, gunnerCountB,
+     * fuelProbability, ammunitionProbability, foodProbability
+     */
 
     SimulationView(Router parent,Map<String,Number> config) {
-        /**
-         * Tablica zawierająca dane konfiguracyjne.
-         * Dostępne pola:
-         * mapSize, buildingCount, iterationCount,
-         * tankCountA, tankCountB,
-         * soldierCountA, soldierCountB,
-         * gunnerCountA, gunnerCountB,
-         * fuelProbability, ammunitionProbability, foodProbability
-         */
         /*
          * Konfiguracja panelu
          */
         this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
-
-        Field[][] map = new Field[config.get("mapSize").intValue()][config.get("mapSize").intValue()];
-        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
-        Tank[] tanksB =new Tank[config.get("tankCountB").intValue()];
-
-
-
-        for (int x = 0 ; x< config.get("mapSize").intValue(); x++)
-        {
-            for (int y = 0; y< config.get("mapSize").intValue(); y++)
-            {
-                Random rand = new Random();
-                map[x][y].type = rand.nextInt(2);
-            }
-        }
-
+        Field[][] map = generateMap(config.get("mapSize").intValue(), config);
 
         /*
          * Napisy na ekranie
@@ -73,9 +58,6 @@ public class SimulationView extends JPanel {
         dirtPanel.setBounds(20,20,64,64);
 
 
-//        dirtPanel.setBackground(new Color (78,53,36));
-//        this.add(dirtPanel);
-
          /* Utworzenie widoku
          */
         Component[] viewItems = {
@@ -97,6 +79,32 @@ public class SimulationView extends JPanel {
             this.add(item);
         }
     }
+
+
+    private Field[][] generateMap(int mapSize, Map<String,Number> config){
+        Field[][] map = new Field[mapSize][mapSize];
+        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
+        Tank[] tanksB =new Tank[config.get("tankCountB").intValue()];
+
+
+
+        for (int x = 0 ; x<mapSize; x++)
+        {
+            for (int y = 0 ; y<mapSize; y++)           //Fill with dirt
+            {
+                map[x][y] = new Field(null,0);
+            }
+
+            for (int z = 0; z < mapSize/50;z++){               // jeden budynek generowany na 50 pol
+                Random rand = new Random(mapSize-1);              // problem z zamiana 2 na rand.nextInt()
+                map[x][2].type = 1;
+            }
+
+        }
+
+        return map;
+    }
+
 
 
 }

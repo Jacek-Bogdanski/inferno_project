@@ -2,9 +2,9 @@ package com.project.Simulation;
 
 public class Field {
     public MillitaryUnit unit;
-    public int type ;
+    public int type ;       // 1- budynek 0- ziemia
 
-    Field(MillitaryUnit unit, int type){
+    public Field(MillitaryUnit unit, int type){
         this.unit = unit;
         this.type=type;
     }
