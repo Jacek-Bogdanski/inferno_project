@@ -1,12 +1,20 @@
 package com.project.Simulation;
 
+/**
+ * Klasa przechowująca informacje o polu na mapie
+ */
 public class Field {
-    public MillitaryUnit unit;
-    public int type ;       // 1- budynek 0- ziemia
+    public MilitaryUnit unit;
 
-    public Item item;
-    public Field(int type){
-        this.type=type;
+    /**
+     * Typ pola
+     * Wartości: 1- budynek 0- ziemia
+     */
+    public int type ;
+
+    public Field(MilitaryUnit unit, int type){
+        this.unit = unit;
+        this.type = type;
     }
 
 }
