@@ -33,8 +33,7 @@ public class SimulationView extends JPanel {
         this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Field[][] map = generateMap(config.get("mapSize").intValue(), config);
-
+        Field[][] map = generateMap(config);
 
         /*
          * Napisy na ekranie
@@ -82,27 +81,40 @@ public class SimulationView extends JPanel {
     }
 
 
-    private Field[][] generateMap(int mapSize, Map<String,Number> config){
+    private Field[][] generateMap(Map<String,Number> config){
+        int mapSize = config.get("mapSize").intValue();
         Field[][] map = new Field[mapSize][mapSize];
         Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
-        Tank[] tanksB =new Tank[config.get("tankCountB").intValue()];
-
-
+        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
         Random rand = new Random();
+
+        /*
+        Wypelnianie mapy typami pola
+         */
+
         for (int x = 0 ; x<mapSize; x++)
         {
             for (int y = 0 ; y<mapSize; y++)
             {
-                map[x][y] = new Field(null,0);
+                map[x][y] = new Field(0);
             }
             for (int z = 0; z < mapSize/10;z++){               // jeden budynek generowany na 10 pol
                 map[x][rand.nextInt(mapSize-1)].type = 1;
             }
         }
 
+        /*
+        wypelnianie mapy jednostkami narazie tylko czolgi
+         */
+
+        int q = mapSize/(tanksA.length+1);
+        for (int x=0; x<tanksA.length;x++){
+            if (x%q==1){
+                map[0][x+q].unit=new Tank('A',0,x+q);
+            }
+        }
+
         return map;
     }
-
-
 
 }
