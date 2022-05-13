@@ -80,7 +80,7 @@ public class OptionsView extends JPanel {
             data.put("ammunitionProbability",parseInt(EParameterField.getText()));
             data.put("foodProbability",parseInt(FParameterField.getText()));
             alert.setVisible(false);
-                parent.showSimulationView(data);
+            parent.showSimulationView(data);
             }
             catch(Exception exc){
                 alert.setVisible(true);
