@@ -110,7 +110,7 @@ public class SimulationView extends JPanel {
         int q = mapSize/(tanksA.length+1);
         for (int x=0; x<tanksA.length;x++){
             if (x%q==1){
-                map[0][x+q].unit=new Tank('A',0,x+q);
+                //map[0][x+q].unit=new Tank('A',0,x+q);
             }
         }
 

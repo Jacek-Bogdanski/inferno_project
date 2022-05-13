@@ -12,8 +12,7 @@ public class Field {
      */
     public int type ;
 
-    public Field(MilitaryUnit unit, int type){
-        this.unit = unit;
+    public Field(int type){
         this.type = type;
     }
 
