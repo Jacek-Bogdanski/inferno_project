@@ -22,6 +22,8 @@ public class OptionsView extends JPanel {
          * Napisy na ekranie
          */
         Label title = new Label("Konfiguracja symulacji", 25, Colors.white);
+        Label alert = new Label("Wprowadzono nieprawidłowe wartości!", 18, Colors.red);
+        alert.setVisible(false);
         Label description = new Label("Zmień parametry lub pozostaw domyślne", 15, Colors.veryLightGrey);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
@@ -61,6 +63,10 @@ public class OptionsView extends JPanel {
         Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
         startButton.addActionListener(e -> {
             Map<String,Number> data = new HashMap<>();
+
+
+            try {
+
             data.put("mapSize",parseInt(sizeField.getText()));
             data.put("buildingCount",parseInt(buildingCountField.getText()));
             data.put("iterationCount",parseInt(iterationCountField.getText()));
@@ -73,8 +79,12 @@ public class OptionsView extends JPanel {
             data.put("fuelProbability",parseInt(GParameterField.getText()));
             data.put("ammunitionProbability",parseInt(EParameterField.getText()));
             data.put("foodProbability",parseInt(FParameterField.getText()));
-
-            parent.showSimulationView(data);
+            alert.setVisible(false);
+                parent.showSimulationView(data);
+            }
+            catch(Exception exc){
+                alert.setVisible(true);
+            }
         });
 
         /*
@@ -130,7 +140,9 @@ public class OptionsView extends JPanel {
                 description,
                 Box.createRigidArea(new Dimension(0, 20)),
                 panel,
-                Box.createRigidArea(new Dimension(0, 40)),
+                Box.createRigidArea(new Dimension(0, 15)),
+                alert,
+                Box.createRigidArea(new Dimension(0, 15)),
                 startButton,
                 Box.createVerticalGlue(),
                 copyright,
