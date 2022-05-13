@@ -44,7 +44,6 @@ public class SimulationView extends JPanel {
         }
 
 
-
         /*
          * Napisy na ekranie
          */
