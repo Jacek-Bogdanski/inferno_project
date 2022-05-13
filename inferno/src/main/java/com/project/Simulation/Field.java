@@ -4,7 +4,7 @@ package com.project.Simulation;
  * Klasa przechowująca informacje o polu na mapie
  */
 public class Field {
-    public MilitaryUnit unit;
+    public MilitaryUnit[] units = {};
 
     /**
      * Typ pola
@@ -12,6 +12,10 @@ public class Field {
      */
     public int type ;
 
+    /**
+     * Konstruktor
+     * @param type typ pola
+     */
     public Field(int type){
         this.type = type;
     }
