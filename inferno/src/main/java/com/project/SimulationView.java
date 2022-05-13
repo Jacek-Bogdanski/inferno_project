@@ -1,5 +1,8 @@
 package com.project;
 
+import com.project.Simulation.Field;
+import com.project.Simulation.Tank;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -31,15 +34,18 @@ public class SimulationView extends JPanel {
 
 
 
-        int[][] map = new int[config.get("mapSize").intValue()][config.get("mapSize").intValue()];
+        Field[][] map = new Field[config.get("mapSize").intValue()][config.get("mapSize").intValue()];
+        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
+        Tank[] tanksB =new Tank[config.get("tankCountB").intValue()];
+
+
 
         for (int x = 0 ; x< config.get("mapSize").intValue(); x++)
         {
             for (int y = 0; y< config.get("mapSize").intValue(); y++)
             {
                 Random rand = new Random();
-                int answer = rand.nextInt(2);
-                map[x][y] = answer;
+                map[x][y].type = rand.nextInt(2);
             }
         }
 
@@ -91,5 +97,6 @@ public class SimulationView extends JPanel {
             this.add(item);
         }
     }
+
 
 }
