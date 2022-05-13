@@ -58,6 +58,21 @@ public class SimulationView extends JPanel {
         dirtPanel.setBounds(20,20,64,64);
 
 
+        System.out.println("");System.out.println("");
+        System.out.println("Wydruk mapy:");
+        for(Field[] row:map){
+            System.out.print("|");
+            for(Field field:row){
+                switch(field.type){
+                    case 1:System.out.print("B");break;
+                    default:System.out.print(" ");break;
+                }
+
+            }
+            System.out.print("|");
+            System.out.println("");
+        }
+
          /* Utworzenie widoku
          */
         Component[] viewItems = {
@@ -68,8 +83,8 @@ public class SimulationView extends JPanel {
                 Box.createRigidArea(new Dimension(0, 40)),
                 startButton,
                 Box.createVerticalGlue(),
-                copyright, Box.createRigidArea(new Dimension(0, 20)),
-
+                copyright,
+                Box.createRigidArea(new Dimension(0, 20)),
         };
 
 
@@ -84,8 +99,6 @@ public class SimulationView extends JPanel {
     private Field[][] generateMap(Map<String,Number> config){
         int mapSize = config.get("mapSize").intValue();
         Field[][] map = new Field[mapSize][mapSize];
-        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
-        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
         Random rand = new Random();
 
         /*
@@ -107,6 +120,16 @@ public class SimulationView extends JPanel {
         wypelnianie mapy jednostkami narazie tylko czolgi
          */
 
+
+        /*
+        * 1. wylosowanie pozycji x,y
+        * 2. wstawienie obiektu do wylosowanego pola
+        */
+
+
+        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
+        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
+
         int q = mapSize/(tanksA.length+1);
         for (int x=0; x<tanksA.length;x++){
             if (x%q==1){
@@ -116,5 +139,7 @@ public class SimulationView extends JPanel {
 
         return map;
     }
+
+
 
 }
