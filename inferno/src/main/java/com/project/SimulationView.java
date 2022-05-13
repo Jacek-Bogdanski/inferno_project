@@ -15,6 +15,9 @@ import java.util.Random;
  * Klasa odpowiadająca za wyświetlenie symulacji
  */
 public class SimulationView extends JPanel {
+
+    private Field[][] map;
+    private Map<String,Integer> config=null;
     /**
      * Map config:
      * Tablica zawierająca dane konfiguracyjne.
@@ -26,14 +29,16 @@ public class SimulationView extends JPanel {
      * fuelProbability, ammunitionProbability, foodProbability
      */
 
-    SimulationView(Router parent,Map<String,Number> config) {
+    SimulationView(Router parent,Map<String,Integer> config) {
+        this.config=config;
         /*
          * Konfiguracja panelu
          */
         this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Field[][] map = generateMap(config);
+
+        this.map = generateMap(config);
 
         /*
          * Napisy na ekranie
@@ -60,7 +65,7 @@ public class SimulationView extends JPanel {
 
         System.out.println("");System.out.println("");
         System.out.println("Wydruk mapy:");
-        for(Field[] row:map){
+        for(Field[] row:this.map){
             System.out.print("|");
             for(Field field:row){
                 switch(field.type){
@@ -86,25 +91,18 @@ public class SimulationView extends JPanel {
                 copyright,
                 Box.createRigidArea(new Dimension(0, 20)),
         };
-
-
-
-
         for (Component item : viewItems) {
             this.add(item);
         }
     }
 
-
-    private Field[][] generateMap(Map<String,Number> config){
+    private Field[][] generateMap(Map<String,Integer> config){
         int mapSize = config.get("mapSize").intValue();
         Field[][] map = new Field[mapSize][mapSize];
         Random rand = new Random();
-
         /*
         Wypelnianie mapy typami pola
          */
-
         for (int x = 0 ; x<mapSize; x++)
         {
             for (int y = 0 ; y<mapSize; y++)
@@ -115,6 +113,10 @@ public class SimulationView extends JPanel {
                 map[x][rand.nextInt(mapSize-1)].type = 1;
             }
         }
+        return map;
+    }
+
+    private void fillMap(){
 
         /*
         wypelnianie mapy jednostkami narazie tylko czolgi
@@ -122,22 +124,29 @@ public class SimulationView extends JPanel {
 
 
         /*
-        * 1. wylosowanie pozycji x,y
-        * 2. wstawienie obiektu do wylosowanego pola
-        */
+         * 1. wylosowanie pozycji x,y
+         * 2. sprawdzenie, czy obiekt moze tam stanąć
+         * 3. wstawienie obiektu do wylosowanego pola
+         */
 
+        Integer tankACounter=0;
+        Integer tankBCounter=0;
 
-        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
-        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
-
-        int q = mapSize/(tanksA.length+1);
-        for (int x=0; x<tanksA.length;x++){
-            if (x%q==1){
-                //map[0][x+q].unit=new Tank('A',0,x+q);
-            }
+        for(int i=0;i<this.config.get("tankCountA");i++){
+            System.out.println("Dodaje czołg A");
         }
 
-        return map;
+
+
+//        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
+//        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
+//
+//        int q = mapSize/(tanksA.length+1);
+//        for (int x=0; x<tanksA.length;x++){
+//            if (x%q==1){
+//                //map[0][x+q].unit=new Tank('A',0,x+q);
+//            }
+//        }
     }
 
 

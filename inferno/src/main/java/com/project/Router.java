@@ -22,7 +22,7 @@ public class Router {
         this.window.validate();
     }
 
-    public void showSimulationView(Map<String, Number> config) {
+    public void showSimulationView(Map<String, Integer> config) {
         JPanel simulationView = new SimulationView(this, config);
         this.window.setContentPane(simulationView);
         this.window.validate();

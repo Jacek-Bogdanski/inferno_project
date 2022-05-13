@@ -62,7 +62,7 @@ public class OptionsView extends JPanel {
         backButton.addActionListener(e -> parent.showMainView());
         Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
         startButton.addActionListener(e -> {
-            Map<String,Number> data = new HashMap<>();
+            Map<String,Integer> data = new HashMap<>();
 
 
             try {
