@@ -1,6 +1,6 @@
 package com.project.Simulation;
 
-public abstract class MillitaryUnit {
+public abstract class MilitaryUnit {
     Integer hp;
     Integer dmg;
     Integer ammo;
@@ -12,6 +12,5 @@ public abstract class MillitaryUnit {
     public void move(){}
     public void pickUpRation(){}
     public void pickUpAmmo(){}
-    public void attack(){};
-
+    public void attack(){}
 }
