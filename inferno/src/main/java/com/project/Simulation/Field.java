@@ -1,10 +1,12 @@
 package com.project.Simulation;
 
+import java.util.ArrayList;
+
 /**
  * Klasa przechowująca informacje o polu na mapie
  */
 public class Field {
-    public MilitaryUnit[] units = {};
+    public ArrayList<MilitaryUnit> units = new ArrayList<>();
 
     /**
      * Typ pola

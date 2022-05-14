@@ -1,6 +1,7 @@
 package com.project;
 
 import com.project.Simulation.Field;
+import com.project.Simulation.Position;
 import com.project.Simulation.Tank;
 
 import javax.swing.*;
@@ -18,6 +19,8 @@ public class SimulationView extends JPanel {
 
     private Field[][] map;
     private Map<String,Integer> config=null;
+    private Random rand = new Random();     // by nie powtarzac
+    int mapSize =0;
     /**
      * Map config:
      * Tablica zawierająca dane konfiguracyjne.
@@ -37,9 +40,9 @@ public class SimulationView extends JPanel {
         this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
+        this.mapSize=config.get("mapSize");
         this.map = generateMap(config);
-
+        fillMap();
         /*
          * Napisy na ekranie
          */
@@ -62,16 +65,29 @@ public class SimulationView extends JPanel {
         JPanel dirtPanel = new JPanel();
         dirtPanel.setBounds(20,20,64,64);
 
-
+// Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
         System.out.println("");System.out.println("");
         System.out.println("Wydruk mapy:");
         for(Field[] row:this.map){
             System.out.print("|");
             for(Field field:row){
                 switch(field.type){
-                    case 1:System.out.print("B");break;
-                    default:System.out.print(" ");break;
+                    case 1:System.out.print("X");break;
+                    default:
+                    {
+                        if (field.units.size()>0){
+                            if(field.units.get(0).team=='A'){
+                                System.out.print("A");
+                            }else{
+                                System.out.print("B");
+                            }
+                        }else{
+                            System.out.print(" ");
+                        }
+                        break;
+                    }
                 }
+
 
             }
             System.out.print("|");
@@ -97,9 +113,9 @@ public class SimulationView extends JPanel {
     }
 
     private Field[][] generateMap(Map<String,Integer> config){
-        int mapSize = config.get("mapSize").intValue();
+
         Field[][] map = new Field[mapSize][mapSize];
-        Random rand = new Random();
+
         /*
         Wypelnianie mapy typami pola
          */
@@ -113,6 +129,7 @@ public class SimulationView extends JPanel {
                 map[x][rand.nextInt(mapSize-1)].type = 1;
             }
         }
+
         return map;
     }
 
@@ -129,24 +146,42 @@ public class SimulationView extends JPanel {
          * 3. wstawienie obiektu do wylosowanego pola
          */
 
-        Integer tankACounter=0;
-        Integer tankBCounter=0;
 
-        for(int i=0;i<this.config.get("tankCountA");i++){
-            System.out.println("Dodaje czołg A");
+        Tank[] tanksA = new Tank[config.get("tankCountA")];
+        Integer tankACounter=config.get("tankCountA");
+        int counter=0;
+        while(tankACounter!=0){
+            int x = rand.nextInt(mapSize-1);
+            int y = rand.nextInt(mapSize-1);
+            if(map[x][y].type!='B'){
+                Tank tank = new Tank('A',new Position(x,y));
+                map[x][y].units.add(tank);
+                tanksA[counter]= tank;
+                counter++;
+                tankACounter--;
+//                System.out.println("Dodaje czołg A");
+            }
+
+        }
+        Tank[] tanksB = new Tank[config.get("tankCountB")];
+        Integer tankBCounter=config.get("tankCountB");
+        counter=0;
+        while(tankBCounter!=0){
+            int x = rand.nextInt(mapSize-1);
+            int y = rand.nextInt(mapSize-1);
+            if(map[x][y].type!='B' && map[x][y].units.size()==0){
+                Tank tank = new Tank('B',new Position(x,y));
+                map[x][y].units.add(tank);
+                tanksB[counter]= tank;
+                counter++;
+                tankBCounter--;
+//                System.out.println("Dodaje czołg B");
+            }
+
         }
 
 
 
-//        Tank[] tanksA = new Tank[config.get("tankCountA").intValue()];
-//        Tank[] tanksB = new Tank[config.get("tankCountB").intValue()];
-//
-//        int q = mapSize/(tanksA.length+1);
-//        for (int x=0; x<tanksA.length;x++){
-//            if (x%q==1){
-//                //map[0][x+q].unit=new Tank('A',0,x+q);
-//            }
-//        }
     }
 
 
