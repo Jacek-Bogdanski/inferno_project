@@ -18,9 +18,9 @@ import java.util.Random;
 public class SimulationView extends JPanel {
 
     private Field[][] map;
-    private Map<String,Integer> config=null;
-    private Random rand = new Random();     // by nie powtarzac
-    int mapSize =0;
+    private Map<String,Integer> config = null;
+    private final Random rand = new Random();     // by nie powtarzac
+    int mapSize=0;
     /**
      * Map config:
      * Tablica zawierająca dane konfiguracyjne.
@@ -41,7 +41,7 @@ public class SimulationView extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.mapSize=config.get("mapSize");
-        this.map = generateMap(config);
+        this.map = generateMap();
         fillMap();
         /*
          * Napisy na ekranie
@@ -112,7 +112,7 @@ public class SimulationView extends JPanel {
         }
     }
 
-    private Field[][] generateMap(Map<String,Integer> config){
+    private Field[][] generateMap(){
 
         Field[][] map = new Field[mapSize][mapSize];
 
@@ -125,8 +125,13 @@ public class SimulationView extends JPanel {
             {
                 map[x][y] = new Field(0);
             }
-            for (int z = 0; z < mapSize/10;z++){               // jeden budynek generowany na 10 pol
-                map[x][rand.nextInt(mapSize-1)].type = 1;
+            int buildingsCount = mapSize/10;
+            while (buildingsCount!=0){               // jeden budynek generowany na 10 pol
+                int ypos= rand.nextInt(mapSize-1);
+                if(map[x][ypos].type == 0){
+                    map[x][ypos].type = 1;
+                    buildingsCount--;
+                }
             }
         }
 
