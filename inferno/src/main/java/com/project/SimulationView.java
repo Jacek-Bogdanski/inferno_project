@@ -151,6 +151,9 @@ public class SimulationView extends JPanel {
          * 3. wstawienie obiektu do wylosowanego pola
          */
 
+//        CZOŁG ANI ARTYLERZYSTA NIE MOGĄ STAC TAM GDZIE BUDYNEK
+        // W budynku moze byc tylko piechur
+
 
         Tank[] tanksA = new Tank[config.get("tankCountA")];
         Integer tankACounter=config.get("tankCountA");
