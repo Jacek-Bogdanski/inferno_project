@@ -18,9 +18,9 @@ public class Tank extends MilitaryUnit{
      */
     private void setParams(){
         this.fuel=50;
-        this.ammo=10;
+        this.ammunition =10;
         this.attackRange = 7;
-        this.dmg=50;        //maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim zakresie
+        this.damage =50;        //maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim zakresie
         this.hp=100;
         this.speed=3;
     }

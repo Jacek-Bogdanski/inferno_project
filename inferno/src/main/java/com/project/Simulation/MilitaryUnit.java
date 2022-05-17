@@ -5,8 +5,8 @@ package com.project.Simulation;
  */
 public abstract class MilitaryUnit {
     public Integer hp=0;
-    public Integer dmg=0;
-    public Integer ammo=0;
+    public Integer damage =0;
+    public Integer ammunition =0;
     public Integer speed=0;
     public Integer attackRange=0;
 
@@ -30,7 +30,7 @@ public abstract class MilitaryUnit {
      * @param unit atakowany obiekt
      */
     public void attack(MilitaryUnit unit){
-        unit.takeDamage(this.dmg);
+        unit.takeDamage(this.damage);
     }
 
     /**
