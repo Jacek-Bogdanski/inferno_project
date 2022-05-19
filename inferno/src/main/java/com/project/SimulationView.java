@@ -87,8 +87,6 @@ public class SimulationView extends JPanel {
                         break;
                     }
                 }
-
-
             }
             System.out.print("|");
             System.out.println("");
@@ -144,7 +142,6 @@ public class SimulationView extends JPanel {
         wypelnianie mapy jednostkami narazie tylko czolgi
          */
 
-
         /*
          * 1. wylosowanie pozycji x,y
          * 2. sprawdzenie, czy obiekt moze tam stanąć
@@ -155,40 +152,28 @@ public class SimulationView extends JPanel {
         // W budynku moze byc tylko piechur
 
 
-        Tank[] tanksA = new Tank[config.get("tankCountA")];
         Integer tankACounter=config.get("tankCountA");
-        int counter=0;
         while(tankACounter!=0){
             int x = rand.nextInt(mapSize-1);
             int y = rand.nextInt(mapSize-1);
             if(map[x][y].type!='B'){
                 Tank tank = new Tank('A',new Position(x,y));
                 map[x][y].units.add(tank);
-                tanksA[counter]= tank;
-                counter++;
                 tankACounter--;
-//                System.out.println("Dodaje czołg A");
             }
-
         }
-        Tank[] tanksB = new Tank[config.get("tankCountB")];
+
         Integer tankBCounter=config.get("tankCountB");
-        counter=0;
+
         while(tankBCounter!=0){
             int x = rand.nextInt(mapSize-1);
             int y = rand.nextInt(mapSize-1);
             if(map[x][y].type!='B' && map[x][y].units.size()==0){
                 Tank tank = new Tank('B',new Position(x,y));
                 map[x][y].units.add(tank);
-                tanksB[counter]= tank;
-                counter++;
                 tankBCounter--;
-//                System.out.println("Dodaje czołg B");
             }
-
         }
-
-
 
     }
 

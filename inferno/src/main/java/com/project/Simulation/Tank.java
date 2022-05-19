@@ -24,4 +24,11 @@ public class Tank extends MilitaryUnit{
         this.hp=100;
         this.speed=3;
     }
+
+    @Override
+    public void move(){
+
+    }
+
+
 }
