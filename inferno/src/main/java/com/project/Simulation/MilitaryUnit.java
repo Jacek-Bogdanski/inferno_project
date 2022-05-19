@@ -19,7 +19,7 @@ public abstract class MilitaryUnit {
         this.position = position;
     }
 
-    public void move(){}
+    public void move(Field[][] map,Position pos, int id, int mapSize){}
 
     public void pickUpRation(){}
 
