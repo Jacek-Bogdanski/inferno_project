@@ -28,24 +28,55 @@ public class Tank extends MilitaryUnit{
     }
 
     @Override
-    public void move(Field[][] map,Position pos, int id,int mapSize){
+    public Position move(Field[][] map, Position pos, int mapSize){
         int direction = rand.nextInt(3); // 0-gora 1-prawo 2-dol 3-prawo
         int moveSpeed = rand.nextInt(2)+1; // losowanie ilosci kratek do przebycia dla testow niech bedzie 1-3 kratki
-        switch (direction){
-            case 0:{
-
+        Tank tank = (Tank) map[pos.x][pos.y].units.get(0); //tu bedzie trzeba jakos obslugiwac wiecej indexow
+        map[pos.x][pos.y].units.remove(tank);
+        switch (direction) {
+            case 0 -> {
+                System.out.println("Przesuwam w gore");
+                if (pos.y - 1 >= 0) {
+                    pos.y -= 1;
+                    map[pos.x][pos.y].units.add(tank);
+                } else {
+                    map[pos.x][pos.y].units.add(tank);
+                    return new Position(pos.x,pos.y);
+                }
             }
-            case 1:{
-
+            case 1 -> {
+                System.out.println("Przesuwam w prawo");
+                if (pos.x + 1 <= mapSize - 1) {
+                    pos.x += 1;
+                    map[pos.x][pos.y].units.add(tank);
+                } else {
+                    map[pos.x][pos.y].units.add(tank);
+                    return new Position(pos.x,pos.y);
+                }
             }
-            case 2:{
-
+            case 2 -> {
+                System.out.println("Przesuwam w dol");
+                if (pos.y + 1 <= mapSize - 1) {
+                    pos.y += 1;
+                    map[pos.x][pos.y].units.add(tank);
+                } else {
+                    map[pos.x][pos.y].units.add(tank);
+                    return new Position(pos.x,pos.y);
+                }
             }
-            case 3:{
-
+            case 3 -> {
+                System.out.println("Przesuwam w lewo");
+                if (pos.x - 1 >= 0) {
+                    pos.x -= 1;
+                    map[pos.x][pos.y].units.add(tank);
+                } else {
+                    map[pos.x][pos.y].units.add(tank);
+                    return new Position(pos.x,pos.y);
+                }
             }
         }
 
+        return pos;
     }
 
 

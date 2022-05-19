@@ -43,6 +43,23 @@ public class SimulationView extends JPanel {
         this.mapSize=config.get("mapSize");
         this.map = generateMap();
         fillMap();
+        printMapToConsole(this.map);
+
+//problem jest taki ze czolg ktory sie przesunie w kolejnej iteracji moze byc przesuniety jeszcze raz
+// trzeba jakos odznaczac przesuniete juz czolgi
+// i nie wiem czemu po niby wylosowaniu przesuniecia w prawo przesuwa sie w lewo
+
+        for (int x = 0 ; x<mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                if (!map[x][y].units.isEmpty()) {
+                    Position newpos = map[x][y].units.get(0).move(map, new Position(x, y), mapSize);
+                    System.out.println("przesuwam czolg z " + x + "," + y +"do" + newpos.x + "," + newpos.y);
+                }
+            }
+        }
+
+        printMapToConsole(this.map);
+
         /*
          * Napisy na ekranie
          */
@@ -65,32 +82,7 @@ public class SimulationView extends JPanel {
         JPanel dirtPanel = new JPanel();
         dirtPanel.setBounds(20,20,64,64);
 
-// Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
-        System.out.println("");System.out.println("");
-        System.out.println("Wydruk mapy:");
-        for(Field[] row:this.map){
-            System.out.print("|");
-            for(Field field:row){
-                switch(field.type){
-                    case 1:System.out.print("X");break;
-                    default:
-                    {
-                        if (field.units.size()>0){
-                            if(field.units.get(0).team=='A'){
-                                System.out.print("A");
-                            }else{
-                                System.out.print("B");
-                            }
-                        }else{
-                            System.out.print(" ");
-                        }
-                        break;
-                    }
-                }
-            }
-            System.out.print("|");
-            System.out.println("");
-        }
+
 
          /* Utworzenie widoku
          */
@@ -177,6 +169,34 @@ public class SimulationView extends JPanel {
 
     }
 
+    public static void printMapToConsole(Field[][] map){
+        // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
+        System.out.println("");System.out.println("");
+        System.out.println("Wydruk mapy:");
+        for(Field[] row:map){
+            System.out.print("|");
+            for(Field field:row){
+                switch(field.type){
+                    case 1:System.out.print("X");break;
+                    default:
+                    {
+                        if (field.units.size()>0){
+                            if(field.units.get(0).team=='A'){
+                                System.out.print("A");
+                            }else{
+                                System.out.print("B");
+                            }
+                        }else{
+                            System.out.print(" ");
+                        }
+                        break;
+                    }
+                }
+            }
+            System.out.print("|");
+            System.out.println("");
+        }
+    }
 
 
 }
