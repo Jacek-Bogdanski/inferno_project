@@ -34,7 +34,7 @@ public class Tank extends MilitaryUnit{
         Tank tank = (Tank) map[pos.x][pos.y].units.get(0); //tu bedzie trzeba jakos obslugiwac wiecej indexow
         map[pos.x][pos.y].units.remove(tank);
         switch (direction) {
-            case 0 -> {
+            case 0:
                 System.out.println("Przesuwam w gore");
                 if (pos.y - 1 >= 0) {
                     pos.y -= 1;
@@ -43,8 +43,8 @@ public class Tank extends MilitaryUnit{
                     map[pos.x][pos.y].units.add(tank);
                     return new Position(pos.x,pos.y);
                 }
-            }
-            case 1 -> {
+                break;
+            case 1:
                 System.out.println("Przesuwam w prawo");
                 if (pos.x + 1 <= mapSize - 1) {
                     pos.x += 1;
@@ -53,8 +53,8 @@ public class Tank extends MilitaryUnit{
                     map[pos.x][pos.y].units.add(tank);
                     return new Position(pos.x,pos.y);
                 }
-            }
-            case 2 -> {
+            break;
+            case 2:
                 System.out.println("Przesuwam w dol");
                 if (pos.y + 1 <= mapSize - 1) {
                     pos.y += 1;
@@ -63,8 +63,8 @@ public class Tank extends MilitaryUnit{
                     map[pos.x][pos.y].units.add(tank);
                     return new Position(pos.x,pos.y);
                 }
-            }
-            case 3 -> {
+            break;
+            case 3:
                 System.out.println("Przesuwam w lewo");
                 if (pos.x - 1 >= 0) {
                     pos.x -= 1;
@@ -73,7 +73,7 @@ public class Tank extends MilitaryUnit{
                     map[pos.x][pos.y].units.add(tank);
                     return new Position(pos.x,pos.y);
                 }
-            }
+                break;
         }
 
         return pos;

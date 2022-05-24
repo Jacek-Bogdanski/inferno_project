@@ -53,7 +53,7 @@ public class SimulationView extends JPanel {
             for (int y = 0; y < mapSize; y++) {
                 if (!map[x][y].units.isEmpty()) {
                     Position newpos = map[x][y].units.get(0).move(map, new Position(x, y), mapSize);
-                    System.out.println("przesuwam czolg z " + x + "," + y +"do" + newpos.x + "," + newpos.y);
+                    System.out.println("przesuwam czolg z (" + x + ", " + y +") do (" + newpos.x + ", " + newpos.y +")");
                 }
             }
         }

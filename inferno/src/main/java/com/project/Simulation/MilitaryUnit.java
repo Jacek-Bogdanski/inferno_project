@@ -23,7 +23,7 @@ public abstract class MilitaryUnit {
         return pos;
     }
 
-    public void pickUpRation(){}
+    public void pickUpFood(){}
 
     public void pickUpAmmo(){}
 
