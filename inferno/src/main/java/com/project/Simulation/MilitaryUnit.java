@@ -4,6 +4,9 @@ package com.project.Simulation;
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
  */
 public abstract class MilitaryUnit {
+    public Integer id = 0;
+    public Integer iterationNumber = 0;
+
     public Integer hp=0;
     public Integer damage =0;
     public Integer ammunition =0;
