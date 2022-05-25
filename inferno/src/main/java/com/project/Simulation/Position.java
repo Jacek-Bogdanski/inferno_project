@@ -22,7 +22,9 @@ public class Position {
     }
 
     public static boolean equals(Position pos1, Position pos2){
-        return Objects.equals(pos1.x, pos2.x);
+        if(!Objects.equals(pos1.x, pos2.x)) return false;
+        if(!Objects.equals(pos1.y, pos2.y)) return false;
+        return true;
     }
 
 }

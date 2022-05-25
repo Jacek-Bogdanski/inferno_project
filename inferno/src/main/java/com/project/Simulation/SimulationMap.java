@@ -44,7 +44,7 @@ public class SimulationMap {
 
     public void runSimulation(){
         for(int i=0;i<ITERATION_NUMBER;i++) {
-            this.handleIteration();
+//            this.handleIteration();
         }
     }
 

@@ -24,7 +24,7 @@ public class SimulationView extends JPanel {
      */
     SimulationView(Router parent,Map<String,Integer> config) {
         this.mapArea = new JTextArea("");
-        this.mapArea.setFont(new Font(Font.MONOSPACED,  Font.PLAIN, 14));
+        this.mapArea.setFont(new Font(Font.MONOSPACED,  Font.PLAIN, 10));
         this.prepareLayout();
         this.parent = parent;
         /*

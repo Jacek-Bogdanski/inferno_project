@@ -31,7 +31,7 @@ public class OptionsView extends JPanel {
         /*
          * Edytowalne pola: Rozmiar mapy, losowość itemków
          */
-        NumberField sizeField = new NumberField(20);
+        NumberField sizeField = new NumberField(30);
         NumberField buildingCountField = new NumberField(15);
         NumberField iterationCountField = new NumberField(1000);
         NumberField EParameterField = new NumberField(50);
