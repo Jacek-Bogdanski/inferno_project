@@ -24,14 +24,15 @@ public class OptionsView extends JPanel {
         Label title = new Label("Konfiguracja symulacji", 25, Colors.white);
         Label alert = new Label("Wprowadzono nieprawidłowe wartości!", 18, Colors.red);
         alert.setVisible(false);
+        Label errorOutput = new Label("", 14, Colors.red);
         Label description = new Label("Zmień parametry lub pozostaw domyślne", 15, Colors.veryLightGrey);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
         /*
          * Edytowalne pola: Rozmiar mapy, losowość itemków
          */
-        NumberField sizeField = new NumberField(50);
-        NumberField buildingCountField = new NumberField(20);
+        NumberField sizeField = new NumberField(20);
+        NumberField buildingCountField = new NumberField(15);
         NumberField iterationCountField = new NumberField(1000);
         NumberField EParameterField = new NumberField(50);
         NumberField FParameterField = new NumberField(50);
@@ -40,8 +41,8 @@ public class OptionsView extends JPanel {
         /*
          * Edytowalne pola: Liczby czołgów w danych drużynach
          */
-        NumberField A1CountField = new NumberField(20);
-        NumberField A2CountField = new NumberField(20);
+        NumberField A1CountField = new NumberField(10);
+        NumberField A2CountField = new NumberField(10);
 
         /*
          * Edytowalne pola: Liczby piechurów w danych drużynach
@@ -84,6 +85,8 @@ public class OptionsView extends JPanel {
             }
             catch(Exception exc){
                 alert.setVisible(true);
+                errorOutput.setText(exc.toString());
+                System.out.println("EXCEPTION OCCURRED: " + exc;
             }
         });
 
@@ -144,6 +147,8 @@ public class OptionsView extends JPanel {
                 alert,
                 Box.createRigidArea(new Dimension(0, 15)),
                 startButton,
+                Box.createVerticalGlue(),
+                errorOutput,
                 Box.createVerticalGlue(),
                 copyright,
                 Box.createRigidArea(new Dimension(0, 20)),

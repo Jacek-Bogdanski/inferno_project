@@ -1,9 +1,6 @@
 package com.project;
 
-import com.project.Simulation.Field;
-import com.project.Simulation.MilitaryUnit;
-import com.project.Simulation.Position;
-import com.project.Simulation.Tank;
+import com.project.Simulation.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,50 +14,31 @@ import java.util.Random;
  * Klasa odpowiadająca za wyświetlenie symulacji
  */
 public class SimulationView extends JPanel {
+    SimulationMap map;
+    Router parent;
 
-    private Field[][] map;
-    private Map<String,Integer> config = null;
-    private final Random rand = new Random();     // by nie powtarzac
-    int mapSize=0;
+    JTextArea mapArea;
+
     /**
-     * Map config:
-     * Tablica zawierająca dane konfiguracyjne.
-     * Dostępne pola:
-     * mapSize, buildingCount, iterationCount,
-     * tankCountA, tankCountB,
-     * soldierCountA, soldierCountB,
-     * gunnerCountA, gunnerCountB,
-     * fuelProbability, ammunitionProbability, foodProbability
+     * Konstruktor symulacji
      */
-
     SimulationView(Router parent,Map<String,Integer> config) {
-        this.config=config;
+        this.mapArea = new JTextArea("");
+        this.mapArea.setFont(new Font(Font.MONOSPACED,  Font.PLAIN, 14));
+        this.prepareLayout();
+        this.parent = parent;
+        /*
+         * Utworzenie mapy
+         */
+        this.map = new SimulationMap(config,mapArea);
+    }
+
+    private void prepareLayout(){
         /*
          * Konfiguracja panelu
          */
         this.setBackground(Colors.darkerGrey);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.mapSize=config.get("mapSize");
-        this.map = generateMap();
-        fillMap();
-        printMapToConsole(this.map);
-
-//problem jest taki ze czolg ktory sie przesunie w kolejnej iteracji moze byc przesuniety jeszcze raz
-// trzeba jakos odznaczac przesuniete juz czolgi
-// i nie wiem czemu po niby wylosowaniu przesuniecia w prawo przesuwa sie w lewo
-
-        for (int x = 0 ; x<mapSize; x++) {
-            for (int y = 0; y < mapSize; y++) {
-                if (!map[x][y].units.isEmpty()) {
-                    MilitaryUnit unit = map[x][y].units.get(0);
-                    Position newpos = unit.move(map, new Position(x, y), mapSize);
-                    System.out.println("przesuwam czolg [id="+unit.id+"] z (" + x + ", " + y +") do (" + newpos.x + ", " + newpos.y +")");
-                }
-            }
-        }
-
-        printMapToConsole(this.map);
 
         /*
          * Napisy na ekranie
@@ -72,8 +50,11 @@ public class SimulationView extends JPanel {
         /*
          * Przyciski
          */
-        Button startButton = new Button("KONIEC", 30, Colors.black);
-        startButton.addActionListener(e -> parent.showMainView());
+        Button endButton = new Button("KONIEC", 30, Colors.black);
+        endButton.addActionListener(e -> parent.showMainView());
+
+        Button continueButton = new Button("Następna iteracja", 20, Colors.black);
+        continueButton.addActionListener(e -> map.handleIteration());
 
         /*
          * Ikony
@@ -81,12 +62,8 @@ public class SimulationView extends JPanel {
         ImageIcon dirt = new ImageIcon("dirt.jpg");
         ImageIcon brick = new ImageIcon("brick.jpg");
 
-        JPanel dirtPanel = new JPanel();
-        dirtPanel.setBounds(20,20,64,64);
-
-
-
-         /* Utworzenie widoku
+        /*
+         * Utworzenie widoku
          */
         Component[] viewItems = {
                 Box.createVerticalGlue(),
@@ -94,8 +71,12 @@ public class SimulationView extends JPanel {
                 Box.createRigidArea(new Dimension(0, 20)),
                 description,
                 Box.createRigidArea(new Dimension(0, 40)),
-                startButton,
-                Box.createVerticalGlue(),
+                this.mapArea,
+                Box.createRigidArea(new Dimension(0, 40)),
+                continueButton,
+                Box.createRigidArea(new Dimension(0, 40)),
+                endButton,
+                Box.createRigidArea(new Dimension(0, 40)),
                 copyright,
                 Box.createRigidArea(new Dimension(0, 20)),
         };
@@ -104,101 +85,7 @@ public class SimulationView extends JPanel {
         }
     }
 
-    private Field[][] generateMap(){
 
-        Field[][] map = new Field[mapSize][mapSize];
-
-        /*
-        Wypelnianie mapy typami pola
-         */
-        for (int x = 0 ; x<mapSize; x++)
-        {
-            for (int y = 0 ; y<mapSize; y++)
-            {
-                map[x][y] = new Field(0);
-            }
-            int buildingsCount = mapSize/10;
-            while (buildingsCount!=0){               // jeden budynek generowany na 10 pol
-                int ypos= rand.nextInt(mapSize-1);
-                if(map[x][ypos].type == 0){
-                    map[x][ypos].type = 1;
-                    buildingsCount--;
-                }
-            }
-        }
-
-        return map;
-    }
-
-    private void fillMap(){
-
-        /*
-        wypelnianie mapy jednostkami narazie tylko czolgi
-         */
-
-        /*
-         * 1. wylosowanie pozycji x,y
-         * 2. sprawdzenie, czy obiekt moze tam stanąć
-         * 3. wstawienie obiektu do wylosowanego pola
-         */
-
-//        CZOŁG ANI ARTYLERZYSTA NIE MOGĄ STAC TAM GDZIE BUDYNEK
-        // W budynku moze byc tylko piechur
-
-
-        Integer tankACounter=config.get("tankCountA");
-        while(tankACounter!=0){
-            int x = rand.nextInt(mapSize-1);
-            int y = rand.nextInt(mapSize-1);
-            if(map[x][y].type!='B'){
-                Tank tank = new Tank('A',new Position(x,y));
-                map[x][y].units.add(tank);
-                tankACounter--;
-            }
-        }
-
-        Integer tankBCounter=config.get("tankCountB");
-
-        while(tankBCounter!=0){
-            int x = rand.nextInt(mapSize-1);
-            int y = rand.nextInt(mapSize-1);
-            if(map[x][y].type!='B' && map[x][y].units.size()==0){
-                Tank tank = new Tank('B',new Position(x,y));
-                map[x][y].units.add(tank);
-                tankBCounter--;
-            }
-        }
-
-    }
-
-    public static void printMapToConsole(Field[][] map){
-        // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
-        System.out.println("");System.out.println("");
-        System.out.println("Wydruk mapy:");
-        for(Field[] row:map){
-            System.out.print("|");
-            for(Field field:row){
-                switch(field.type){
-                    case 1:System.out.print("X");break;
-                    default:
-                    {
-                        if (field.units.size()>0){
-                            if(field.units.get(0).team=='A'){
-                                System.out.print("A");
-                            }else{
-                                System.out.print("B");
-                            }
-                        }else{
-                            System.out.print(" ");
-                        }
-                        break;
-                    }
-                }
-            }
-            System.out.print("|");
-            System.out.println("");
-        }
-    }
 
 
 }

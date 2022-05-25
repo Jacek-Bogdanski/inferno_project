@@ -5,7 +5,7 @@ package com.project.Simulation;
  */
 public abstract class MilitaryUnit {
     public static Integer instanceCount = 0;
-    public Integer id = null;
+    public Integer id;
     public Integer iterationNumber = 0;
 
     public Integer hp=0;
@@ -25,8 +25,8 @@ public abstract class MilitaryUnit {
         this.position = position;
     }
 
-    public Position move(Field[][] map, Position pos, int mapSize){
-        return pos;
+    public Position move(SimulationMap map){
+        return this.position;
     }
 
     public void pickUpFood(){}
