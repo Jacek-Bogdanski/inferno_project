@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
+import static java.lang.Math.sqrt;
+
 public class SimulationMap {
     /**
      * Map config:
@@ -18,10 +20,13 @@ public class SimulationMap {
      */
     private Map<String,Integer> config;
 
+    public Integer alliveA=0;
+    public Integer alliveB=0;
+
     JTextArea mapArea;
 
     public Field[][] map;
-    int mapSize=0;
+    int mapSize;
 
     // numer aktualnej iteracji
     int iterationNumber = 1;
@@ -44,12 +49,16 @@ public class SimulationMap {
 
     public void runSimulation(){
         for(int i=0;i<ITERATION_NUMBER;i++) {
+
 //            this.handleIteration();
         }
     }
 
     public void handleIteration(){
         this.iterationNumber++;
+
+        // PRZESUNIĘCIE OBIEKTÓW
+
         // 1. wejście do danego pola i wyciągnięcie obiektów
         // 2. wylosowanie nowych wspolrzednych
         // 3. aktualizacja obiektu position
@@ -57,44 +66,80 @@ public class SimulationMap {
         // 5. usunięcie obiektu ze starego pola
         // 6. inkrementacja wartości iterationNumber - do sprawdzenia czy juz sie poruszył
 
-
-
-
-
-
-        //problem jest taki ze czolg ktory sie przesunie w kolejnej iteracji moze byc przesuniety jeszcze raz
-// trzeba jakos odznaczac przesuniete juz czolgi
-// i nie wiem czemu po niby wylosowaniu przesuniecia w prawo przesuwa sie w lewo
-
-
-        System.out.println("Liczba obiektów: " + MilitaryUnit.instanceCount);
-        System.out.println();
-
         for (int x = 0 ; x<mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<MilitaryUnit> units = map[x][y].units;
                     for(int i=0; i<units.size(); i++){
                         MilitaryUnit unit = units.get(i);
+                        if(!unit.isAlive) continue;
                         if(unit.iterationNumber==this.iterationNumber)
                             continue;
                         unit.iterationNumber = this.iterationNumber;
                         unit.move(this);
                     }
-
-//                units.forEach((unit)->{
-//
-//                });
-
-
-//                if (!map[x][y].units.isEmpty()) {
-//                    MilitaryUnit unit = map[x][y].units.get(0);
-//                    Position newpos = unit.move(map, new Position(x, y), mapSize);
-//                    System.out.println("przesuwam czolg [id="+unit.id+"] z (" + x + ", " + y +") do (" + newpos.x + ", " + newpos.y +")");
-//                }
             }
         }
+
+        // WYKONANIE ATAKÓW
+
+        // Iteracja wybierająca obiekty atakujące
+        for (int x = 0 ; x<mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<MilitaryUnit> attackingUnits = map[x][y].units;
+                for(int i=0; i<attackingUnits.size(); i++){
+                    MilitaryUnit attackingUnit = attackingUnits.get(i);
+                    if(!attackingUnit.isAlive) continue;
+
+                    MilitaryUnit unitToAttack=null;
+                    int distanceToAttack = this.mapSize*this.mapSize;
+
+                    // Iteracja wybierająca najblizszy obiekt do zaatakowania
+                    for (int attackX = 0 ; attackX<mapSize; attackX++) {
+                        for (int attackY = 0; attackY < mapSize; attackY++) {
+                            // obliczenie odległości euklidesowej
+                            int distance = (int) sqrt((attackX-x)*(attackX-x) + (attackY-y)*(attackY-y));
+
+                            if(distance>attackingUnit.attackRange) continue;
+
+                            // Iteracja wybierająca bezpośrednio jednostkę do zaatakowania
+                            ArrayList<MilitaryUnit> attackedUnits = map[attackX][attackY].units;
+                            for(int k=0; k<attackedUnits.size(); k++){
+                                MilitaryUnit attackedUnit = attackedUnits.get(k);
+                                if(!attackedUnit.isAlive) continue;
+                                if(attackedUnit.team==attackingUnit.team) continue;
+                                if(distanceToAttack<distance) continue;
+
+                                unitToAttack = attackedUnit;
+                                distanceToAttack = distance;
+
+
+//
+                            }
+                        }
+                    }
+                    if(unitToAttack==null) continue;
+                    unitToAttack.takeDamage(attackingUnit.damage);
+                                System.out.println("unit "+unitToAttack.id+" : hp="+unitToAttack.hp);
+                }
+            }
+        }
+
+        // Oznaczenie zniszczonych obiektów za zabite
+        this.alliveA=0;
+        this.alliveB=0;
+        for (int x = 0 ; x<mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<MilitaryUnit> units = map[x][y].units;
+                for (MilitaryUnit unit : units) {
+                    if (unit.hp <= 0) unit.isAlive = false;
+                    if(unit.isAlive && unit.team=='A') this.alliveA++;
+                    if(unit.isAlive && unit.team=='B') this.alliveB++;
+                }
+            }
+        }
+
         this.printMapToMapArea();
-        this.printMapToConsole(this.map);
+//        this.printMapToConsole(this.map);
     }
 
     public int getFieldType(Position position){
@@ -172,12 +217,22 @@ public class SimulationMap {
             }
         }
 
+        // Obliczenie liczby zywych na poczatku
+        for (int x = 0 ; x<mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<MilitaryUnit> units = map[x][y].units;
+                for (MilitaryUnit unit : units) {
+                    if(unit.isAlive && unit.team=='A') this.alliveA++;
+                    if(unit.isAlive && unit.team=='B') this.alliveB++;
+                }
+            }
+        }
     }
 
     public void printMapToConsole(Field[][] map){
         // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
 
-        System.out.println("");
+        System.out.println(" ");
         System.out.println("Iteracja: "+this.iterationNumber);
         System.out.println("Wydruk mapy:");
         for(Field[] row:map){
@@ -199,7 +254,7 @@ public class SimulationMap {
                 System.out.print(" ");
             }
             System.out.print("|");
-            System.out.println("");
+            System.out.println(" ");
         }
     }
 
@@ -207,7 +262,7 @@ public class SimulationMap {
         // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
 
         this.mapArea.setText("");
-        this.mapArea.append("Iteracja "+this.iterationNumber+":\n\n");
+        this.mapArea.append("Iteracja "+this.iterationNumber+" | żywych A: "+alliveA+" | żywych B: "+alliveB+"\n\n");
         for(Field[] row:this.map){
             this.mapArea.append("      |");
             for(Field field:row){
@@ -222,7 +277,7 @@ public class SimulationMap {
                             break;
                         }
                         if (field.units.size()==1) {
-                            this.mapArea.append(String.valueOf(field.units.get(0).team)+" ");
+                            this.mapArea.append(field.units.get(0).team +" ");
                             break;
                         }
                         this.mapArea.append(String.valueOf(field.units.get(0).team));
