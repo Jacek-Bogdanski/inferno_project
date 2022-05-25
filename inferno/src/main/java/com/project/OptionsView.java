@@ -63,27 +63,25 @@ public class OptionsView extends JPanel {
         backButton.addActionListener(e -> parent.showMainView());
         Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
         startButton.addActionListener(e -> {
-            Map<String,Integer> data = new HashMap<>();
-
+            Map<String, Integer> data = new HashMap<>();
 
             try {
 
-            data.put("mapSize",parseInt(sizeField.getText()));
-            data.put("buildingCount",parseInt(buildingCountField.getText()));
-            data.put("iterationCount",parseInt(iterationCountField.getText()));
-            data.put("tankCountA",parseInt(A1CountField.getText()));
-            data.put("tankCountB",parseInt(A2CountField.getText()));
-            data.put("soldierCountA",parseInt(B1CountField.getText()));
-            data.put("soldierCountB",parseInt(B2CountField.getText()));
-            data.put("gunnerCountA",parseInt(C1CountField.getText()));
-            data.put("gunnerCountB",parseInt(C2CountField.getText()));
-            data.put("fuelProbability",parseInt(GParameterField.getText()));
-            data.put("ammunitionProbability",parseInt(EParameterField.getText()));
-            data.put("foodProbability",parseInt(FParameterField.getText()));
-            alert.setVisible(false);
-            parent.showSimulationView(data);
-            }
-            catch(Exception exc){
+                data.put("mapSize", parseInt(sizeField.getText()));
+                data.put("buildingCount", parseInt(buildingCountField.getText()));
+                data.put("iterationCount", parseInt(iterationCountField.getText()));
+                data.put("tankCountA", parseInt(A1CountField.getText()));
+                data.put("tankCountB", parseInt(A2CountField.getText()));
+                data.put("soldierCountA", parseInt(B1CountField.getText()));
+                data.put("soldierCountB", parseInt(B2CountField.getText()));
+                data.put("gunnerCountA", parseInt(C1CountField.getText()));
+                data.put("gunnerCountB", parseInt(C2CountField.getText()));
+                data.put("fuelProbability", parseInt(GParameterField.getText()));
+                data.put("ammunitionProbability", parseInt(EParameterField.getText()));
+                data.put("foodProbability", parseInt(FParameterField.getText()));
+                alert.setVisible(false);
+                parent.showSimulationView(data);
+            } catch (Exception exc) {
                 alert.setVisible(true);
                 errorOutput.setText(exc.toString());
                 System.out.println("EXCEPTION OCCURRED: " + exc);

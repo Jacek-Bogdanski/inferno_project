@@ -6,7 +6,7 @@ import javax.swing.*;
  * Klasa odpowiadająca za formatowanie i obsługę pól tekstowych
  */
 public class NumberField extends JTextField {
-    private void config(){
+    private void config() {
         this.setHorizontalAlignment(JTextField.CENTER);
         this.setSize(200, 50);
         this.setBackground(Colors.darkGrey);

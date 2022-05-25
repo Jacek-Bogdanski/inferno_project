@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
-
 /**
  * Klasa odpowiadająca za wyświetlenie symulacji
  */
@@ -22,18 +21,18 @@ public class SimulationView extends JPanel {
     /**
      * Konstruktor symulacji
      */
-    SimulationView(Router parent,Map<String,Integer> config) {
+    SimulationView(Router parent, Map<String, Integer> config) {
         this.mapArea = new JTextArea("");
-        this.mapArea.setFont(new Font(Font.MONOSPACED,  Font.PLAIN, 10));
+        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
         this.prepareLayout();
         this.parent = parent;
         /*
          * Utworzenie mapy
          */
-        this.map = new SimulationMap(config,mapArea);
+        this.map = new SimulationMap(config, mapArea);
     }
 
-    private void prepareLayout(){
+    private void prepareLayout() {
         /*
          * Konfiguracja panelu
          */
@@ -84,8 +83,5 @@ public class SimulationView extends JPanel {
             this.add(item);
         }
     }
-
-
-
 
 }

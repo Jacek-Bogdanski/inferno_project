@@ -12,13 +12,14 @@ public class Field {
      * Typ pola
      * Wartości: 1- budynek 0- ziemia
      */
-    public int type ;
+    public int type;
 
     /**
      * Konstruktor
+     * 
      * @param type typ pola
      */
-    public Field(int type){
+    public Field(int type) {
         this.type = type;
     }
 
