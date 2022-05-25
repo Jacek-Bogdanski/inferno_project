@@ -23,7 +23,7 @@ public class SimulationView extends JPanel {
      */
     SimulationView(Router parent, Map<String, Integer> config) {
         this.mapArea = new JTextArea("");
-        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
+        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 9));
         this.prepareLayout();
         this.parent = parent;
         /*
@@ -67,8 +67,8 @@ public class SimulationView extends JPanel {
         Component[] viewItems = {
                 Box.createVerticalGlue(),
                 title,
-                Box.createRigidArea(new Dimension(0, 20)),
-                description,
+//                Box.createRigidArea(new Dimension(0, 20)),
+//                description,
                 Box.createRigidArea(new Dimension(0, 40)),
                 this.mapArea,
                 Box.createRigidArea(new Dimension(0, 40)),

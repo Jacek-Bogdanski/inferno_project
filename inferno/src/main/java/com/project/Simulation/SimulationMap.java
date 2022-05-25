@@ -48,10 +48,16 @@ public class SimulationMap {
     }
 
     public void runSimulation() {
-        for (int i = 0; i < ITERATION_NUMBER; i++) {
+//        for (int i = 0; i < ITERATION_NUMBER; i++) {
+//            // this.handleIteration();
+//        }
 
-            // this.handleIteration();
-        }
+
+        // Po odkomentowaniu kodu poniżej, symulacja trwa do momentu, aż jedna druzyna wyginie
+
+//        while(alliveA>0&&alliveB>0){
+//            this.handleIteration();
+//        }
     }
 
     public void handleIteration() {
@@ -84,9 +90,12 @@ public class SimulationMap {
 
         // WYKONANIE ATAKÓW
 
+        // kazdy obiekt atakuje tylko jeden, najblizczy obiekt przeciwnika
+
         // Iteracja wybierająca obiekty atakujące
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
+                // Lista obiektów atakujących
                 ArrayList<MilitaryUnit> attackingUnits = map[x][y].units;
                 for (int i = 0; i < attackingUnits.size(); i++) {
                     MilitaryUnit attackingUnit = attackingUnits.get(i);
@@ -118,15 +127,15 @@ public class SimulationMap {
 
                                 unitToAttack = attackedUnit;
                                 distanceToAttack = distance;
-
-                                //
                             }
                         }
                     }
+
+                    // Ostateczne zaatakowanie wybranej jednostki
                     if (unitToAttack == null)
                         continue;
                     unitToAttack.takeDamage(attackingUnit.damage);
-                    System.out.println("unit " + unitToAttack.id + " : hp=" + unitToAttack.hp);
+                    System.out.println("atak na obiekt [id=" + unitToAttack.id + "] : remaining hp=" + unitToAttack.hp);
                 }
             }
         }

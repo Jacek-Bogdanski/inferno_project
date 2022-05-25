@@ -26,7 +26,7 @@ public class Tank extends MilitaryUnit {
         this.attackRange = 7;
         this.damage = 50; // maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim zakresie
         this.hp = 100;
-        this.speed = 2;
+        this.speed = 1;
     }
 
     @Override
