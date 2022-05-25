@@ -64,7 +64,7 @@ public class SimulationView extends JPanel {
          * Napisy na ekranie
          */
         Label title = new Label("TRWA SYMULACJA", 35, Colors.white);
-        Label description = new Label("Żarcik, jeszcze nie ;).", 25, Colors.veryLightGrey);
+        Label description = new Label("Dane wyjściowe znajdują się w konsoli.", 25, Colors.veryLightGrey);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
         /*
