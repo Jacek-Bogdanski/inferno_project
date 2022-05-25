@@ -33,8 +33,8 @@ public class Tank extends MilitaryUnit{
         Position newPosition;
 
         do {
-            int moveX = rand.nextInt(this.speed) - (this.speed/2);
-            int moveY = rand.nextInt(this.speed) - (this.speed/2);
+            int moveX = rand.nextInt(this.speed+1) - (this.speed/2);
+            int moveY = rand.nextInt(this.speed+1) - (this.speed/2);
             int newX = this.position.x + moveX;
             int newY = this.position.y + moveY;
             newPosition = new Position(newX,newY);
