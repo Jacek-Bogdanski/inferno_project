@@ -86,7 +86,7 @@ public class OptionsView extends JPanel {
             catch(Exception exc){
                 alert.setVisible(true);
                 errorOutput.setText(exc.toString());
-                System.out.println("EXCEPTION OCCURRED: " + exc;
+                System.out.println("EXCEPTION OCCURRED: " + exc);
             }
         });
 
