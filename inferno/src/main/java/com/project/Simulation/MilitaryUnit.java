@@ -4,7 +4,8 @@ package com.project.Simulation;
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
  */
 public abstract class MilitaryUnit {
-    public Integer id = 0;
+    public static Integer instanceCount = 0;
+    public Integer id = null;
     public Integer iterationNumber = 0;
 
     public Integer hp=0;
@@ -18,6 +19,8 @@ public abstract class MilitaryUnit {
     public Position position;
 
     public MilitaryUnit(char team, Position position){
+        instanceCount++;
+        this.id = instanceCount;
         this.team = team;
         this.position = position;
     }
