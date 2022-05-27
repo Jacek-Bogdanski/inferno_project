@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.project.Parameters.MAP_SIZE;
-import static java.lang.Math.sqrt;
 
 public class SimulationMap {
     /**
