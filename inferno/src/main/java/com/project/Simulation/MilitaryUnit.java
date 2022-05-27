@@ -8,7 +8,7 @@ import static java.lang.Math.sqrt;
 /**
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
  */
-public abstract class MilitaryUnit implements Unit {
+public abstract class MilitaryUnit implements Movable {
     public static Integer instanceCount = 0;
     public Integer id;
     public Integer iterationNumber = 0;
@@ -23,6 +23,7 @@ public abstract class MilitaryUnit implements Unit {
     public char team;
     public Position position;
 
+
     /**
      * Konstruktor
      * @param team litera reprezentująca drużynę
@@ -35,6 +36,7 @@ public abstract class MilitaryUnit implements Unit {
         this.position = position;
     }
 
+
     /**
      * Metoda wykonująca ruch obiektu na podstawie parametru speed
      * Parametr speed określa maksymalną liczbę pól do przemieszczenia się w jednej iteracji
@@ -45,12 +47,14 @@ public abstract class MilitaryUnit implements Unit {
         this.makeMove(map);
     }
 
+
     /**
      * Metoda podnosząca itemek z pola, na którym sie znajduje obiekt
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     public void pickUpDrop(SimulationMap map) {
     }
+
 
     /**
      * Metoda wykonująca atak
@@ -92,6 +96,7 @@ public abstract class MilitaryUnit implements Unit {
         System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp=" + unitToAttack.hp);
     }
 
+
     /**
      * Metoda przyjmująca atak
      * Określenie śmierci postaci następuje po wykonaniu wszystkich ataków w iteracji
@@ -102,6 +107,7 @@ public abstract class MilitaryUnit implements Unit {
         if (this.hp < 0)
             this.hp = 0;
     }
+
 
     /**
      * Metoda wykonująca ruch na mapie
@@ -134,6 +140,7 @@ public abstract class MilitaryUnit implements Unit {
 
         return true;
     }
+
 
     /**
      * Metoda generująca nowy obiekt pozycji
