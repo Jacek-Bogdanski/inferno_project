@@ -180,8 +180,7 @@ public class SimulationMap {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             if (map[x][y].type != 'B') {
-                Tank tank = new Tank('A', new Position(x, y));
-                map[x][y].units.add(tank);
+                map[x][y].units.add(new Tank('A', new Position(x, y)));
                 tankACounter--;
             }
         }
@@ -192,8 +191,7 @@ public class SimulationMap {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             if (map[x][y].type != 'B' && map[x][y].units.size() == 0) {
-                Tank tank = new Tank('B', new Position(x, y));
-                map[x][y].units.add(tank);
+                map[x][y].units.add(new Tank('B', new Position(x, y)));
                 tankBCounter--;
             }
         }
@@ -214,6 +212,28 @@ public class SimulationMap {
             int y = rand.nextInt(mapSize - 1);
             map[x][y].units.add(new Soldier('B', new Position(x, y)));
             soldierBCounter--;
+        }
+
+        // Dodanie artylerzystów drużyny A
+        Integer gunnerACounter = config.get("gunnerCountA");
+        while (gunnerACounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            if (map[x][y].type != 'B') {
+                map[x][y].units.add(new Gunner('A', new Position(x, y)));
+                gunnerACounter--;
+            }
+        }
+
+        // Dodanie artylerzystów drużyny B
+        Integer gunnerBCounter = config.get("gunnerCountB");
+        while (gunnerBCounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            if (map[x][y].type != 'B') {
+                map[x][y].units.add(new Gunner('B', new Position(x, y)));
+                gunnerBCounter--;
+            }
         }
 
         // Obliczenie liczby zywych na poczatku
