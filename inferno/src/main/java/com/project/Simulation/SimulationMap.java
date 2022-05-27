@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
+import static com.project.Parameters.MAP_SIZE;
 import static java.lang.Math.sqrt;
 
 public class SimulationMap {
@@ -39,7 +40,8 @@ public class SimulationMap {
     public SimulationMap(Map<String, Integer> config, JTextArea mapArea) {
         this.config = config;
         this.mapArea = mapArea;
-        this.mapSize = config.get("mapSize");
+//        this.mapSize = config.get("mapSize");
+        this.mapSize = MAP_SIZE;
         this.map = this.generateMap();
         this.fillMap();
         // this.printMapToConsole(this.map);

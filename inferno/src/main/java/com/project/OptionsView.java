@@ -111,7 +111,7 @@ public class OptionsView extends JPanel {
                 new Label("Liczba artylerzystów B", 15, Colors.white),
                 C1CountField,
                 C2CountField,
-                new Label("Rozmiar mapy", 15, Colors.white),
+                new Label("Rozmiar mapy (wyłączone)", 15, Colors.white),
                 new Label("Liczba budynków", 15, Colors.white),
                 sizeField,
                 buildingCountField,
