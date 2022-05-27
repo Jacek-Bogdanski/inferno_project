@@ -2,6 +2,8 @@ package com.project.Simulation;
 
 import java.util.Random;
 
+import static com.project.Simulation.Parameters.*;
+
 /**
  * Klasa postaci - artylerzysta
  *
@@ -16,13 +18,6 @@ import java.util.Random;
  */
 public class Gunner extends MilitaryUnit {
     private final Random rand = new Random();
-
-    // parametry
-    Integer GUNNER_SPEED = 0;
-    Integer GUNNER_ATTACK_RANGE = 30;
-    Integer GUNNER_ATTACK_DAMAGE = 200;
-    Integer GUNNER_HP = 10;
-    Integer GUNNER_AMMUNITION = 2000;
 
     /**
      * Konstruktor

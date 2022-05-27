@@ -2,6 +2,8 @@ package com.project.Simulation;
 
 import java.util.Random;
 
+import static com.project.Simulation.Parameters.*;
+
 /**
  * Klasa postaci - czołg
  *
@@ -21,15 +23,6 @@ public class Tank extends MilitaryUnit {
 
     private Integer fuel;
     private Double fuelUsageProbability;
-
-    // parametry
-    Double TANK_FUEL_USAGE_PROBABILITY = 0.3;
-    Integer TANK_FUEL = 50;
-    Integer TANK_SPEED = 1;
-    Integer TANK_ATTACK_RANGE = 6;
-    Integer TANK_ATTACK_DAMAGE = 160;
-    Integer TANK_HP = 500;
-    Integer TANK_AMMUNITION = 200;
 
 
     /**

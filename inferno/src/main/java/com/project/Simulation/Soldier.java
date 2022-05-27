@@ -2,6 +2,8 @@ package com.project.Simulation;
 
 import java.util.Random;
 
+import static com.project.Simulation.Parameters.*;
+
 /**
  * Klasa postaci - żołnierz
  *
@@ -22,14 +24,6 @@ public class Soldier extends MilitaryUnit {
     private Integer food;
     private Double foodUsageProbability;
 
-    // parametry
-    Double SOLDIER_FOOD_USAGE_PROBABILITY = 0.3;
-    Integer SOLDIER_SPEED = 3;
-    Integer SOLDIER_ATTACK_RANGE = 3;
-    Integer SOLDIER_ATTACK_DAMAGE = 20;
-    Integer SOLDIER_HP = 50;
-    Integer SOLDIER_AMMUNITION = 50;
-    Integer SOLDIER_FOOD = 50;
 
     /**
      * Konstruktor
