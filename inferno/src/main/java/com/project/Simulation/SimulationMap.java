@@ -300,14 +300,14 @@ public class SimulationMap {
         appendToPane(this.mapArea, "", Color.BLACK);
         this.mapArea.setText("");
 //        this.mapArea.setDocument(new PlainDocument());
-        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + "\n\n", Color.BLACK);
+        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + " | CZERWONY A, NIEBIESKI B\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
             for (Field field : row) {
                 switch (field.type) {
                     case 1:
-                        appendToPane(this.mapArea, "##", new Color(130,70,20));
+                        appendToPane(this.mapArea, "##", new Color(160,160,160));
                         break;
                     case -1:
                         break;
@@ -320,19 +320,19 @@ public class SimulationMap {
                         MilitaryUnit unit = field.units.get(0);
                         // team chwilowo zastąpiony symbolem jednostki
                         String team= unit.symbol;
-                        Color color = null;
+                        Color color;
                         switch (unit.team) {
                             case 'A':
                                 color = new Color(255, 0, 0);
-                                if(!unit.isAlive) color= new Color(60,20,20);
+                                if(!unit.isAlive) color= new Color(80,40, 0);
                                 break;
                             case 'B':
                                 color = new Color(0,0,255);
-                                if(!unit.isAlive) color= new Color(20,20,60);
+                                if(!unit.isAlive) color= new Color(0,40,80);
                                 break;
                             default:
                                 color = new Color(0,0,0);
-                                if(!unit.isAlive) color= new Color(20,20,20);
+                                if(!unit.isAlive) color= new Color(80,80,80);
                                 break;
                         }
                         appendToPane(this.mapArea, team,color );
@@ -343,8 +343,8 @@ public class SimulationMap {
                         }
 
                         MilitaryUnit unit2 = field.units.get(1);
-                        String team2= String.valueOf(unit.team);;
-                        Color color2 = null;
+                        String team2= String.valueOf(unit.team);
+                        Color color2;
                         switch (unit.team) {
                             case 'A':
                                 color2 = new Color(255, 0, 0);
