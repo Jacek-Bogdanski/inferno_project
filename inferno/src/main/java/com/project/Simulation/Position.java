@@ -14,11 +14,6 @@ public class Position {
         this.y = y;
     }
 
-    public Position() {
-        this.x = 0;
-        this.y = 0;
-    }
-
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
     }
@@ -26,9 +21,7 @@ public class Position {
     public static boolean equals(Position pos1, Position pos2) {
         if (!Objects.equals(pos1.x, pos2.x))
             return false;
-        if (!Objects.equals(pos1.y, pos2.y))
-            return false;
-        return true;
+        return Objects.equals(pos1.y, pos2.y);
     }
 
 }
