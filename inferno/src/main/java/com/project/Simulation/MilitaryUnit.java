@@ -27,8 +27,31 @@ public abstract class MilitaryUnit {
         this.position = position;
     }
 
-    public Position move(SimulationMap map) {
-        return this.position;
+    /**
+     * Metoda wykonująca ruch obiektu na podstawie parametru speed
+     *
+     * Parametr speed określa maksymalną liczbę pól do przemieszczenia się w jednej iteracji
+     * Np. speed=5 oznacza maksymalny ruch 5 pionowo i 5 poziomo
+     *
+     * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
+     */
+    public void move(SimulationMap map) {
+        if(this.speed==0)
+            return;
+
+        Position newPosition;
+
+        do {
+            newPosition = this.generateNewPosition(map, this.speed, this.position);
+        } while (map.getFieldType(newPosition) != 0);
+
+        this.makeMove(map, this.position, newPosition);
+
+        String moveMessage = "ruch postaci [id=" + this.id + "], (" + this.position.x + ", " + this.position.y + ")->("
+                + newPosition.x + ", " + newPosition.y + ")";
+        System.out.println(moveMessage);
+
+        this.position = newPosition;
     }
 
     public void pickUpFood() {

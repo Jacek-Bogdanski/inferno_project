@@ -2,9 +2,35 @@ package com.project.Simulation;
 
 import java.util.Random;
 
+/**
+ * Klasa postaci - czołg
+ *
+ * - Porusza się z prędkością TANK_SPEED
+ * - Zużywa paliwo przy ruchu (jednorazowo 1szt, co iterację z prawdopodobieństwem TANK_FUEL_USAGE_PROBABILITY)
+ * - Strzela na odległość TANK_ATTACK_RANGE zużywając 1szt amunicji na każdy atak
+ * - Atak na tym samym polu też zużywa amunicje
+ * - Zadaje obrażenia TANK_ATTACK_DAMAGE
+ * - Ma początkową liczbę punktów życia TANK_HP
+ * - Ma początkową amunicję TANK_AMMUNITION
+ * - Ma początkowe jedzenie TANK_FUEL
+ * - Zbiera napotkane paliwo i amunicję
+ *
+ */
 public class Tank extends MilitaryUnit {
-    private Integer fuel;
     private final Random rand = new Random();
+
+    private Integer fuel;
+    private Double fuelUsageProbability;
+
+    // parametry
+    Double TANK_FUEL_USAGE_PROBABILITY = 0.3;
+    Integer TANK_FUEL = 50;
+    Integer TANK_SPEED = 1;
+    Integer TANK_ATTACK_RANGE = 6;
+    Integer TANK_ATTACK_DAMAGE = 160;
+    Integer TANK_HP = 500;
+    Integer TANK_AMMUNITION = 200;
+
 
     /**
      * Konstruktor
@@ -21,29 +47,16 @@ public class Tank extends MilitaryUnit {
      * Metoda ustawiająca parametry początkowe obiektu
      */
     private void setParams() {
-        this.fuel = 50;
-        this.ammunition = 10;
-        this.attackRange = 7;
-        this.damage = 50; // maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim zakresie
-        this.hp = 100;
-        this.speed = 1;
+        this.fuel = TANK_FUEL;
+        this.ammunition = TANK_AMMUNITION;
+        this.attackRange = TANK_ATTACK_RANGE;
+        this.damage = TANK_ATTACK_DAMAGE; // maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim zakresie
+        this.hp = TANK_HP;
+        this.speed = TANK_SPEED;
+        this.fuelUsageProbability =TANK_FUEL_USAGE_PROBABILITY;
     }
 
-    @Override
-    public Position move(SimulationMap map) {
-
-        Position newPosition;
-        do {
-            newPosition = this.generateNewPosition(map, this.speed, this.position);
-        } while (map.getFieldType(newPosition) != 0);
-
-        this.makeMove(map, this.position, newPosition);
-        System.out.println("ruch czołgu [id=" + this.id + "], (" + this.position.x + ", " + this.position.y + ")->("
-                + newPosition.x + ", " + newPosition.y + ")");
-
-        this.position = newPosition;
-
-        return this.position;
+    public Integer getFuel() {
+        return fuel;
     }
-
 }
