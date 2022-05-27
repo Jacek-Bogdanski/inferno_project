@@ -1,6 +1,9 @@
 package com.project.Simulation;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import static java.lang.Math.sqrt;
 
 /**
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
@@ -47,11 +50,45 @@ public abstract class MilitaryUnit {
 
     /**
      * Metoda wykonująca atak
-     * 
-     * @param unit atakowany obiekt
+     * 1. jednostka przeszukuje mapę, aby znaleźć pola możliwe do zaatakowania
+     * 2. spośród tych pól wybiera najbliższy obiekt
+     * 3. Jeśli taki istnieje, atakuje go
      */
-    public void attack(MilitaryUnit unit) {
-        unit.takeDamage(this.damage);
+    public void attack(SimulationMap simulationMap) {
+        MilitaryUnit unitToAttack = null;
+        int distanceToAttack = simulationMap.mapSize * simulationMap.mapSize;
+
+        // Iteracja wybierająca najblizszy obiekt do zaatakowania
+        for (int attackX = 0; attackX < simulationMap.mapSize; attackX++) {
+            for (int attackY = 0; attackY < simulationMap.mapSize; attackY++) {
+                // obliczenie odległości euklidesowej
+                int distance = (int) sqrt((attackX - this.position.x) * (attackX - this.position.x) + (attackY - this.position.y) * (attackY - this.position.y));
+
+                if (distance > this.attackRange)
+                    continue;
+
+                // Iteracja wybierająca bezpośrednio jednostkę do zaatakowania
+                ArrayList<MilitaryUnit> attackedUnits = simulationMap.map[attackX][attackY].units;
+                for (MilitaryUnit attackedUnit : attackedUnits) {
+                    if (!attackedUnit.isAlive)
+                        continue;
+                    if (attackedUnit.team == this.team)
+                        continue;
+                    if (distanceToAttack < distance)
+                        continue;
+
+                    unitToAttack = attackedUnit;
+                    distanceToAttack = distance;
+                }
+            }
+        }
+
+        // Ostateczne zaatakowanie wybranej jednostki
+        if (unitToAttack == null)
+            return;
+        unitToAttack.takeDamage(this.damage);
+        System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp=" + unitToAttack.hp);
+
     }
 
     /**

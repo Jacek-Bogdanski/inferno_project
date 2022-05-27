@@ -92,50 +92,14 @@ public class SimulationMap {
 
         // kazdy obiekt atakuje tylko jeden, najblizczy obiekt przeciwnika
 
-        // Iteracja wybierająca obiekty atakujące
+        // Iteracja wykonująca atak przez każdy żywy obiekt
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
-                // Lista obiektów atakujących
                 ArrayList<MilitaryUnit> attackingUnits = map[x][y].units;
-                for (int i = 0; i < attackingUnits.size(); i++) {
-                    MilitaryUnit attackingUnit = attackingUnits.get(i);
+                for (MilitaryUnit attackingUnit : attackingUnits) {
                     if (!attackingUnit.isAlive)
                         continue;
-
-                    MilitaryUnit unitToAttack = null;
-                    int distanceToAttack = this.mapSize * this.mapSize;
-
-                    // Iteracja wybierająca najblizszy obiekt do zaatakowania
-                    for (int attackX = 0; attackX < mapSize; attackX++) {
-                        for (int attackY = 0; attackY < mapSize; attackY++) {
-                            // obliczenie odległości euklidesowej
-                            int distance = (int) sqrt((attackX - x) * (attackX - x) + (attackY - y) * (attackY - y));
-
-                            if (distance > attackingUnit.attackRange)
-                                continue;
-
-                            // Iteracja wybierająca bezpośrednio jednostkę do zaatakowania
-                            ArrayList<MilitaryUnit> attackedUnits = map[attackX][attackY].units;
-                            for (int k = 0; k < attackedUnits.size(); k++) {
-                                MilitaryUnit attackedUnit = attackedUnits.get(k);
-                                if (!attackedUnit.isAlive)
-                                    continue;
-                                if (attackedUnit.team == attackingUnit.team)
-                                    continue;
-                                if (distanceToAttack < distance)
-                                    continue;
-
-                                unitToAttack = attackedUnit;
-                                distanceToAttack = distance;
-                            }
-                        }
-                    }
-
-                    // Ostateczne zaatakowanie wybranej jednostki
-                    if (unitToAttack == null)
-                        continue;
-                    unitToAttack.takeDamage(attackingUnit.damage);
-                    System.out.println("atak na obiekt [id=" + unitToAttack.id + "] : remaining hp=" + unitToAttack.hp);
+                    attackingUnit.attack(this);
                 }
             }
         }
@@ -259,7 +223,8 @@ public class SimulationMap {
                     case 1:
                         System.out.print("X");
                         break;
-
+                    case -1:
+                        break;
                     default:
                         if (field.units.size() == 0) {
                             System.out.print(" ");
@@ -288,7 +253,8 @@ public class SimulationMap {
                     case 1:
                         this.mapArea.append("XX");
                         break;
-
+                    case -1:
+                        break;
                     default:
                         if (field.units.size() == 0) {
                             this.mapArea.append("  ");

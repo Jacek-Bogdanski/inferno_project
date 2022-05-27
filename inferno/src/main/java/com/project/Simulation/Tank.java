@@ -80,5 +80,8 @@ public class Tank extends MilitaryUnit {
         int randomNumber = rand.nextInt(11);
         if(this.fuelUsageProbability*10<randomNumber)
         this.fuel--;
+
+        if(this.fuel==0)
+            System.out.println("brak paliwa [id=" + this.id + "]");
     }
 }
