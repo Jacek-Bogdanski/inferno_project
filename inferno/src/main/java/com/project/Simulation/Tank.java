@@ -2,7 +2,7 @@ package com.project.Simulation;
 
 import java.util.Random;
 
-import static com.project.Simulation.Parameters.*;
+import static com.project.Parameters.*;
 
 /**
  * Klasa postaci - czołg

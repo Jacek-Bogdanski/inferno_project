@@ -1,9 +1,13 @@
-package com.project.Simulation;
+package com.project;
 
 /**
  * Klasa przechowująca parametry symulacji
  */
 public class Parameters {
+    /**
+     * Parametry symulacji
+     */
+    public static Integer MAP_SIZE = 100;
 
     /*
      * Parametry żołnierza
