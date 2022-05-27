@@ -44,7 +44,7 @@ public abstract class MilitaryUnit implements Movable {
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     public void move(SimulationMap map) {
-        this.makeMove(map);
+        // do nothing
     }
 
 
@@ -112,18 +112,11 @@ public abstract class MilitaryUnit implements Movable {
     /**
      * Metoda wykonująca ruch na mapie
      * @param map - obiekt mapy potrzebny do wykonania ruchu
+     * @param newPosition destination position
      * @return boolean whether the object has moved
      */
-    protected boolean makeMove(SimulationMap map) {
-        if(this.speed==0)
-            return false;
-
+    protected boolean makeMove(SimulationMap map, Position newPosition) {
         Position prevPosition = this.position;
-        Position newPosition;
-
-        do {
-            newPosition = this.generateNewPosition(map, this.speed, prevPosition);
-        } while (map.getFieldType(newPosition) != 0);
         this.position = newPosition;
 
         // w przypadku braku poruszenia

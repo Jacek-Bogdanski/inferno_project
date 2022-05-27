@@ -39,4 +39,24 @@ public class Gunner extends MilitaryUnit {
         this.hp = GUNNER_HP;
         this.speed = GUNNER_SPEED;
     }
+
+    /**
+     * Metoda wykonująca ruch - uwzględnia zużycie paliwa
+     * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
+     */
+    @Override
+    public void move(SimulationMap map) {
+        if(this.speed==0)
+            return;
+
+        Position prevPosition = this.position;
+        Position newPosition;
+
+        // Wylosowanie nowej pozycji, nie może być to budynek
+        do {
+            newPosition = this.generateNewPosition(map, this.speed, prevPosition);
+        } while (map.getFieldType(newPosition) != 0);
+
+        this.makeMove(map,newPosition);
+    }
 }

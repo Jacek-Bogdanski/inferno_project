@@ -56,8 +56,18 @@ public class Tank extends MilitaryUnit {
     public void move(SimulationMap map) {
         if(this.fuel==0)
             return;
+        if(this.speed==0)
+            return;
 
-        if(this.makeMove(map))
+        Position prevPosition = this.position;
+        Position newPosition;
+
+        // Wylosowanie nowej pozycji, nie może być to budynek
+        do {
+            newPosition = this.generateNewPosition(map, this.speed, prevPosition);
+        } while (map.getFieldType(newPosition) != 0);
+
+        if(this.makeMove(map,newPosition))
             this.useFuel();
     }
 

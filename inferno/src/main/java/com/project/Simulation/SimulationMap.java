@@ -174,6 +174,7 @@ public class SimulationMap {
         // CZOŁG ANI ARTYLERZYSTA NIE MOGĄ STAC TAM GDZIE BUDYNEK
         // W budynku moze byc tylko piechur
 
+        // Dodanie czołgów drużyny A
         Integer tankACounter = config.get("tankCountA");
         while (tankACounter != 0) {
             int x = rand.nextInt(mapSize - 1);
@@ -185,8 +186,8 @@ public class SimulationMap {
             }
         }
 
+        // Dodanie czołgów drużyny B
         Integer tankBCounter = config.get("tankCountB");
-
         while (tankBCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -195,6 +196,24 @@ public class SimulationMap {
                 map[x][y].units.add(tank);
                 tankBCounter--;
             }
+        }
+
+        // Dodanie piechurów drużyny A
+        Integer soldierACounter = config.get("soldierCountA");
+        while (soldierACounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].units.add(new Soldier('A', new Position(x, y)));
+            soldierACounter--;
+        }
+
+        // Dodanie piechurów drużyny B
+        Integer soldierBCounter = config.get("soldierCountB");
+        while (soldierBCounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].units.add(new Soldier('B', new Position(x, y)));
+            soldierBCounter--;
         }
 
         // Obliczenie liczby zywych na poczatku

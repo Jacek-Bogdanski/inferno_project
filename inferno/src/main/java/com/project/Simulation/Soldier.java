@@ -55,7 +55,18 @@ public class Soldier extends MilitaryUnit {
      */
     @Override
     public void move(SimulationMap map) {
-        if(this.makeMove(map))
+        if(this.speed==0)
+            return;
+
+        Position prevPosition = this.position;
+        Position newPosition;
+
+        // Wylosowanie nowej pozycji, to moze byc tez budynek
+        do {
+            newPosition = this.generateNewPosition(map, this.speed, prevPosition);
+        } while (map.getFieldType(newPosition) < 0);
+
+        if(this.makeMove(map,newPosition))
             this.useFood();
     }
 
