@@ -27,7 +27,6 @@ public class Tank extends MilitaryUnit {
 
     /**
      * Konstruktor
-     * 
      * @param team     nazwa drużyny [char]
      * @param position pozycja początkowa
      */
@@ -49,7 +48,37 @@ public class Tank extends MilitaryUnit {
         this.fuelUsageProbability =TANK_FUEL_USAGE_PROBABILITY;
     }
 
+    /**
+     * Metoda wykonująca ruch - uwzględnia zużycie paliwa
+     * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
+     */
+    @Override
+    public void move(SimulationMap map) {
+        if(this.fuel==0)
+            return;
+
+        if(this.makeMove(map))
+            this.useFuel();
+    }
+
+    /**
+     * Metoda zwracająca ilość paliwa
+     * @return fuel amount
+     */
     public Integer getFuel() {
         return fuel;
+    }
+
+    /**
+     * Metoda zużywająca paliwo z prawdopodobieństwem z parametru
+     */
+    public void useFuel() {
+        // brak zmian, gdy paliwa nie ma
+        if(fuel<=0) return;
+
+        // wylosowanie, czy pobrać paliwo
+        int randomNumber = rand.nextInt(11);
+        if(this.fuelUsageProbability*10<randomNumber)
+        this.fuel--;
     }
 }

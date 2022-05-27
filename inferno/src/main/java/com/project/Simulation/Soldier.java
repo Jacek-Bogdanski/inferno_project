@@ -49,7 +49,37 @@ public class Soldier extends MilitaryUnit {
         this.foodUsageProbability = SOLDIER_FOOD_USAGE_PROBABILITY;
     }
 
+    /**
+     * Metoda wykonująca ruch - uwzględnia zużycie jedzenia
+     * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
+     */
+    @Override
+    public void move(SimulationMap map) {
+        if(this.makeMove(map))
+            this.useFood();
+    }
+
+    /**
+     * Metoda zwracająca ilość jedzenia
+     * @return food amount
+     */
     public Integer getFood() {
         return food;
+    }
+
+    /**
+     * Metoda zużywająca jedzenie z prawdopodobieństwem z parametru
+     */
+    public void useFood() {
+        if(this.food>0) {
+            // wylosowanie, czy pobrać jedzenie
+            int randomNumber = rand.nextInt(11);
+            if(this.foodUsageProbability*10<randomNumber)
+                this.food--;
+        }
+
+        // oznaczenie jako nieżywy
+        if(food<=0)
+            this.isAlive=false;
     }
 }

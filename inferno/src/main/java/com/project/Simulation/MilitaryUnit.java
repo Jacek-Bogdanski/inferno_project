@@ -36,22 +36,7 @@ public abstract class MilitaryUnit {
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     public void move(SimulationMap map) {
-        if(this.speed==0)
-            return;
-
-        Position newPosition;
-
-        do {
-            newPosition = this.generateNewPosition(map, this.speed, this.position);
-        } while (map.getFieldType(newPosition) != 0);
-
-        this.makeMove(map, this.position, newPosition);
-
-        String moveMessage = "ruch postaci [id=" + this.id + "], (" + this.position.x + ", " + this.position.y + ")->("
-                + newPosition.x + ", " + newPosition.y + ")";
-        System.out.println(moveMessage);
-
-        this.position = newPosition;
+        this.makeMove(map);
     }
 
     public void pickUpFood() {
@@ -80,19 +65,36 @@ public abstract class MilitaryUnit {
             this.hp = 0;
     }
 
-    protected void makeMove(SimulationMap map, Position prevPosition, Position newPosition) {
-        // nieprawidlowa pozycja
-        if (map.getFieldType(newPosition) == -1)
-            return;
+    /**
+     * Metoda wykonująca ruch
+     * @param map - obiekt mapy potrzebny do wykonania ruchu
+     * @return boolean whether the object has moved
+     */
+    protected boolean makeMove(SimulationMap map) {
+        if(this.speed==0)
+            return false;
+
+        Position prevPosition = this.position;
+        Position newPosition;
+
+        do {
+            newPosition = this.generateNewPosition(map, this.speed, this.position);
+        } while (map.getFieldType(newPosition) != 0);
+        this.position = newPosition;
+
+        String moveMessage = "ruch postaci [id=" + this.id + "], (" + prevPosition.x + ", " + prevPosition.y + ")->("
+                + newPosition.x + ", " + newPosition.y + ")";
+        System.out.println(moveMessage);
 
         // w przypadku braku poruszenia
         if (Position.equals(newPosition, prevPosition))
-            return;
+            return false;
 
         // przeniesienie obiektu
         map.map[prevPosition.x][prevPosition.y].units.remove(this);
         map.map[newPosition.x][newPosition.y].units.add(this);
 
+        return true;
     }
 
     protected Position generateNewPosition(SimulationMap map, Integer speed, Position prevPosition) {
