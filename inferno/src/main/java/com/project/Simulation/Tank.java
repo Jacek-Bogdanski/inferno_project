@@ -46,6 +46,7 @@ public class Tank extends MilitaryUnit {
         this.hp = TANK_HP;
         this.speed = TANK_SPEED;
         this.fuelUsageProbability =TANK_FUEL_USAGE_PROBABILITY;
+        this.symbol = "T";
     }
 
     /**

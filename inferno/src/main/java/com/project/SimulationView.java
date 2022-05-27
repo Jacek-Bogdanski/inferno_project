@@ -27,7 +27,7 @@ public class SimulationView extends JPanel {
 //        EmptyBorder eb = new EmptyBorder(new Insets(10, 10, 10, 10));
 
         this.mapArea = new JTextPane();
-        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 7));
+        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 8));
 //        this.mapArea.setBorder(eb);
 //        this.mapArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 //        this.mapArea.setMargin(new Insets(5, 5, 5, 5));

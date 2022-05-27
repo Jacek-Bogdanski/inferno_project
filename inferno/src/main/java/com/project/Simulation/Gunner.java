@@ -38,6 +38,7 @@ public class Gunner extends MilitaryUnit {
         this.damage = GUNNER_ATTACK_DAMAGE;
         this.hp = GUNNER_HP;
         this.speed = GUNNER_SPEED;
+        this.symbol = "G";
     }
 
     /**

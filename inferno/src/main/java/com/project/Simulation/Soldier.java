@@ -47,6 +47,7 @@ public class Soldier extends MilitaryUnit {
         this.speed = SOLDIER_SPEED;
         this.food = SOLDIER_FOOD;
         this.foodUsageProbability = SOLDIER_FOOD_USAGE_PROBABILITY;
+        this.symbol = "S";
     }
 
     /**

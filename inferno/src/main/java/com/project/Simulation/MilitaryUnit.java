@@ -13,6 +13,8 @@ public abstract class MilitaryUnit implements Movable {
     public Integer id;
     public Integer iterationNumber = 0;
 
+    public String symbol=" ";
+
     public Integer hp = 0;
     public Integer damage = 0;
     public Integer ammunition = 0;

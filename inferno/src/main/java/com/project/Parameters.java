@@ -7,12 +7,12 @@ public class Parameters {
     /**
      * Parametry symulacji
      */
-    public static Integer MAP_SIZE = 60;
+    public static Integer MAP_SIZE = 50;
 
     /*
      * Parametry żołnierza
      */
-    public static Double SOLDIER_FOOD_USAGE_PROBABILITY = 0.3;
+    public static Double SOLDIER_FOOD_USAGE_PROBABILITY = 0.1;
     public static Integer SOLDIER_SPEED = 3;
     public static Integer SOLDIER_ATTACK_RANGE = 3;
     public static Integer SOLDIER_ATTACK_DAMAGE = 20;

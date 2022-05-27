@@ -318,7 +318,8 @@ public class SimulationMap {
                         }
 
                         MilitaryUnit unit = field.units.get(0);
-                        String team= String.valueOf(unit.team);;
+                        // team chwilowo zastąpiony symbolem jednostki
+                        String team= unit.symbol;
                         Color color = null;
                         switch (unit.team) {
                             case 'A':
