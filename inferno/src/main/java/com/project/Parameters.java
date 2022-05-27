@@ -7,7 +7,7 @@ public class Parameters {
     /**
      * Parametry symulacji
      */
-    public static Integer MAP_SIZE = 40;
+    public static Integer MAP_SIZE = 60;
 
     /*
      * Parametry żołnierza

@@ -3,6 +3,7 @@ package com.project;
 import com.project.Simulation.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 import java.util.Arrays;
@@ -16,14 +17,20 @@ public class SimulationView extends JPanel {
     SimulationMap map;
     Router parent;
 
-    JTextArea mapArea;
+    JTextPane mapArea;
 
     /**
      * Konstruktor symulacji
      */
     SimulationView(Router parent, Map<String, Integer> config) {
-        this.mapArea = new JTextArea("");
-        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 9));
+
+//        EmptyBorder eb = new EmptyBorder(new Insets(10, 10, 10, 10));
+
+        this.mapArea = new JTextPane();
+        this.mapArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 7));
+//        this.mapArea.setBorder(eb);
+//        this.mapArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+//        this.mapArea.setMargin(new Insets(5, 5, 5, 5));
         this.prepareLayout();
         this.parent = parent;
         /*
@@ -69,13 +76,13 @@ public class SimulationView extends JPanel {
                 title,
 //                Box.createRigidArea(new Dimension(0, 20)),
 //                description,
-                Box.createRigidArea(new Dimension(0, 40)),
+                Box.createRigidArea(new Dimension(0, 10)),
                 this.mapArea,
-                Box.createRigidArea(new Dimension(0, 40)),
+                Box.createRigidArea(new Dimension(0, 10)),
                 continueButton,
-                Box.createRigidArea(new Dimension(0, 40)),
+                Box.createRigidArea(new Dimension(0, 10)),
                 endButton,
-                Box.createRigidArea(new Dimension(0, 40)),
+                Box.createRigidArea(new Dimension(0, 10)),
                 copyright,
                 Box.createRigidArea(new Dimension(0, 20)),
         };

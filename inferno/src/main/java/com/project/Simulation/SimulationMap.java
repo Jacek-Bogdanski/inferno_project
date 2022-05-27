@@ -1,6 +1,8 @@
 package com.project.Simulation;
 
 import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -23,7 +25,7 @@ public class SimulationMap {
     public Integer alliveA = 0;
     public Integer alliveB = 0;
 
-    JTextArea mapArea;
+    JTextPane mapArea;
 
     public Field[][] map;
     int mapSize;
@@ -36,7 +38,7 @@ public class SimulationMap {
 
     private final Random rand = new Random();
 
-    public SimulationMap(Map<String, Integer> config, JTextArea mapArea) {
+    public SimulationMap(Map<String, Integer> config, JTextPane mapArea) {
         this.config = config;
         this.mapArea = mapArea;
 //        this.mapSize = config.get("mapSize");
@@ -280,38 +282,90 @@ public class SimulationMap {
         }
     }
 
+    private void appendToPane(JTextPane tp, String msg, Color c)
+    {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "MONOSPACED");
+        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        int len = tp.getDocument().getLength();
+        tp.setCaretPosition(len);
+        tp.setCharacterAttributes(aset, false);
+        tp.replaceSelection(msg);
+    }
+
     public void printMapToMapArea() {
         // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
-
+        appendToPane(this.mapArea, "", Color.BLACK);
         this.mapArea.setText("");
-        this.mapArea.append(
-                "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + "\n\n");
+//        this.mapArea.setDocument(new PlainDocument());
+        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + "\n\n", Color.BLACK);
+
         for (Field[] row : this.map) {
-            this.mapArea.append("      |");
+            appendToPane(this.mapArea, "      |", Color.BLACK);
             for (Field field : row) {
                 switch (field.type) {
                     case 1:
-                        this.mapArea.append("XX");
+                        appendToPane(this.mapArea, "##", new Color(130,70,20));
                         break;
                     case -1:
                         break;
                     default:
                         if (field.units.size() == 0) {
-                            this.mapArea.append("  ");
+                            appendToPane(this.mapArea, "  ", Color.BLACK);
                             break;
                         }
-                        if (field.units.size() == 1) {
-                            this.mapArea.append(field.units.get(0).team + " ");
+
+                        MilitaryUnit unit = field.units.get(0);
+                        String team= String.valueOf(unit.team);;
+                        Color color = null;
+                        switch (unit.team) {
+                            case 'A':
+                                color = new Color(255, 0, 0);
+                                if(!unit.isAlive) color= new Color(60,20,20);
+                                break;
+                            case 'B':
+                                color = new Color(0,0,255);
+                                if(!unit.isAlive) color= new Color(20,20,60);
+                                break;
+                            default:
+                                color = new Color(0,0,0);
+                                if(!unit.isAlive) color= new Color(20,20,20);
+                                break;
+                        }
+                        appendToPane(this.mapArea, team,color );
+
+                        if(field.units.size()==1) {
+                            appendToPane(this.mapArea, " ",Color.BLACK );
                             break;
                         }
-                        this.mapArea.append(String.valueOf(field.units.get(0).team));
-                        this.mapArea.append(String.valueOf(field.units.get(1).team));
+
+                        MilitaryUnit unit2 = field.units.get(1);
+                        String team2= String.valueOf(unit.team);;
+                        Color color2 = null;
+                        switch (unit.team) {
+                            case 'A':
+                                color2 = new Color(255, 0, 0);
+                                if(!unit.isAlive) color2= new Color(60,20,20);
+                                break;
+                            case 'B':
+                                color2 = new Color(0,0,255);
+                                if(!unit.isAlive) color2= new Color(20,20,60);
+                                break;
+                            default:
+                                color2 = new Color(0,0,0);
+                                if(!unit.isAlive) color2= new Color(20,20,20);
+                                break;
+                        }
+                        appendToPane(this.mapArea, team2,color2 );
+
                         break;
                 }
-                this.mapArea.append(" ");
+                appendToPane(this.mapArea, " ", Color.BLACK);
 
             }
-            this.mapArea.append("|\n");
+            appendToPane(this.mapArea, "|\n", Color.BLACK);
         }
     }
 }
