@@ -65,6 +65,9 @@ public class SimulationMap {
 
     public void handleIteration() {
         this.iterationNumber++;
+        //zrzucanie dropu
+
+
 
         // PRZESUNIĘCIE OBIEKTÓW
         // 1. wejście do danego pola i wyciągnięcie obiektów
@@ -119,6 +122,18 @@ public class SimulationMap {
                         this.alliveA++;
                     if (unit.isAlive && unit.team == 'B')
                         this.alliveB++;
+                }
+            }
+        }
+
+//usuwanie pustych dropow
+        for (int x = 0; x < mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<Drop> drops = map[x][y].drops;
+                for (Drop drop : drops) {
+                    if (drop.getValue()<=0){
+                        drops.remove(drop);
+                    }
                 }
             }
         }
