@@ -67,7 +67,6 @@ public class SimulationMap {
         this.iterationNumber++;
 
         // PRZESUNIĘCIE OBIEKTÓW
-
         // 1. wejście do danego pola i wyciągnięcie obiektów
         // 2. wylosowanie nowych wspolrzednych
         // 3. aktualizacja obiektu position
@@ -162,11 +161,7 @@ public class SimulationMap {
     }
 
     private void fillMap() {
-
-        /*
-         * wypelnianie mapy jednostkami narazie tylko czolgi
-         */
-
+        dropItemsOnMap();
         /*
          * 1. wylosowanie pozycji x,y
          * 2. sprawdzenie, czy obiekt moze tam stanąć
@@ -305,6 +300,11 @@ public class SimulationMap {
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
             for (Field field : row) {
+                //tymczasowe
+                if (field.drops.size()>0){
+                    appendToPane(this.mapArea,"Z",Color.GREEN);
+                }
+
                 switch (field.type) {
                     case 1:
                         appendToPane(this.mapArea, "##", new Color(160,160,160));
@@ -369,4 +369,31 @@ public class SimulationMap {
             appendToPane(this.mapArea, "|\n", Color.BLACK);
         }
     }
+
+    void dropItemsOnMap(){
+
+        Integer fuelCounter = config.get("fuelProbability")*mapSize/100;
+        while (fuelCounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].drops.add(new Drop("fuel", 100));
+            fuelCounter--;
+        }
+        Integer ammunitionCounter = config.get("ammunitionProbability")*mapSize/100;
+        while (ammunitionCounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].drops.add(new Drop("ammo", 100));
+            ammunitionCounter--;
+        }
+        Integer foodCouner = config.get("foodProbability")*mapSize/100;
+        while (foodCouner != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].drops.add(new Drop("food", 100));
+            foodCouner--;
+        }
+
+    }
+
 }

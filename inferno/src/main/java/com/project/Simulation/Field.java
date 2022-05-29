@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Field {
     public ArrayList<MilitaryUnit> units = new ArrayList<>();
-
+    public ArrayList<Drop> drops = new ArrayList<>();
     /**
      * Typ pola
      * Wartości: 1- budynek 0- ziemia

@@ -13,7 +13,10 @@ public class Drop implements Pickable{
     }
 
     public Integer collect(Integer value){
-        if(value==0) return 0;
+        if(value==0) {
+            isCollected = true;
+            return 0;
+        }
         if(value>this.value) {
             Integer toCollect = this.value;
             this.value=0;
@@ -21,5 +24,9 @@ public class Drop implements Pickable{
         }
         this.value-= value;
         return value;
+    }
+    public Drop(String type, Integer value){
+        this.type = type;
+        this.value = value;
     }
 }
