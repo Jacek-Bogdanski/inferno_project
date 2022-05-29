@@ -18,7 +18,6 @@ import static com.project.Parameters.*;
  */
 public class Gunner extends MilitaryUnit {
     private final Random rand = new Random();
-
     /**
      * Konstruktor
      * @param team     nazwa drużyny [char]
@@ -59,5 +58,10 @@ public class Gunner extends MilitaryUnit {
         } while (map.getFieldType(newPosition) != 0);
 
         this.makeMove(map,newPosition);
+    }
+
+    public void addAmmo(Integer value){
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po" + (this.ammunition+value));
+        this.ammunition += value;
     }
 }

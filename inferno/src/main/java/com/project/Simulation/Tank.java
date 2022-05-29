@@ -20,7 +20,7 @@ import static com.project.Parameters.*;
  */
 public class Tank extends MilitaryUnit {
     private final Random rand = new Random();
-
+    public String type = "Tank";
     private Integer fuel;
     private Double fuelUsageProbability;
 
@@ -94,5 +94,14 @@ public class Tank extends MilitaryUnit {
 
         if(this.fuel==0)
             System.out.println("brak paliwa [id=" + this.id + "]");
+    }
+
+    public void addFuel(Integer value){
+        System.out.println("Podnoszenie paliwa [id=" + this.id + "] : paliwa przed =" + this.fuel + " paliwa po" + (this.fuel+value));
+        this.fuel+=value;
+    }
+    public void addAmmo(Integer value){
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po" + (this.ammunition+value));
+        this.ammunition+=value;
     }
 }

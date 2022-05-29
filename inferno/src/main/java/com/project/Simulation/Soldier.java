@@ -20,7 +20,7 @@ import static com.project.Parameters.*;
  */
 public class Soldier extends MilitaryUnit {
     private final Random rand = new Random();
-
+    public String type = "Soldier";
     private Integer food;
     private Double foodUsageProbability;
 
@@ -93,5 +93,13 @@ public class Soldier extends MilitaryUnit {
         // oznaczenie jako nieżywy
         if(food<=0)
             this.isAlive=false;
+    }
+    public void eat(Integer value){
+        System.out.println("Jedzenie [id=" + this.id + "] : food przed =" + this.food + " food po" + (this.food+value));
+        this.food+=value;
+    }
+    public void addAmmo(Integer value){
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po" + (this.ammunition+value));
+        this.ammunition += value;
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-import static com.project.Parameters.MAP_SIZE;
+import static com.project.Parameters.*;
 
 public class SimulationMap {
     /**
@@ -119,6 +119,64 @@ public class SimulationMap {
                         this.alliveA++;
                     if (unit.isAlive && unit.team == 'B')
                         this.alliveB++;
+                }
+            }
+        }
+//podnoszenie dropu
+        for (int x = 0; x < mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<MilitaryUnit> units = map[x][y].units;
+                ArrayList<Drop> drops = map[x][y].drops;
+                if (map[x][y].drops.size()==0) continue;
+                for (MilitaryUnit unit : units) {
+                    if (unit.isAlive) {
+                        switch (unit.symbol) {
+                            case "T":
+                                Tank tank = (Tank) unit;
+                                for (Drop drop : drops) {
+                                    switch (drop.type) {
+                                        case "fuel":
+                                            tank.addFuel(drop.collect(TANK_FUEL - tank.getFuel()));
+                                            break;
+                                        case "ammo":
+                                            tank.addAmmo(drop.collect(TANK_AMMUNITION - tank.ammunition));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+
+                            case "G":
+                                Gunner gunner = (Gunner) unit;
+                                for (Drop drop : drops) {
+                                    switch (drop.type) {
+                                        case "ammo":
+                                            gunner.addAmmo(drop.collect(GUNNER_AMMUNITION - gunner.ammunition));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            case "S":
+                                Soldier soldier = (Soldier) unit;
+                                for (Drop drop : drops) {
+                                    switch (drop.type) {
+                                        case "ammo":
+                                            soldier.addAmmo(drop.collect(SOLDIER_AMMUNITION - soldier.ammunition));
+                                            break;
+                                        case "food":
+                                            soldier.eat(drop.collect(SOLDIER_FOOD - soldier.getFood()));
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -302,7 +360,7 @@ public class SimulationMap {
             for (Field field : row) {
                 //tymczasowe
                 if (field.drops.size()>0){
-                    appendToPane(this.mapArea,"Z",Color.GREEN);
+                    appendToPane(this.mapArea,"D",Color.GREEN);
                 }
 
                 switch (field.type) {
@@ -395,5 +453,4 @@ public class SimulationMap {
         }
 
     }
-
 }

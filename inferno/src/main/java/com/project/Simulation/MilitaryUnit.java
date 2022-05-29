@@ -106,8 +106,10 @@ public abstract class MilitaryUnit implements Movable {
      */
     public void takeDamage(Integer dmg) {
         this.hp -= dmg;
-        if (this.hp < 0)
+        if (this.hp < 0) {
             this.hp = 0;
+            this.isAlive = false;
+        }
     }
 
 
