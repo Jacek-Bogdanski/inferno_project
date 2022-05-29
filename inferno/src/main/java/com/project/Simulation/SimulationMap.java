@@ -65,8 +65,11 @@ public class SimulationMap {
 
     public void handleIteration() {
         this.iterationNumber++;
-        //zrzucanie dropu
-
+        //zrzucanie dropu co 10 rund
+        if (this.iterationNumber%10==0) {
+            this.dropItemsOnMap();
+            System.out.println("Zrzucam drop");
+        }
 
 
         // PRZESUNIĘCIE OBIEKTÓW
