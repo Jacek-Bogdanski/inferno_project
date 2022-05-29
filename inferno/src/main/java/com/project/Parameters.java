@@ -17,8 +17,8 @@ public class Parameters {
     public static Integer SOLDIER_ATTACK_RANGE = 3;
     public static Integer SOLDIER_ATTACK_DAMAGE = 40;
     public static Integer SOLDIER_HP = 70;
-    public static Integer SOLDIER_AMMUNITION = 50;
-    public static Integer SOLDIER_FOOD = 200;
+    public static Integer SOLDIER_AMMUNITION = 10;
+    public static Integer SOLDIER_FOOD = 20;
 
     /*
      * Parametry artylerzysty
@@ -27,13 +27,13 @@ public class Parameters {
     public static Integer GUNNER_ATTACK_RANGE = 30;
     public static Integer GUNNER_ATTACK_DAMAGE = 600;
     public static Integer GUNNER_HP = 50;
-    public static Integer GUNNER_AMMUNITION = 2000;
+    public static Integer GUNNER_AMMUNITION = 30;
 
     /*
      * Parametry czołgu
      */
     public static Double TANK_FUEL_USAGE_PROBABILITY = 0.3;
-    public static Integer TANK_FUEL = 100;
+    public static Integer TANK_FUEL = 30;
     public static Integer TANK_SPEED = 1;
     public static Integer TANK_ATTACK_RANGE = 6;
     public static Integer TANK_ATTACK_DAMAGE = 200;

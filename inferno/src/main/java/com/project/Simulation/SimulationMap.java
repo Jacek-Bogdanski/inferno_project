@@ -29,6 +29,7 @@ public class SimulationMap {
 
     public Field[][] map;
     int mapSize;
+    Integer[] dropProbability = new Integer[3]; //0-fuel  1-ammo 2-food
 
     // numer aktualnej iteracji
     int iterationNumber = 1;
@@ -43,6 +44,9 @@ public class SimulationMap {
         this.mapArea = mapArea;
 //        this.mapSize = config.get("mapSize");
         this.mapSize = MAP_SIZE;
+        this.dropProbability[0] = config.get("fuelProbability");
+        this.dropProbability[1] = config.get("ammunitionProbability");
+        this.dropProbability[2] = config.get("foodProbability");
         this.map = this.generateMap();
         this.fillMap();
         // this.printMapToConsole(this.map);
@@ -65,10 +69,19 @@ public class SimulationMap {
 
     public void handleIteration() {
         this.iterationNumber++;
-        //zrzucanie dropu co 10 rund
-        if (this.iterationNumber%10==0) {
-            this.dropItemsOnMap();
-            System.out.println("Zrzucam drop");
+
+        int randomNumber = rand.nextInt(101);
+        if (dropProbability[0]>randomNumber){
+            dropFuelOnMap();
+            System.out.println("Zrzucam paliwo na mape");
+        }
+        if (dropProbability[1]>randomNumber){
+            dropFuelOnMap();
+            System.out.println("Zrzucam amunicje na mape");
+        }
+        if (dropProbability[2]>randomNumber){
+            dropFuelOnMap();
+            System.out.println("Zrzucam jedzenie na mape");
         }
 
 
@@ -447,21 +460,31 @@ public class SimulationMap {
     }
 
     void dropItemsOnMap(){
+        dropFuelOnMap();
+        dropAmmoOnMap();
+        dropFoodOnMap();
+    }
 
-        Integer fuelCounter = config.get("fuelProbability")*mapSize/100;
+    void dropFuelOnMap() {
+        Integer fuelCounter = config.get("fuelProbability") * mapSize / 100;
         while (fuelCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("fuel", 100));
             fuelCounter--;
         }
-        Integer ammunitionCounter = config.get("ammunitionProbability")*mapSize/100;
-        while (ammunitionCounter != 0) {
-            int x = rand.nextInt(mapSize - 1);
-            int y = rand.nextInt(mapSize - 1);
-            map[x][y].drops.add(new Drop("ammo", 100));
-            ammunitionCounter--;
+    }
+
+        void dropAmmoOnMap() {
+            Integer ammunitionCounter = config.get("ammunitionProbability") * mapSize / 100;
+            while (ammunitionCounter != 0) {
+                int x = rand.nextInt(mapSize - 1);
+                int y = rand.nextInt(mapSize - 1);
+                map[x][y].drops.add(new Drop("ammo", 100));
+                ammunitionCounter--;
+            }
         }
+    void dropFoodOnMap(){
         Integer foodCouner = config.get("foodProbability")*mapSize/100;
         while (foodCouner != 0) {
             int x = rand.nextInt(mapSize - 1);

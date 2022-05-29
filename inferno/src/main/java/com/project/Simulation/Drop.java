@@ -6,7 +6,6 @@ package com.project.Simulation;
 public class Drop implements Pickable{
     String type = ""; // ammo,food,fuel
     private int value = 0; // 0-100
-    boolean isCollected = false;
 
     public Integer getValue(){
         return this.value;
@@ -14,7 +13,6 @@ public class Drop implements Pickable{
 
     public Integer collect(Integer value){
         if(value==0) {
-            isCollected = true;
             return 0;
         }
         if(value>this.value) {
