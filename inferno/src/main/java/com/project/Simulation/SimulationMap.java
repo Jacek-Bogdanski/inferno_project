@@ -9,6 +9,9 @@ import java.util.Random;
 
 import static com.project.Parameters.*;
 
+/**
+ * Klasa mapy symulacji
+ */
 public class SimulationMap {
     /**
      * Map config:
@@ -29,61 +32,56 @@ public class SimulationMap {
 
     public Field[][] map;
     int mapSize;
-    Integer[] dropProbability = new Integer[3]; //0-fuel  1-ammo 2-food
 
     // numer aktualnej iteracji
     int iterationNumber = 1;
 
-    // liczba wszystkich iteracji do wykonania
-    int ITERATION_NUMBER = 10;
-
     private final Random rand = new Random();
 
+    /**
+     * Konstruktor
+     * 
+     * @param config  dane konfiguracyjne (do eliminacji)
+     * @param mapArea obiekt JTextPane do wydruku mapy
+     */
     public SimulationMap(Map<String, Integer> config, JTextPane mapArea) {
         this.config = config;
         this.mapArea = mapArea;
-//        this.mapSize = config.get("mapSize");
         this.mapSize = MAP_SIZE;
-        this.dropProbability[0] = config.get("fuelProbability");
-        this.dropProbability[1] = config.get("ammunitionProbability");
-        this.dropProbability[2] = config.get("foodProbability");
         this.map = this.generateMap();
         this.fillMap();
-        // this.printMapToConsole(this.map);
         this.printMapToMapArea();
-        this.runSimulation();
+        this.runSimulation(ITERATION_COUNT);
     }
 
-    public void runSimulation() {
-//        for (int i = 0; i < ITERATION_NUMBER; i++) {
-//            // this.handleIteration();
-//        }
+    /**
+     * Funkcja automatycznie wykonująca symulację 
+     * 
+     * @param iterationCount liczba iteracji do wykonania
+     *                       liczba mniejsza od 0 oznacza wykonywanie symulacji do
+     *                       śmierci wszystkich obiektów jednej druzyny
+     *                       w pozostałych przypadkach wykona się zadana liczba
+     *                       iteracji
+     */
+    public void runSimulation(int iterationCount) {
+        if (iterationCount < 0) {
+            while (alliveA > 0 && alliveB > 0) {
+                this.handleIteration();
+            }
+        }
+        for (int i = 0; i < iterationCount; i++) {
+            this.handleIteration();
+        }
 
-
-        // Po odkomentowaniu kodu poniżej, symulacja trwa do momentu, aż jedna druzyna wyginie
-
-//        while(alliveA>0&&alliveB>0){
-//            this.handleIteration();
-//        }
     }
 
+    /**
+     * Metoda wykonująca wszystkie operacje dla kazdej iteracji
+     */
     public void handleIteration() {
         this.iterationNumber++;
 
-        int randomNumber = rand.nextInt(101);
-        if (dropProbability[0]>randomNumber){
-            dropFuelOnMap();
-            System.out.println("Zrzucam paliwo na mape");
-        }
-        if (dropProbability[1]>randomNumber){
-            dropFuelOnMap();
-            System.out.println("Zrzucam amunicje na mape");
-        }
-        if (dropProbability[2]>randomNumber){
-            dropFuelOnMap();
-            System.out.println("Zrzucam jedzenie na mape");
-        }
-
+        this.dropItemsOnMap();
 
         // PRZESUNIĘCIE OBIEKTÓW
         // 1. wejście do danego pola i wyciągnięcie obiektów
@@ -142,19 +140,20 @@ public class SimulationMap {
             }
         }
 
-//usuwanie pustych dropow
+        // usuwanie pustych dropow
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<Drop> drops = map[x][y].drops;
                 drops.removeIf(drop -> drop.getValue() <= 0);
             }
         }
-//podnoszenie dropu
+        // podnoszenie dropu
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<MilitaryUnit> units = map[x][y].units;
                 ArrayList<Drop> drops = map[x][y].drops;
-                if (map[x][y].drops.size()==0) continue;
+                if (map[x][y].drops.size() == 0)
+                    continue;
                 for (MilitaryUnit unit : units) {
                     if (unit.isAlive) {
                         switch (unit.symbol) {
@@ -207,11 +206,15 @@ public class SimulationMap {
                 }
             }
         }
-
         this.printMapToMapArea();
-        // this.printMapToConsole(this.map);
     }
 
+    /**
+     * Metoda zwracająca rodzaj zadanego pola
+     * 
+     * @param position obiekt pozycji
+     * @return field type from [-1,0,1]
+     */
     public int getFieldType(Position position) {
         try {
             Field field = this.map[position.x][position.y];
@@ -221,6 +224,11 @@ public class SimulationMap {
         }
     }
 
+    /**
+     * Metoda przeprowadzająca generowanie mapy
+     * 
+     * @return wygenerowana mapa
+     */
     private Field[][] generateMap() {
 
         Field[][] map = new Field[mapSize][mapSize];
@@ -245,6 +253,9 @@ public class SimulationMap {
         return map;
     }
 
+    /**
+     * Metoda wypełniająca mapę obiektami według parametrów
+     */
     private void fillMap() {
         dropItemsOnMap();
         /*
@@ -332,8 +343,14 @@ public class SimulationMap {
         }
     }
 
-    private void appendToPane(JTextPane textpane, String message, Color color)
-    {
+    /**
+     * Metoda dopisująca tekst to textPane
+     * 
+     * @param textpane textpane to add text
+     * @param message  message to append
+     * @param color    color of the text
+     */
+    private void appendToPane(JTextPane textpane, String message, Color color) {
         StyleContext scope = StyleContext.getDefaultStyleContext();
         AttributeSet attrSet = scope.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
         attrSet = scope.addAttribute(attrSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
@@ -344,92 +361,132 @@ public class SimulationMap {
         textpane.replaceSelection(message);
     }
 
+    /**
+     * Metoda drukująca pojedynczą komórkę mapy (wysokość 1 linia, szerokość 3
+     * znaki)
+     * 
+     * @param field pole mapy
+     */
+    public void printFieldToMapArea(Field field) {
+        if (field.drops.size() > 0)
+            appendToPane(this.mapArea, "D", Color.GREEN);
+        else
+            appendToPane(this.mapArea, " ", Color.BLACK);
+
+        switch (field.type) {
+            case 1:
+                appendToPane(this.mapArea, "##", new Color(160, 160, 160));
+                break;
+            case -1:
+                break;
+            default:
+                if (field.units.size() == 0) {
+                    appendToPane(this.mapArea, "  ", Color.BLACK);
+                    break;
+                }
+
+                MilitaryUnit unit = field.units.get(0);
+
+                Color color;
+                switch (unit.team) {
+                    case 'A':
+                        color = new Color(255, 0, 0);
+                        if (!unit.isAlive)
+                            color = new Color(80, 40, 0);
+                        break;
+                    case 'B':
+                        color = new Color(0, 0, 255);
+                        if (!unit.isAlive)
+                            color = new Color(0, 40, 80);
+                        break;
+                    default:
+                        color = new Color(0, 0, 0);
+                        if (!unit.isAlive)
+                            color = new Color(80, 80, 80);
+                        break;
+                }
+                appendToPane(this.mapArea, unit.symbol, color);
+
+                if (field.units.size() == 1) {
+                    appendToPane(this.mapArea, " ", Color.BLACK);
+                    break;
+                }
+
+                MilitaryUnit unit2 = field.units.get(1);
+                Color color2;
+                switch (unit2.team) {
+                    case 'A':
+                        color2 = new Color(255, 0, 0);
+                        if (!unit2.isAlive)
+                            color2 = new Color(60, 20, 20);
+                        break;
+                    case 'B':
+                        color2 = new Color(0, 0, 255);
+                        if (!unit2.isAlive)
+                            color2 = new Color(20, 20, 60);
+                        break;
+                    default:
+                        color2 = new Color(0, 0, 0);
+                        if (!unit2.isAlive)
+                            color2 = new Color(20, 20, 20);
+                        break;
+                }
+                appendToPane(this.mapArea, unit2.symbol, color2);
+
+                break;
+        }
+        appendToPane(this.mapArea, " ", Color.BLACK);
+    }
+
+    /**
+     * Metoda aktywująca wydruk mapy w okienku
+     */
     public void printMapToMapArea() {
         appendToPane(this.mapArea, "", Color.BLACK);
         this.mapArea.setText("");
-        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + " | CZERWONY A, NIEBIESKI B\n\n", Color.BLACK);
+        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
+                + alliveB + " | CZERWONY A, NIEBIESKI B\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
             for (Field field : row) {
-                if (field.drops.size()>0)
-                    appendToPane(this.mapArea,"D",Color.GREEN);
-                else
-                    appendToPane(this.mapArea," ",Color.BLACK);
-
-                switch (field.type) {
-                    case 1:
-                        appendToPane(this.mapArea, "##", new Color(160,160,160));
-                        break;
-                    case -1:
-                        break;
-                    default:
-                        if (field.units.size() == 0) {
-                            appendToPane(this.mapArea, "  ", Color.BLACK);
-                            break;
-                        }
-
-                        MilitaryUnit unit = field.units.get(0);
-                        // team chwilowo zastąpiony symbolem jednostki
-                        String team= unit.symbol;
-                        Color color;
-                        switch (unit.team) {
-                            case 'A':
-                                color = new Color(255, 0, 0);
-                                if(!unit.isAlive) color = new Color(80,40, 0);
-                                break;
-                            case 'B':
-                                color = new Color(0,0,255);
-                                if(!unit.isAlive) color = new Color(0,40,80);
-                                break;
-                            default:
-                                color = new Color(0,0,0);
-                                if(!unit.isAlive) color = new Color(80,80,80);
-                                break;
-                        }
-                        appendToPane(this.mapArea, team,color );
-
-                        if(field.units.size()==1) {
-                            appendToPane(this.mapArea, " ",Color.BLACK );
-                            break;
-                        }
-
-                        MilitaryUnit unit2 = field.units.get(1);
-                        String team2= String.valueOf(unit2.team);
-                        Color color2;
-                        switch (unit2.team) {
-                            case 'A':
-                                color2 = new Color(255, 0, 0);
-                                if(!unit2.isAlive) color2 = new Color(60,20,20);
-                                break;
-                            case 'B':
-                                color2 = new Color(0,0,255);
-                                if(!unit2.isAlive) color2 = new Color(20,20,60);
-                                break;
-                            default:
-                                color2 = new Color(0,0,0);
-                                if(!unit2.isAlive) color2 = new Color(20,20,20);
-                                break;
-                        }
-                        appendToPane(this.mapArea, team2, color2 );
-
-                        break;
-                }
-                appendToPane(this.mapArea, " ", Color.BLACK);
+                this.printFieldToMapArea(field);
 
             }
             appendToPane(this.mapArea, "|\n", Color.BLACK);
         }
     }
 
-    void dropItemsOnMap(){
-        dropFuelOnMap();
-        dropAmmoOnMap();
-        dropFoodOnMap();
+    /**
+     * Metoda aktywująca rozrzut dropów
+     */
+    void dropItemsOnMap() {
+        if (this.iterationNumber % 10 == 1) {
+            // dropFuelOnMap();
+            // dropAmmoOnMap();
+            // dropFoodOnMap();
+            int randomNumber = rand.nextInt(101);
+            if (FUEL_DROP_PROBABILITY * 100 < randomNumber) {
+                dropFuelOnMap();
+            }
+            randomNumber = rand.nextInt(101);
+            if (AMMUNITION_DROP_PROBABILITY * 100 < randomNumber) {
+                dropAmmoOnMap();
+            }
+            randomNumber = rand.nextInt(101);
+            if (FOOD_DROP_PROBABILITY * 100 < randomNumber) {
+                dropFoodOnMap();
+            }
+        }
+
     }
 
+    /**
+     * Metoda rozmieszczająca dropy paliwa po mapie
+     */
     void dropFuelOnMap() {
-        int fuelCounter = (int)(FUEL_DROP_PROBABILITY * mapSize);
+        System.out.println("Zrzucam paliwo na mape");
+        int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize);
         while (fuelCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -438,19 +495,26 @@ public class SimulationMap {
         }
     }
 
-        void dropAmmoOnMap() {
-            int ammunitionCounter = (int)(AMMUNITION_DROP_PROBABILITY * mapSize);
-            while (ammunitionCounter != 0) {
-                int x = rand.nextInt(mapSize - 1);
-                int y = rand.nextInt(mapSize - 1);
-                map[x][y].drops.add(new Drop("ammo", AMMUNITION_DROP_VALUE));
-                ammunitionCounter--;
-            }
+    /**
+     * Metoda rozmieszczająca dropy amunicji po mapie
+     */
+    void dropAmmoOnMap() {
+        System.out.println("Zrzucam amunicje na mape");
+        int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize);
+        while (ammunitionCounter != 0) {
+            int x = rand.nextInt(mapSize - 1);
+            int y = rand.nextInt(mapSize - 1);
+            map[x][y].drops.add(new Drop("ammo", AMMUNITION_DROP_VALUE));
+            ammunitionCounter--;
         }
+    }
 
-
-    void dropFoodOnMap(){
-        int foodCounter = (int)(FOOD_DROP_PROBABILITY * mapSize);
+    /**
+     * Metoda rozmieszczająca dropy jedzenia po mapie
+     */
+    void dropFoodOnMap() {
+        System.out.println("Zrzucam jedzenie na mape");
+        int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize);
         while (foodCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);

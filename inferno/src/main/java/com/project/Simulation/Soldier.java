@@ -8,8 +8,10 @@ import static com.project.Parameters.*;
  * Klasa postaci - żołnierz
  *
  * - Porusza się z prędkością SOLDIER_SPEED
- * - Zużywa jedzenie (jednorazowo 1szt, co iterację z prawdopodobieństwem SOLDIER_FOOD_USAGE_PROBABILITY)
- * - Strzela na odległość SOLDIER_ATTACK_RANGE zużywając 1szt amunicji na każdy atak
+ * - Zużywa jedzenie (jednorazowo 1szt, co iterację z prawdopodobieństwem
+ * SOLDIER_FOOD_USAGE_PROBABILITY)
+ * - Strzela na odległość SOLDIER_ATTACK_RANGE zużywając 1szt amunicji na każdy
+ * atak
  * - Atak na tym samym polu nie zużywa amunicji
  * - Zadaje obrażenia SOLDIER_ATTACK_DAMAGE
  * - Ma początkową liczbę punktów życia SOLDIER_HP
@@ -23,7 +25,6 @@ public class Soldier extends MilitaryUnit {
     public String type = "Soldier";
     private Integer food;
     private Double foodUsageProbability;
-
 
     /**
      * Konstruktor
@@ -52,11 +53,12 @@ public class Soldier extends MilitaryUnit {
 
     /**
      * Metoda wykonująca ruch - uwzględnia zużycie jedzenia
+     * 
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     @Override
     public void move(SimulationMap map) {
-        if(this.speed==0)
+        if (this.speed == 0)
             return;
 
         Position prevPosition = this.position;
@@ -67,12 +69,13 @@ public class Soldier extends MilitaryUnit {
             newPosition = this.generateNewPosition(map, this.speed, prevPosition);
         } while (map.getFieldType(newPosition) < 0);
 
-        if(this.makeMove(map,newPosition))
+        if (this.makeMove(map, newPosition))
             this.useFood();
     }
 
     /**
      * Metoda zwracająca ilość jedzenia
+     * 
      * @return food amount
      */
     public Integer getFood() {
@@ -83,23 +86,27 @@ public class Soldier extends MilitaryUnit {
      * Metoda zużywająca jedzenie z prawdopodobieństwem z parametru
      */
     public void useFood() {
-        if(this.food>0) {
+        if (this.food > 0) {
             // wylosowanie, czy pobrać jedzenie
             int randomNumber = rand.nextInt(11);
-            if(this.foodUsageProbability*10<randomNumber)
+            if (this.foodUsageProbability * 10 < randomNumber)
                 this.food--;
         }
 
         // oznaczenie jako nieżywy
-        if(food<=0)
-            this.isAlive=false;
+        if (food <= 0)
+            this.isAlive = false;
     }
-    public void eat(Integer value){
-        System.out.println("Jedzenie [id=" + this.id + "] : food przed =" + this.food + " food po" + (this.food+value));
-        this.food+=value;
+
+    public void eat(Integer value) {
+        System.out
+                .println("Jedzenie [id=" + this.id + "] : food przed =" + this.food + " food po" + (this.food + value));
+        this.food += value;
     }
-    public void addAmmo(Integer value){
-        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po" + (this.ammunition+value));
+
+    public void addAmmo(Integer value) {
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po"
+                + (this.ammunition + value));
         this.ammunition += value;
     }
 }

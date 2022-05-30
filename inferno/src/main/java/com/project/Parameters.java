@@ -8,12 +8,13 @@ public class Parameters {
      * Parametry symulacji
      */
     public static Integer MAP_SIZE = 50;
+    public static Integer ITERATION_COUNT = 0;
 
     public static Double FUEL_DROP_PROBABILITY = 0.18;
-    public static Integer FUEL_DROP_VALUE = 100;
+    public static Integer FUEL_DROP_VALUE = 50;
 
     public static Double FOOD_DROP_PROBABILITY = 0.23;
-    public static Integer FOOD_DROP_VALUE = 100;
+    public static Integer FOOD_DROP_VALUE = 40;
 
     public static Double AMMUNITION_DROP_PROBABILITY = 0.15;
     public static Integer AMMUNITION_DROP_VALUE = 100;

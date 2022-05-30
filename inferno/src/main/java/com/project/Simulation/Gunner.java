@@ -8,7 +8,8 @@ import static com.project.Parameters.*;
  * Klasa postaci - artylerzysta
  *
  * - Nie porusza się
- * - Strzela na odległość GUNNER_ATTACK_RANGE zużywając 1szt amunicji na każdy atak
+ * - Strzela na odległość GUNNER_ATTACK_RANGE zużywając 1szt amunicji na każdy
+ * atak
  * - Atak na tym samym polu nie zużywa amunicji
  * - Zadaje obrażenia GUNNER_ATTACK_DAMAGE
  * - Ma początkową liczbę punktów życia GUNNER_HP
@@ -18,8 +19,10 @@ import static com.project.Parameters.*;
  */
 public class Gunner extends MilitaryUnit {
     private final Random rand = new Random();
+
     /**
      * Konstruktor
+     * 
      * @param team     nazwa drużyny [char]
      * @param position pozycja początkowa
      */
@@ -42,11 +45,12 @@ public class Gunner extends MilitaryUnit {
 
     /**
      * Metoda wykonująca ruch - uwzględnia zużycie paliwa
+     * 
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     @Override
     public void move(SimulationMap map) {
-        if(this.speed==0)
+        if (this.speed == 0)
             return;
 
         Position prevPosition = this.position;
@@ -57,11 +61,17 @@ public class Gunner extends MilitaryUnit {
             newPosition = this.generateNewPosition(map, this.speed, prevPosition);
         } while (map.getFieldType(newPosition) != 0);
 
-        this.makeMove(map,newPosition);
+        this.makeMove(map, newPosition);
     }
 
-    public void addAmmo(Integer value){
-        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po" + (this.ammunition+value));
+    /**
+     * Metoda obsługująca podnoszenie amunicji
+     * 
+     * @param value wartość dodanej amunicji
+     */
+    public void addAmmo(Integer value) {
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po"
+                + (this.ammunition + value));
         this.ammunition += value;
     }
 }
