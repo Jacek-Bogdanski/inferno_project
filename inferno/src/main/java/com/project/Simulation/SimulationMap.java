@@ -332,17 +332,16 @@ public class SimulationMap {
         }
     }
 
-    private void appendToPane(JTextPane tp, String msg, Color c)
+    private void appendToPane(JTextPane textpane, String message, Color color)
     {
-        StyleContext sc = StyleContext.getDefaultStyleContext();
-        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
-
-        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "MONOSPACED");
-        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-        int len = tp.getDocument().getLength();
-        tp.setCaretPosition(len);
-        tp.setCharacterAttributes(aset, false);
-        tp.replaceSelection(msg);
+        StyleContext scope = StyleContext.getDefaultStyleContext();
+        AttributeSet attrSet = scope.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+        attrSet = scope.addAttribute(attrSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        attrSet = scope.addAttribute(attrSet, StyleConstants.FontFamily, "MONOSPACED");
+        int length = textpane.getDocument().getLength();
+        textpane.setCaretPosition(length);
+        textpane.setCharacterAttributes(attrSet, false);
+        textpane.replaceSelection(message);
     }
 
     public void printMapToMapArea() {
