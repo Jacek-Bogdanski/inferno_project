@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 import static com.project.Parameters.*;
@@ -13,17 +12,6 @@ import static com.project.Parameters.*;
  * Klasa mapy symulacji
  */
 public class SimulationMap {
-    /**
-     * Map config:
-     * Tablica zawierająca dane konfiguracyjne.
-     * Dostępne pola:
-     * mapSize, buildingCount, iterationCount,
-     * tankCountA, tankCountB,
-     * soldierCountA, soldierCountB,
-     * gunnerCountA, gunnerCountB,
-     * fuelProbability, ammunitionProbability, foodProbability
-     */
-    private Map<String, Integer> config;
 
     public Integer alliveA = 0;
     public Integer alliveB = 0;
@@ -44,8 +32,7 @@ public class SimulationMap {
      * @param config  dane konfiguracyjne (do eliminacji)
      * @param mapArea obiekt JTextPane do wydruku mapy
      */
-    public SimulationMap(Map<String, Integer> config, JTextPane mapArea) {
-        this.config = config;
+    public SimulationMap(JTextPane mapArea) {
         this.mapArea = mapArea;
         this.mapSize = MAP_SIZE;
         this.map = this.generateMap();
@@ -268,7 +255,7 @@ public class SimulationMap {
         // W budynku moze byc tylko piechur
 
         // Dodanie czołgów drużyny A
-        Integer tankACounter = config.get("tankCountA");
+        Integer tankACounter = TANK_A_COUNT;
         while (tankACounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -279,7 +266,7 @@ public class SimulationMap {
         }
 
         // Dodanie czołgów drużyny B
-        Integer tankBCounter = config.get("tankCountB");
+        Integer tankBCounter = TANK_B_COUNT;
         while (tankBCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -290,7 +277,7 @@ public class SimulationMap {
         }
 
         // Dodanie piechurów drużyny A
-        Integer soldierACounter = config.get("soldierCountA");
+        Integer soldierACounter = SOLDIER_A_COUNT;
         while (soldierACounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -299,7 +286,7 @@ public class SimulationMap {
         }
 
         // Dodanie piechurów drużyny B
-        Integer soldierBCounter = config.get("soldierCountB");
+        Integer soldierBCounter = SOLDIER_B_COUNT;
         while (soldierBCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -308,7 +295,7 @@ public class SimulationMap {
         }
 
         // Dodanie artylerzystów drużyny A
-        Integer gunnerACounter = config.get("gunnerCountA");
+        Integer gunnerACounter = GUNNER_A_COUNT;
         while (gunnerACounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -319,7 +306,7 @@ public class SimulationMap {
         }
 
         // Dodanie artylerzystów drużyny B
-        Integer gunnerBCounter = config.get("gunnerCountB");
+        Integer gunnerBCounter = GUNNER_B_COUNT;
         while (gunnerBCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);

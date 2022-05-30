@@ -27,7 +27,7 @@ public class SimulationView extends JPanel {
         /*
          * Utworzenie mapy
          */
-        this.map = new SimulationMap(config, mapArea);
+        this.map = new SimulationMap(mapArea);
     }
 
     private void prepareLayout() {

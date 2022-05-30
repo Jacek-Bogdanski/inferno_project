@@ -15,4 +15,5 @@ public class Label extends JLabel {
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setForeground(color);
     }
+
 }

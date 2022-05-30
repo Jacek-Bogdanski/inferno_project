@@ -10,6 +10,14 @@ public class Parameters {
     public static Integer MAP_SIZE = 50;
     public static Integer ITERATION_COUNT = 0;
 
+    public static Integer TANK_A_COUNT = 15;
+    public static Integer SOLDIER_A_COUNT = 30;
+    public static Integer GUNNER_A_COUNT = 10;
+
+    public static Integer TANK_B_COUNT = 15;
+    public static Integer SOLDIER_B_COUNT = 30;
+    public static Integer GUNNER_B_COUNT = 10;
+
     public static Double FUEL_DROP_PROBABILITY = 0.18;
     public static Integer FUEL_DROP_VALUE = 50;
 

@@ -1,7 +1,5 @@
 package com.project.Simulation;
 
-import java.util.Random;
-
 import static com.project.Parameters.*;
 
 /**
@@ -18,7 +16,6 @@ import static com.project.Parameters.*;
  *
  */
 public class Gunner extends MilitaryUnit {
-    private final Random rand = new Random();
 
     /**
      * Konstruktor
