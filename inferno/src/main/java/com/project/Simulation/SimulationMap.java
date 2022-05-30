@@ -146,11 +146,7 @@ public class SimulationMap {
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<Drop> drops = map[x][y].drops;
-                for (Drop drop : drops) {
-                    if (drop.getValue()<=0){
-                        drops.remove(drop);
-                    }
-                }
+                drops.removeIf(drop -> drop.getValue() <= 0);
             }
         }
 //podnoszenie dropu
@@ -336,36 +332,6 @@ public class SimulationMap {
         }
     }
 
-    public void printMapToConsole(Field[][] map) {
-        // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
-
-        System.out.println(" ");
-        System.out.println("Iteracja: " + this.iterationNumber);
-        System.out.println("Wydruk mapy:");
-        for (Field[] row : map) {
-            System.out.print("|");
-            for (Field field : row) {
-                switch (field.type) {
-                    case 1:
-                        System.out.print("X");
-                        break;
-                    case -1:
-                        break;
-                    default:
-                        if (field.units.size() == 0) {
-                            System.out.print(" ");
-                            break;
-                        }
-                        System.out.print(field.units.get(0).team);
-                        break;
-                }
-                System.out.print(" ");
-            }
-            System.out.print("|");
-            System.out.println(" ");
-        }
-    }
-
     private void appendToPane(JTextPane tp, String msg, Color c)
     {
         StyleContext sc = StyleContext.getDefaultStyleContext();
@@ -380,10 +346,8 @@ public class SimulationMap {
     }
 
     public void printMapToMapArea() {
-        // Wydruk mapy do konsoli X-budynek, A-tankA, B-tankB
         appendToPane(this.mapArea, "", Color.BLACK);
         this.mapArea.setText("");
-//        this.mapArea.setDocument(new PlainDocument());
         appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: " + alliveB + " | CZERWONY A, NIEBIESKI B\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
@@ -466,31 +430,33 @@ public class SimulationMap {
     }
 
     void dropFuelOnMap() {
-        Integer fuelCounter = config.get("fuelProbability") * mapSize / 100;
+        int fuelCounter = (int)(FUEL_DROP_PROBABILITY * mapSize);
         while (fuelCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
-            map[x][y].drops.add(new Drop("fuel", 100));
+            map[x][y].drops.add(new Drop("fuel", FUEL_DROP_VALUE));
             fuelCounter--;
         }
     }
 
         void dropAmmoOnMap() {
-            Integer ammunitionCounter = config.get("ammunitionProbability") * mapSize / 100;
+            int ammunitionCounter = (int)(AMMUNITION_DROP_PROBABILITY * mapSize);
             while (ammunitionCounter != 0) {
                 int x = rand.nextInt(mapSize - 1);
                 int y = rand.nextInt(mapSize - 1);
-                map[x][y].drops.add(new Drop("ammo", 100));
+                map[x][y].drops.add(new Drop("ammo", AMMUNITION_DROP_VALUE));
                 ammunitionCounter--;
             }
         }
+
+
     void dropFoodOnMap(){
-        Integer foodCouner = config.get("foodProbability")*mapSize/100;
-        while (foodCouner != 0) {
+        int foodCounter = (int)(FOOD_DROP_PROBABILITY * mapSize);
+        while (foodCounter != 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
-            map[x][y].drops.add(new Drop("food", 100));
-            foodCouner--;
+            map[x][y].drops.add(new Drop("food", FOOD_DROP_VALUE));
+            foodCounter--;
         }
 
     }
