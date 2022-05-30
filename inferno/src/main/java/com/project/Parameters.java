@@ -8,6 +8,9 @@ public class Parameters {
      * Parametry symulacji
      */
     public static Integer MAP_SIZE = 50;
+    public static Double FUEL_DROP_PROBABILITY = 0.11;
+    public static Double FOOD_DROP_PROBABILITY = 0.13;
+    public static Double AMMUNITION_DROP_PROBABILITY = 0.15;
 
     /*
      * Parametry żołnierza
