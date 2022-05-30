@@ -389,10 +389,10 @@ public class SimulationMap {
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
             for (Field field : row) {
-                //tymczasowe
-                if (field.drops.size()>0){
+                if (field.drops.size()>0)
                     appendToPane(this.mapArea,"D",Color.GREEN);
-                }
+                else
+                    appendToPane(this.mapArea," ",Color.BLACK);
 
                 switch (field.type) {
                     case 1:
