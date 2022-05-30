@@ -34,21 +34,21 @@ public class OptionsView extends JPanel {
         NumberField sizeField = new NumberField(40);
         NumberField buildingCountField = new NumberField(15);
         NumberField iterationCountField = new NumberField(1000);
-        NumberField EParameterField = new NumberField(50);
-        NumberField FParameterField = new NumberField(50);
-        NumberField GParameterField = new NumberField(50);
+        NumberField EParameterField = new NumberField(20);
+        NumberField FParameterField = new NumberField(20);
+        NumberField GParameterField = new NumberField(20);
 
         /*
          * Edytowalne pola: Liczby czołgów w danych drużynach
          */
-        NumberField A1CountField = new NumberField(10);
-        NumberField A2CountField = new NumberField(10);
+        NumberField A1CountField = new NumberField(20);
+        NumberField A2CountField = new NumberField(20);
 
         /*
          * Edytowalne pola: Liczby piechurów w danych drużynach
          */
-        NumberField B1CountField = new NumberField(20);
-        NumberField B2CountField = new NumberField(20);
+        NumberField B1CountField = new NumberField(30);
+        NumberField B2CountField = new NumberField(30);
 
         /*
          * Edytowalne pola: Liczby artylerzystów w danych drużynach
