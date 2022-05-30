@@ -413,15 +413,15 @@ public class SimulationMap {
                         switch (unit.team) {
                             case 'A':
                                 color = new Color(255, 0, 0);
-                                if(!unit.isAlive) color= new Color(80,40, 0);
+                                if(!unit.isAlive) color = new Color(80,40, 0);
                                 break;
                             case 'B':
                                 color = new Color(0,0,255);
-                                if(!unit.isAlive) color= new Color(0,40,80);
+                                if(!unit.isAlive) color = new Color(0,40,80);
                                 break;
                             default:
                                 color = new Color(0,0,0);
-                                if(!unit.isAlive) color= new Color(80,80,80);
+                                if(!unit.isAlive) color = new Color(80,80,80);
                                 break;
                         }
                         appendToPane(this.mapArea, team,color );
@@ -432,23 +432,23 @@ public class SimulationMap {
                         }
 
                         MilitaryUnit unit2 = field.units.get(1);
-                        String team2= String.valueOf(unit.team);
+                        String team2= String.valueOf(unit2.team);
                         Color color2;
-                        switch (unit.team) {
+                        switch (unit2.team) {
                             case 'A':
                                 color2 = new Color(255, 0, 0);
-                                if(!unit.isAlive) color2= new Color(60,20,20);
+                                if(!unit2.isAlive) color2 = new Color(60,20,20);
                                 break;
                             case 'B':
                                 color2 = new Color(0,0,255);
-                                if(!unit.isAlive) color2= new Color(20,20,60);
+                                if(!unit2.isAlive) color2 = new Color(20,20,60);
                                 break;
                             default:
                                 color2 = new Color(0,0,0);
-                                if(!unit.isAlive) color2= new Color(20,20,20);
+                                if(!unit2.isAlive) color2 = new Color(20,20,20);
                                 break;
                         }
-                        appendToPane(this.mapArea, team2,color2 );
+                        appendToPane(this.mapArea, team2, color2 );
 
                         break;
                 }
