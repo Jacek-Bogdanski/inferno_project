@@ -28,8 +28,7 @@ public class SimulationMap {
 
     /**
      * Konstruktor
-     * 
-     * @param config  dane konfiguracyjne (do eliminacji)
+     *
      * @param mapArea obiekt JTextPane do wydruku mapy
      */
     public SimulationMap(JTextPane mapArea) {
