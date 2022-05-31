@@ -448,9 +448,6 @@ public class SimulationMap {
      */
     void dropItemsOnMap() {
         if (this.iterationNumber % 10 == 1) {
-            // dropFuelOnMap();
-            // dropAmmoOnMap();
-            // dropFoodOnMap();
             int randomNumber = rand.nextInt(101);
             if (FUEL_DROP_PROBABILITY * 100 < randomNumber) {
                 dropFuelOnMap();

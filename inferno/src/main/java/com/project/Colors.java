@@ -3,7 +3,7 @@ package com.project;
 import java.awt.*;
 
 /**
- * Klasa odpowiedzialna za dostarczenie kolorów
+ * Klasa odpowiedzialna za dostarczenie własnych kolorów
  */
 public class Colors {
     public static Color white = new Color(0xffffff);

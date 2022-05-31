@@ -9,6 +9,8 @@ public class Parameters {
      */
     public static Integer MAP_SIZE = 50;
     public static Integer ITERATION_COUNT = 0;
+    // ujemna liczba iteracji oznacza trwanie symulacji do wyginięcia jednostek
+    // jednej z druzyn.
 
     public static Integer TANK_A_COUNT = 15;
     public static Integer SOLDIER_A_COUNT = 30;

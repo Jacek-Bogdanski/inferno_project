@@ -8,6 +8,13 @@ import java.awt.*;
  */
 public class Label extends JLabel {
 
+    /**
+     * Konstruktor
+     * 
+     * @param text  zawartość tekstu
+     * @param size  rozmiar czcionki
+     * @param color kolor tekstu
+     */
     Label(String text, int size, Color color) {
         super(text, SwingConstants.CENTER);
         this.setText(text);

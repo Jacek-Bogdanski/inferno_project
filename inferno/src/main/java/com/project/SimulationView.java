@@ -30,6 +30,9 @@ public class SimulationView extends JPanel {
         this.map = new SimulationMap(mapArea);
     }
 
+    /**
+     * Metoda przygotowująca layout aplikacji
+     */
     private void prepareLayout() {
         /*
          * Konfiguracja panelu
@@ -68,6 +71,7 @@ public class SimulationView extends JPanel {
                 copyright,
                 Box.createRigidArea(new Dimension(0, 20)),
         };
+
         for (Component item : viewItems) {
             this.add(item);
         }

@@ -103,13 +103,13 @@ public class Tank extends MilitaryUnit {
     }
 
     public void addFuel(Integer value) {
-        System.out.println("Podnoszenie paliwa [id=" + this.id + "] : paliwa przed =" + this.fuel + " paliwa po"
+        System.out.println("Podnoszenie paliwa [id=" + this.id + "] : przed=" + this.fuel + ", po="
                 + (this.fuel + value));
         this.fuel += value;
     }
 
     public void addAmmo(Integer value) {
-        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : ammo przed =" + this.ammunition + " ammo po"
+        System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;
     }

@@ -10,25 +10,38 @@ import java.util.Map;
 public class Router {
     private final Window window;
 
+    /**
+     * Konstruktor
+     */
+    Router() {
+        this.window = new Window();
+    }
+
+    /**
+     * Metoda wyśwyetlająca widok początkowy
+     */
     public void showMainView() {
         JPanel startView = new StartView(this);
         this.window.setContentPane(startView);
         this.window.validate();
     }
 
+    /**
+     * Metoda wyśwyetlająca widok konfiguracji symulacji
+     */
     public void showOptionsView() {
         JPanel optionsView = new OptionsView(this);
         this.window.setContentPane(optionsView);
         this.window.validate();
     }
 
+    /**
+     * Metoda wyśwyetlająca widok wymulacji
+     */
     public void showSimulationView(Map<String, Integer> config) {
         JPanel simulationView = new SimulationView(this, config);
         this.window.setContentPane(simulationView);
         this.window.validate();
     }
 
-    Router() {
-        this.window = new Window();
-    }
 }
