@@ -44,6 +44,11 @@ W budynku może schować się piechur, nie jest wtedy widoczny dla innych przeci
 # Diagram przypadków użycia
 ![Diagram przypadków użycia](usage_diagram.png)
 
+Klasy Tank, Soldier, Gunner dziedziczą po klasie Military Unit, która implementuje interfejs Movable. Obiekty tych klas są zdolne do poruszania się, zbierania określonych zasobów (dropów) oraz atakowania jednostek drużyny przeciwnej. Jednostki tej samej drużyny są wobec siebie neutralne. Dodatkowo obiekty klasy Soldier mogą wejść do budynku, w których są bezpieczne - nie mogą być zaatakowane przez obiekty poza budynkiem. 
+Klasa Drop implementuje interfejs Pickable.
+
 
 # Diagram obiektów
 ![Diagram obiektów](object_diagram.png)
+
+Najważniejszym obiektem jest obiekt Map, który łączy wszystkie dane symulacji. Zawiera dwuwymiarową tablicę mapy, która przechowuje informacje o rodzaju pola i znajdujących się na ich obiektach. Każdemu obiektowi przypisany jest obiekt Position, wskazujący jego aktualną pozycję na mapie. Obiekty poruszające się pojawiają się na mapie na pozątku symulacji, natomiast Dropy pojawiają się na mapie losowo wraz z postępem symulacji. Czołgi podnoszą paliwo i amunicję, żołnierze podnoszą jedzenie i amunicję, uzupełniając swoje zapasy, natomiast artylerzyści podnoszą tylko amunicję. W przedstawionej sytuacji czołg Leopard 2 jest sojusznikiem artylerzysty Tomka. Artylerzysta walczy z żołnierzem Zenkiem, stoją na tym samym polu, natomiast czołg Leopard 2 znajduje się zbyt daleko, żeby prowadzić atak.
