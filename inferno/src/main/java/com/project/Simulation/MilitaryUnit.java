@@ -3,6 +3,7 @@ package com.project.Simulation;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.project.Parameters.*;
 import static java.lang.Math.sqrt;
 
 /**
@@ -17,7 +18,6 @@ public abstract class MilitaryUnit implements Movable {
 
     public Integer hp = 0;
     public Integer damage = 0;
-    public Integer ammunition = 0;
     public Integer speed = 0;
     public Integer attackRange = 0;
 
@@ -56,6 +56,34 @@ public abstract class MilitaryUnit implements Movable {
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     public void pickUpDrop(SimulationMap map) {
+        ArrayList<Drop> drops = map.map[this.position.x][this.position.x].drops;
+        if (map.map[this.position.x][this.position.x].drops.size() == 0)
+            return;
+
+        for (Drop drop : drops) {
+            switch (drop.type) {
+                case "fuel":
+                    if(this instanceof Tank)
+                       ((Tank) this).addFuel(drop.collect(TANK_FUEL - ((Tank) this).getFuelAmount()));
+                    break;
+
+                case "ammo":
+                    if(this instanceof Tank)
+                        ((Tank) this).addAmmo(drop.collect(TANK_AMMUNITION - ((Tank) this).getAmmunitionAmount()));
+                    if(this instanceof Gunner)
+                        ((Gunner) this).addAmmo(drop.collect(GUNNER_AMMUNITION - ((Gunner) this).getAmmunitionAmount()));
+                    if(this instanceof Soldier)
+                        ((Soldier) this).addAmmo(drop.collect(SOLDIER_AMMUNITION - ((Soldier) this).getAmmunitionAmount()));
+                    break;
+
+                case "food":
+                    if(this instanceof Soldier)
+                        ((Soldier) this).addFood(drop.collect(SOLDIER_FOOD - ((Soldier) this).getFoodAmount()));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /**

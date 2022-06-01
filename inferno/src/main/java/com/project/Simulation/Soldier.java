@@ -24,6 +24,7 @@ public class Soldier extends MilitaryUnit {
     private final Random rand = new Random();
     public String type = "Soldier";
     private Integer food;
+    private Integer ammunition;
     private Double foodUsageProbability;
 
     /**
@@ -78,7 +79,7 @@ public class Soldier extends MilitaryUnit {
      * 
      * @return food amount
      */
-    public Integer getFood() {
+    public Integer getFoodAmount() {
         return food;
     }
 
@@ -98,7 +99,7 @@ public class Soldier extends MilitaryUnit {
             this.isAlive = false;
     }
 
-    public void eat(Integer value) {
+    public void addFood(Integer value) {
         System.out
                 .println("Jedzenie [id=" + this.id + "] : przed=" + this.food + ", po=" + (this.food + value));
         this.food += value;
@@ -108,5 +109,13 @@ public class Soldier extends MilitaryUnit {
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;
+    }
+
+    /**
+     * Metoda zwracająca ilość amunicji bez jej zmiany
+     * @return ammunition amount
+     */
+    public Integer getAmmunitionAmount(){
+        return this.ammunition;
     }
 }

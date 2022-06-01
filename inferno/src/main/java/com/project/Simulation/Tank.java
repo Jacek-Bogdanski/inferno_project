@@ -24,6 +24,7 @@ public class Tank extends MilitaryUnit {
     private final Random rand = new Random();
     public String type = "Tank";
     private Integer fuel;
+    private Integer ammunition;
     private Double fuelUsageProbability;
 
     /**
@@ -81,7 +82,7 @@ public class Tank extends MilitaryUnit {
      * 
      * @return fuel amount
      */
-    public Integer getFuel() {
+    public Integer getFuelAmount() {
         return fuel;
     }
 
@@ -112,5 +113,13 @@ public class Tank extends MilitaryUnit {
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;
+    }
+
+    /**
+     * Metoda zwracająca ilość amunicji bez jej zmiany
+     * @return ammunition amount
+     */
+    public Integer getAmmunitionAmount(){
+        return this.ammunition;
     }
 }

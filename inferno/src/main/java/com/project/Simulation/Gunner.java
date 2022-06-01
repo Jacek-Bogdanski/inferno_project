@@ -16,6 +16,7 @@ import static com.project.Parameters.*;
  *
  */
 public class Gunner extends MilitaryUnit {
+    private Integer ammunition;
 
     /**
      * Konstruktor
@@ -70,5 +71,13 @@ public class Gunner extends MilitaryUnit {
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;
+    }
+
+    /**
+     * Metoda zwracająca ilość amunicji bez jej zmiany
+     * @return ammunition amount
+     */
+    public Integer getAmmunitionAmount(){
+        return this.ammunition;
     }
 }
