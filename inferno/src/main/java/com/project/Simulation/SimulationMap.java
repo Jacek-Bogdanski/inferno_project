@@ -53,6 +53,7 @@ public class SimulationMap {
      */
     public void runSimulation(int iterationCount) {
         this.startTime = System.currentTimeMillis();
+        this.endTime = System.currentTimeMillis();
         System.out.println("### START SYMULACJI ###");
         if (iterationCount < 0) {
             while (alliveA > 0 && alliveB > 0) {
@@ -402,7 +403,7 @@ public class SimulationMap {
         double time = (double) (this.endTime - this.startTime) / 1000;
 
         appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
-                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS: "+time+" s\n\n", Color.BLACK);
+                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS OD ROZPOCZĘCIA: "+time+" s\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
@@ -487,5 +488,6 @@ public class SimulationMap {
     public void nextIteration() {
         this.handleIteration();
         this.printMapToMapArea();
+        this.endTime = System.currentTimeMillis();
     }
 }
