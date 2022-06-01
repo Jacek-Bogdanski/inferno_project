@@ -16,6 +16,9 @@ public class SimulationMap {
     public Integer alliveA = 0;
     public Integer alliveB = 0;
 
+    private long startTime;
+    private long endTime;
+
     JTextPane mapArea;
 
     public Field[][] map;
@@ -37,7 +40,6 @@ public class SimulationMap {
         this.map = this.generateMap();
         this.fillMap();
         this.printMapToMapArea();
-        this.runSimulation(ITERATION_COUNT);
     }
 
     /**
@@ -50,15 +52,26 @@ public class SimulationMap {
      *                       iteracji
      */
     public void runSimulation(int iterationCount) {
+        this.startTime = System.currentTimeMillis();
+        System.out.println("### START SYMULACJI ###");
         if (iterationCount < 0) {
             while (alliveA > 0 && alliveB > 0) {
                 this.handleIteration();
-                if(this.iterationNumber>MAX_ITERATION_COUNT) return;
+                // wydruk mapy
+                if(PRINT_MAP_WHILE_SIMULATION)
+                    this.printMapToMapArea();
+                if(this.iterationNumber>MAX_ITERATION_COUNT) break;
             }
+
         }
         for (int i = 0; i < iterationCount; i++) {
             this.handleIteration();
+            // wydruk mapy
+            if(PRINT_MAP_WHILE_SIMULATION)
+                this.printMapToMapArea();
         }
+        this.endTime = System.currentTimeMillis();
+        this.printMapToMapArea();
     }
 
     /**
@@ -145,8 +158,9 @@ public class SimulationMap {
             }
         }
 
-        // wydruk mapy
-        this.printMapToMapArea();
+
+        if(PRINT_DEBUG_TO_CONSOLE)
+        System.out.println("Iteracja nr "+this.iterationNumber);
     }
 
     /**
@@ -384,8 +398,11 @@ public class SimulationMap {
     public void printMapToMapArea() {
         appendToPane(this.mapArea, "", Color.BLACK);
         this.mapArea.setText("");
+
+        double time = (double) (this.endTime - this.startTime) / 1000;
+
         appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
-                + alliveB + " | CZERWONY A, NIEBIESKI B\n\n", Color.BLACK);
+                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS: "+time+" s\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
             appendToPane(this.mapArea, "      |", Color.BLACK);
@@ -422,6 +439,7 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy paliwa po mapie
      */
     void dropFuelOnMap() {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Zrzucam paliwo na mape");
         int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize);
         while (fuelCounter != 0) {
@@ -436,6 +454,7 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy amunicji po mapie
      */
     void dropAmmoOnMap() {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Zrzucam amunicje na mape");
         int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize);
         while (ammunitionCounter != 0) {
@@ -450,6 +469,7 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy jedzenia po mapie
      */
     void dropFoodOnMap() {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Zrzucam jedzenie na mape");
         int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize);
         while (foodCounter != 0) {
@@ -459,5 +479,13 @@ public class SimulationMap {
             foodCounter--;
         }
 
+    }
+
+    /**
+     * Dodatkowa metoda wykonująca wydruk mapy na zlecenie przycisku
+     */
+    public void nextIteration() {
+        this.handleIteration();
+        this.printMapToMapArea();
     }
 }

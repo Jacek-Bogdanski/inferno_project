@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+import static com.project.Parameters.ITERATION_COUNT;
 
 /**
  * Klasa odpowiadająca za wyświetlenie symulacji
@@ -28,6 +31,16 @@ public class SimulationView extends JPanel {
          * Utworzenie mapy
          */
         this.map = new SimulationMap(mapArea);
+        this.map.printMapToMapArea();
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                                map.runSimulation(ITERATION_COUNT);
+                    }
+                },
+                1000
+        );
     }
 
     /**
@@ -53,7 +66,7 @@ public class SimulationView extends JPanel {
         endButton.addActionListener(e -> parent.showMainView());
 
         Button continueButton = new Button("Następna iteracja", 20, Colors.black);
-        continueButton.addActionListener(e -> map.handleIteration());
+        continueButton.addActionListener(e -> map.nextIteration());
 
         /*
          * Utworzenie widoku

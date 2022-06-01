@@ -14,7 +14,12 @@ public class Parameters {
 
     // Liczba iteracji
     // ujemna liczba iteracji oznacza trwanie symulacji do wyginięcia jednostek jednej z druzyn.
-    public static Integer ITERATION_COUNT = 0;
+    public static Integer ITERATION_COUNT = -1;
+
+    public static boolean PRINT_DEBUG_TO_CONSOLE = false;
+
+    // true znacznie spowalnia symulację
+    public static boolean PRINT_MAP_WHILE_SIMULATION = false;
 
 
     public static Integer TANK_A_COUNT = 15;
