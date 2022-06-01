@@ -8,9 +8,14 @@ public class Parameters {
      * Parametry symulacji
      */
     public static Integer MAP_SIZE = 50;
+
+    // liczba iteracji, po których automatyczna symulacja (do wyginięcia) zostaje przerwana
+    public static Integer MAX_ITERATION_COUNT = 99999;
+
+    // Liczba iteracji
+    // ujemna liczba iteracji oznacza trwanie symulacji do wyginięcia jednostek jednej z druzyn.
     public static Integer ITERATION_COUNT = 0;
-    // ujemna liczba iteracji oznacza trwanie symulacji do wyginięcia jednostek
-    // jednej z druzyn.
+
 
     public static Integer TANK_A_COUNT = 15;
     public static Integer SOLDIER_A_COUNT = 30;

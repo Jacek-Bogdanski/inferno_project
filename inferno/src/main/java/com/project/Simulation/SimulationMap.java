@@ -53,6 +53,7 @@ public class SimulationMap {
         if (iterationCount < 0) {
             while (alliveA > 0 && alliveB > 0) {
                 this.handleIteration();
+                if(this.iterationNumber>MAX_ITERATION_COUNT) return;
             }
         }
         for (int i = 0; i < iterationCount; i++) {
