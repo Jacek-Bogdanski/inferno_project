@@ -23,4 +23,27 @@ public class Field {
         this.type = type;
     }
 
+    /**
+     * Metoda zwracająca rodzaj pola
+     * @return field type
+     */
+    public int getType() {
+        return this.type;
+    }
+
+    /**
+     * Metoda zwracająca listę jednostek na tym polu
+     * @return unit list
+     */
+    public ArrayList<MilitaryUnit> getUnits(){
+        return this.units;
+    }
+
+    /**
+     * Metoda zwracająca listę dropów na tym polu
+     * @return drop list
+     */
+    public ArrayList<Drop> getDrops(){
+        return this.drops;
+    }
 }

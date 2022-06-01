@@ -4,8 +4,8 @@ package com.project.Simulation;
  * Klasa obiektu zbieranego z mapy przez postacie
  */
 public class Drop implements Pickable {
-    String type = ""; // ammo,food,fuel
-    private int value = 0; // 0-100
+    String type; // ammo,food,fuel
+    private int value; // 0-100
 
     /**
      * Konstruktor
@@ -41,4 +41,7 @@ public class Drop implements Pickable {
         return value;
     }
 
+    public String getType() {
+        return this.type;
+    }
 }

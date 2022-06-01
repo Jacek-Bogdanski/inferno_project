@@ -22,7 +22,6 @@ import static com.project.Parameters.*;
  */
 public class Tank extends MilitaryUnit {
     private final Random rand = new Random();
-    public String type = "Tank";
     private Integer fuel;
     private Integer ammunition;
     private Double fuelUsageProbability;
@@ -45,8 +44,7 @@ public class Tank extends MilitaryUnit {
         this.fuel = TANK_FUEL;
         this.ammunition = TANK_AMMUNITION;
         this.attackRange = TANK_ATTACK_RANGE;
-        this.damage = TANK_ATTACK_DAMAGE; // maksymalny dmg, pozniej podczas ataku bedzie losowa wartosc w takim
-                                          // zakresie
+        this.damage = TANK_ATTACK_DAMAGE;
         this.hp = TANK_HP;
         this.speed = TANK_SPEED;
         this.fuelUsageProbability = TANK_FUEL_USAGE_PROBABILITY;

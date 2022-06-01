@@ -2,11 +2,17 @@ package com.project.Simulation;
 
 public interface Pickable {
     /**
-     * Zobaczenie przechowywanej wartości
+     * Metoda zwracająca wartość dropu bez jego zmiany
      * 
      * @return wartość przechowywana
      */
     Integer getValue();
+
+    /**
+     * Metoda zwracająca typ obiektu
+     * @return typ dropu
+     */
+    String getType();
 
     /**
      * Pobranie dostępnej ilości materiału. Zwróci albo oczekiwaną wartośc, albo
