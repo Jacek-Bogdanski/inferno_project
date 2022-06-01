@@ -98,16 +98,19 @@ public class Tank extends MilitaryUnit {
             this.fuel--;
 
         if (this.fuel == 0)
+            if(PRINT_DEBUG_TO_CONSOLE)
             System.out.println("brak paliwa [id=" + this.id + "]");
     }
 
     public void addFuel(Integer value) {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Podnoszenie paliwa [id=" + this.id + "] : przed=" + this.fuel + ", po="
                 + (this.fuel + value));
         this.fuel += value;
     }
 
     public void addAmmo(Integer value) {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;

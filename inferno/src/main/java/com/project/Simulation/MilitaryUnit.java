@@ -125,6 +125,7 @@ public abstract class MilitaryUnit implements Movable {
         if (unitToAttack == null)
             return;
         unitToAttack.takeDamage(this.damage);
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
                 + unitToAttack.hp);
     }
@@ -162,10 +163,11 @@ public abstract class MilitaryUnit implements Movable {
         // przeniesienie obiektu
         map.map[prevPosition.x][prevPosition.y].units.remove(this);
         map.map[newPosition.x][newPosition.y].units.add(this);
-
-        String moveMessage = "ruch postaci [id=" + this.id + "], (" + prevPosition.x + ", " + prevPosition.y + ")->("
-                + newPosition.x + ", " + newPosition.y + ")";
-        System.out.println(moveMessage);
+        if(PRINT_DEBUG_TO_CONSOLE) {
+            String moveMessage = "ruch postaci [id=" + this.id + "], (" + prevPosition.x + ", " + prevPosition.y + ")->("
+                    + newPosition.x + ", " + newPosition.y + ")";
+            System.out.println(moveMessage);
+        }
 
         return true;
     }

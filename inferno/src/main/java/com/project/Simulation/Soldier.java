@@ -100,12 +100,14 @@ public class Soldier extends MilitaryUnit {
     }
 
     public void addFood(Integer value) {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out
                 .println("Jedzenie [id=" + this.id + "] : przed=" + this.food + ", po=" + (this.food + value));
         this.food += value;
     }
 
     public void addAmmo(Integer value) {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;

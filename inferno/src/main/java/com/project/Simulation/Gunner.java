@@ -68,6 +68,7 @@ public class Gunner extends MilitaryUnit {
      * @param value wartość dodanej amunicji
      */
     public void addAmmo(Integer value) {
+        if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
                 + (this.ammunition + value));
         this.ammunition += value;
