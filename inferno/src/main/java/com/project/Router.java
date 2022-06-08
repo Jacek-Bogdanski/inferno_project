@@ -38,8 +38,8 @@ public class Router {
     /**
      * Metoda wyśwyetlająca widok wymulacji
      */
-    public void showSimulationView(Map<String, Integer> config) {
-        JPanel simulationView = new SimulationView(this, config);
+    public void showSimulationView() {
+        JPanel simulationView = new SimulationView(this);
         this.window.setContentPane(simulationView);
         this.window.validate();
     }
