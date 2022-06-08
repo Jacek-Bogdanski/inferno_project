@@ -31,13 +31,12 @@ public class OptionsView extends JPanel {
          */
         Button backButton = new Button("Powrót", 20, Colors.darkGrey);
         backButton.addActionListener(e -> parent.showMainView());
-        Button startButton = new Button("Rozpocznij symulację", 20, Colors.black);
+        Button startButton = new Button("Rozpocznij", 20, Colors.black);
         startButton.addActionListener(e -> {
-            Map<String, Integer> data = new HashMap<>();
 
             try {
                 alert.setVisible(false);
-                parent.showSimulationView(data);
+                parent.showSimulationView();
             } catch (Exception exc) {
                 alert.setVisible(true);
                 errorOutput.setText(exc.toString());

@@ -7,7 +7,7 @@ public class Parameters {
     /**
      * Parametry symulacji
      */
-    public static Integer MAP_SIZE = 50;
+    public static Integer MAP_SIZE = 60;
 
     // liczba iteracji, po których automatyczna symulacja (do wyginięcia) zostaje przerwana
     public static Integer MAX_ITERATION_COUNT = 99999;
@@ -53,7 +53,7 @@ public class Parameters {
     /*
      * Parametry artylerzysty
      */
-    public static Integer GUNNER_SPEED = 0;
+    public static Integer GUNNER_SPEED = 1;
     public static Integer GUNNER_ATTACK_RANGE = 30;
     public static Integer GUNNER_ATTACK_DAMAGE = 600;
     public static Integer GUNNER_HP = 50;
@@ -64,7 +64,7 @@ public class Parameters {
      */
     public static Double TANK_FUEL_USAGE_PROBABILITY = 0.3;
     public static Integer TANK_FUEL = 30;
-    public static Integer TANK_SPEED = 1;
+    public static Integer TANK_SPEED = 2;
     public static Integer TANK_ATTACK_RANGE = 6;
     public static Integer TANK_ATTACK_DAMAGE = 200;
     public static Integer TANK_HP = 500;

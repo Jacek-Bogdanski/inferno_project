@@ -58,8 +58,6 @@ public class Tank extends MilitaryUnit {
      */
     @Override
     public void move(SimulationMap map) {
-        if (this.fuel == 0)
-            return;
         if (this.speed == 0)
             return;
 
@@ -68,7 +66,11 @@ public class Tank extends MilitaryUnit {
 
         // Wylosowanie nowej pozycji, nie może być to budynek
         do {
-            newPosition = this.generateNewPosition(map, this.speed, prevPosition);
+            if (this.fuel == 0)
+            newPosition = this.generateNewPosition(map, 1, prevPosition);
+            else
+                newPosition = this.generateNewPosition(map, this.speed, prevPosition);
+
         } while (map.getFieldType(newPosition) != 0);
 
         if (this.makeMove(map, newPosition))

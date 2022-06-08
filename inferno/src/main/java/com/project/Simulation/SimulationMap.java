@@ -3,8 +3,7 @@ package com.project.Simulation;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 import static com.project.Parameters.*;
 
@@ -15,6 +14,10 @@ public class SimulationMap {
 
     public Integer alliveA = 0;
     public Integer alliveB = 0;
+
+    public Integer foodCount = 0;
+    public Integer ammoCount = 0;
+    public Integer fuelCount = 0;
 
     private long startTime;
     private long endTime;
@@ -44,7 +47,7 @@ public class SimulationMap {
 
     /**
      * Funkcja automatycznie wykonująca symulację 
-     * 
+     *
      * @param iterationCount liczba iteracji do wykonania
      *                       liczba mniejsza od 0 oznacza wykonywanie symulacji do
      *                       śmierci wszystkich obiektów jednej druzyny
@@ -59,20 +62,33 @@ public class SimulationMap {
             while (alliveA > 0 && alliveB > 0) {
                 this.handleIteration();
                 // wydruk mapy
-                if(PRINT_MAP_WHILE_SIMULATION)
+                if (PRINT_MAP_WHILE_SIMULATION)
                     this.printMapToMapArea();
-                if(this.iterationNumber>MAX_ITERATION_COUNT) break;
+                if (this.iterationNumber > MAX_ITERATION_COUNT) break;
             }
 
         }
         for (int i = 0; i < iterationCount; i++) {
             this.handleIteration();
             // wydruk mapy
-            if(PRINT_MAP_WHILE_SIMULATION)
+            if (PRINT_MAP_WHILE_SIMULATION)
                 this.printMapToMapArea();
         }
         this.endTime = System.currentTimeMillis();
         this.printMapToMapArea();
+    }
+
+    /**
+     * Metoda czyszcząca mapę z dropów
+     */
+    public void removeAllDrops(){
+// usuwanie pustych dropow
+        for (int x = 0; x < mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<Drop> drops = map[x][y].drops;
+                drops.removeIf(drop -> true);
+            }
+        }
     }
 
     /**
@@ -160,13 +176,13 @@ public class SimulationMap {
         }
 
 
-        if(PRINT_DEBUG_TO_CONSOLE)
-        System.out.println("Iteracja nr "+this.iterationNumber);
+        if (PRINT_DEBUG_TO_CONSOLE)
+            System.out.println("Iteracja nr " + this.iterationNumber);
     }
 
     /**
      * Metoda zwracająca rodzaj zadanego pola
-     * 
+     *
      * @param position obiekt pozycji
      * @return field type from [-1,0,1]
      */
@@ -181,7 +197,7 @@ public class SimulationMap {
 
     /**
      * Metoda przeprowadzająca generowanie mapy
-     * 
+     *
      * @return wygenerowana mapa
      */
     private Field[][] generateMap() {
@@ -300,7 +316,7 @@ public class SimulationMap {
 
     /**
      * Metoda dopisująca tekst to textPane
-     * 
+     *
      * @param textpane textpane to add text
      * @param message  message to append
      * @param color    color of the text
@@ -319,15 +335,10 @@ public class SimulationMap {
     /**
      * Metoda drukująca pojedynczą komórkę mapy (wysokość 1 linia, szerokość 3
      * znaki)
-     * 
+     *
      * @param field pole mapy
      */
     public void printFieldToMapArea(Field field) {
-        if (field.drops.size() > 0)
-            appendToPane(this.mapArea, "D", Color.GREEN);
-        else
-            appendToPane(this.mapArea, " ", Color.BLACK);
-
         switch (field.type) {
             case 1:
                 appendToPane(this.mapArea, "##", new Color(160, 160, 160));
@@ -336,7 +347,10 @@ public class SimulationMap {
                 break;
             default:
                 if (field.units.size() == 0) {
-                    appendToPane(this.mapArea, "  ", Color.BLACK);
+                    if (field.drops.size() > 0)
+                        appendToPane(this.mapArea, "D ", Color.GREEN);
+                    else
+                        appendToPane(this.mapArea, "  ", Color.BLACK);
                     break;
                 }
 
@@ -363,7 +377,10 @@ public class SimulationMap {
                 appendToPane(this.mapArea, unit.symbol, color);
 
                 if (field.units.size() == 1) {
-                    appendToPane(this.mapArea, " ", Color.BLACK);
+                    if (field.drops.size() > 0)
+                        appendToPane(this.mapArea, "D", Color.GREEN);
+                    else
+                        appendToPane(this.mapArea, " ", Color.BLACK);
                     break;
                 }
 
@@ -403,10 +420,10 @@ public class SimulationMap {
         double time = (double) (this.endTime - this.startTime) / 1000;
 
         appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
-                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS OD ROZPOCZĘCIA: "+time+" s\n\n", Color.BLACK);
+                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS OD ROZPOCZĘCIA: " + time + " s\n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
-            appendToPane(this.mapArea, "      |", Color.BLACK);
+            appendToPane(this.mapArea, "               |", Color.BLACK);
             for (Field field : row) {
                 this.printFieldToMapArea(field);
 
@@ -420,6 +437,7 @@ public class SimulationMap {
      */
     void dropItemsOnMap() {
         if (this.iterationNumber % 10 == 1) {
+            this.removeAllDrops();
             int randomNumber = rand.nextInt(101);
             if (FUEL_DROP_PROBABILITY * 100 < randomNumber) {
                 dropFuelOnMap();
@@ -440,14 +458,14 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy paliwa po mapie
      */
     void dropFuelOnMap() {
-        if(PRINT_DEBUG_TO_CONSOLE)
-        System.out.println("Zrzucam paliwo na mape");
-        int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize);
-        while (fuelCounter != 0) {
+        if (PRINT_DEBUG_TO_CONSOLE)
+            System.out.println("Zrzucam paliwo na mape");
+        int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize)*3;
+        while (fuelCounter >0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("fuel", FUEL_DROP_VALUE));
-            fuelCounter--;
+            fuelCounter--;fuelCount++;
         }
     }
 
@@ -455,14 +473,14 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy amunicji po mapie
      */
     void dropAmmoOnMap() {
-        if(PRINT_DEBUG_TO_CONSOLE)
-        System.out.println("Zrzucam amunicje na mape");
-        int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize);
-        while (ammunitionCounter != 0) {
+        if (PRINT_DEBUG_TO_CONSOLE)
+            System.out.println("Zrzucam amunicje na mape");
+        int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize)*3;
+        while (ammunitionCounter > 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("ammo", AMMUNITION_DROP_VALUE));
-            ammunitionCounter--;
+            ammunitionCounter--;ammoCount++;
         }
     }
 
@@ -470,14 +488,16 @@ public class SimulationMap {
      * Metoda rozmieszczająca dropy jedzenia po mapie
      */
     void dropFoodOnMap() {
-        if(PRINT_DEBUG_TO_CONSOLE)
-        System.out.println("Zrzucam jedzenie na mape");
-        int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize);
-        while (foodCounter != 0) {
+        if (PRINT_DEBUG_TO_CONSOLE)
+            System.out.println("Zrzucam jedzenie na mape");
+        int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize)*3;
+        System.out.println("zrzucam jedzenia: "+foodCounter);
+        while (foodCounter > 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("food", FOOD_DROP_VALUE));
             foodCounter--;
+            foodCount++;
         }
 
     }
@@ -489,5 +509,62 @@ public class SimulationMap {
         this.handleIteration();
         this.printMapToMapArea();
         this.endTime = System.currentTimeMillis();
+    }
+
+    /**
+     * Metoda zwracająca dane z mapy
+     *
+     * @return map with map data
+     */
+    public Map<String, String> getOutputData() {
+        Map<String, String> map = new HashMap<>();
+
+        int alliveTanksA = 0;
+        int alliveTanksB = 0;
+        int alliveSoldiersA = 0;
+        int alliveSoldiersB = 0;
+        int alliveGunnersA = 0;
+        int alliveGunnersB = 0;
+
+        for (Field[] fields : this.map) {
+            for (Field field : fields) {
+                for (MilitaryUnit unit : field.units) {
+                    switch (unit.team) {
+                        case 'A':
+                            if (unit instanceof Soldier)
+                                alliveSoldiersA++;
+                            if (unit instanceof Tank)
+                                alliveTanksA++;
+                            if (unit instanceof Gunner)
+                                alliveGunnersA++;
+
+                            break;
+                        case 'B':
+                            if (unit instanceof Soldier)
+                                alliveSoldiersB++;
+                            if (unit instanceof Tank)
+                                alliveTanksB++;
+                            if (unit instanceof Gunner)
+                                alliveGunnersB++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        map.put("alliveTanksA", String.valueOf(alliveTanksA));
+        map.put("alliveTanksB", String.valueOf(alliveTanksB));
+        map.put("alliveSoldiersA", String.valueOf(alliveSoldiersA));
+        map.put("alliveSoldiersB", String.valueOf(alliveSoldiersB));
+        map.put("alliveGunnersA", String.valueOf(alliveGunnersA));
+        map.put("alliveGunnersB", String.valueOf(alliveGunnersB));
+
+        map.put("alliveA", String.valueOf(this.alliveA));
+        map.put("alliveB", String.valueOf(this.alliveA));
+        map.put("iteration", String.valueOf(this.iterationNumber));
+
+        return map;
     }
 }
