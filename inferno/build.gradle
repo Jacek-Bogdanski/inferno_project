@@ -4,6 +4,10 @@ plugins {
 }
 mainClassName = 'com.project.Main'
 
+application {
+    mainClass = 'org.gradle.sample.Main'
+}
+
 group 'com.project'
 version '1.0-SNAPSHOT'
 
@@ -13,9 +17,7 @@ repositories {
 
 jar {
     manifest {
-        attributes(
-                'Main-Class': 'com.project.Main'
-        )
+        attributes 'Main-Class': 'com.project.Main'
     }
 }
 
