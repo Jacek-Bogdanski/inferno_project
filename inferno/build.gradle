@@ -2,14 +2,19 @@ plugins {
     id 'java'
     id 'application'
 }
-mainClassName = 'com.project.Main'
 
 application {
-    mainClass = 'org.project.Main'
+    mainClass = 'com.project.Main'
+}
+
+task runByJar(type: Exec) {
+    dependsOn jar
+    group = "Execution"
+    commandLine "java", "-jar", jar.archiveFile.get()
 }
 
 group 'com.project'
-version '1.0-SNAPSHOT'
+
 
 repositories {
     mavenCentral()
