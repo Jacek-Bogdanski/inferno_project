@@ -5,7 +5,7 @@ plugins {
 mainClassName = 'com.project.Main'
 
 application {
-    mainClass = 'org.gradle.sample.Main'
+    mainClass = 'org.project.Main'
 }
 
 group 'com.project'
