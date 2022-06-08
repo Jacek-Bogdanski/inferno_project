@@ -7,10 +7,11 @@ public class Main {
     /**
      * Konstruktor programu
      * 
-     * @param args
+     * @param args argumenty tekstowe
      */
     public static void main(String[] args) {
         Router router = new Router();
         router.showMainView();
+        new FileWrite("output/output.csv","Test;Zapisu");
     }
 }
