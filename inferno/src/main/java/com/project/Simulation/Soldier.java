@@ -22,7 +22,6 @@ import static com.project.Parameters.*;
  */
 public class Soldier extends MilitaryUnit {
     private final Random rand = new Random();
-    public String type = "Soldier";
     private Integer food;
     private Integer ammunition;
     private Double foodUsageProbability;

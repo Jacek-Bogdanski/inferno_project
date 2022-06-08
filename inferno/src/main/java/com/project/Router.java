@@ -1,7 +1,6 @@
 package com.project;
 
 import javax.swing.*;
-import java.util.Map;
 
 /**
  * Klasa odpowiedzialna za wyświetlenie odpowiedniego widoku w danym momencie

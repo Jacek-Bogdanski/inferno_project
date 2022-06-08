@@ -7,7 +7,6 @@ import java.awt.*;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import static com.project.Parameters.ITERATION_COUNT;
 
@@ -96,7 +95,6 @@ public class SimulationView extends JPanel {
         /*
          * Napisy na ekranie
          */
-        Label title = new Label("TRWA SYMULACJA", 35, Colors.white);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
         /*

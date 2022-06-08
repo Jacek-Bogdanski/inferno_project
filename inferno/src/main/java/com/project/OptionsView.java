@@ -2,8 +2,6 @@ package com.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Klasa odpowiadająca za wyświetlenie widoku konfiguracji symulacji
