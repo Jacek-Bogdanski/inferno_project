@@ -12,23 +12,23 @@ import static com.project.Parameters.*;
  */
 public class SimulationMap {
 
-    public Integer alliveA = 0;
-    public Integer alliveB = 0;
+    private Integer alliveA = 0;
+    private Integer alliveB = 0;
 
-    public Integer foodCount = 0;
-    public Integer ammoCount = 0;
-    public Integer fuelCount = 0;
+    private Integer foodCount = 0;
+    private Integer ammoCount = 0;
+    private Integer fuelCount = 0;
 
     private long startTime;
     private long endTime;
 
     JTextPane mapArea;
 
-    public Field[][] map;
+    public  Field[][] map;
     int mapSize;
 
     // numer aktualnej iteracji
-    int iterationNumber = 1;
+    private int iterationNumber = 1;
 
     private final Random rand = new Random();
 
