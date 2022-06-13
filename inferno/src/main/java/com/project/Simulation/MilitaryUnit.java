@@ -24,6 +24,7 @@ public abstract class MilitaryUnit implements Movable {
     public boolean isAlive = true;
     public char team;
     public Position position;
+    private final Random rand = new Random();
 
     /**
      * Konstruktor
@@ -124,7 +125,7 @@ public abstract class MilitaryUnit implements Movable {
         // Ostateczne zaatakowanie wybranej jednostki
         if (unitToAttack == null)
             return;
-        unitToAttack.takeDamage(this.damage);
+        unitToAttack.takeDamage(rand.nextInt(this.damage+1));
         if(PRINT_DEBUG_TO_CONSOLE)
         System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
                 + unitToAttack.hp);
