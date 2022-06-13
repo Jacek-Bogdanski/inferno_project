@@ -10,18 +10,18 @@ import static java.lang.Math.sqrt;
  * Klasa abstrakcyjna po której dziedziczą postacie w symulacji
  */
 public abstract class MilitaryUnit implements Movable {
-    public static Integer instanceCount = 0;
-    public Integer id;
-    public Integer iterationNumber = 0;
+    static Integer instanceCount = 0;
+    Integer id;
+    Integer iterationNumber = 0;
 
-    public String symbol = " ";
+    String symbol = " ";
 
-    public Integer hp = 0;
-    public Integer damage = 0;
-    public Integer speed = 0;
-    public Integer attackRange = 0;
-    public boolean isAlive = true;
-    public boolean isAttackable = true;
+    Integer hp = 0;
+    Integer damage = 0;
+    Integer speed = 0;
+    Integer attackRange = 0;
+    boolean isAlive = true;
+    boolean isAttackable = true;
     public char team;
     public Position position;
     private final Random rand = new Random();
