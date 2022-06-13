@@ -20,8 +20,8 @@ public abstract class MilitaryUnit implements Movable {
     public Integer damage = 0;
     public Integer speed = 0;
     public Integer attackRange = 0;
-
     public boolean isAlive = true;
+    public boolean isAttackable = true;
     public char team;
     public Position position;
     private final Random rand = new Random();
@@ -127,7 +127,7 @@ public abstract class MilitaryUnit implements Movable {
             return;
         unitToAttack.takeDamage(rand.nextInt(this.damage+1));
         if(PRINT_DEBUG_TO_CONSOLE)
-        System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
+            System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
                 + unitToAttack.hp);
     }
 
