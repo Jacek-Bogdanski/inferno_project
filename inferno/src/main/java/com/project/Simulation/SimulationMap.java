@@ -110,8 +110,7 @@ public class SimulationMap {
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<MilitaryUnit> units = map[x][y].units;
-                for (int i = 0; i < units.size(); i++) {
-                    MilitaryUnit unit = units.get(i);
+                for (MilitaryUnit unit : units) {
                     if (!unit.isAlive)
                         continue;
                     if (unit.iterationNumber == this.iterationNumber)
