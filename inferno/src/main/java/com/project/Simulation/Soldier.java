@@ -69,8 +69,10 @@ public class Soldier extends MilitaryUnit {
             newPosition = this.generateNewPosition(map, this.speed, prevPosition);
         } while (map.getFieldType(newPosition) < 0);
 
-        if (this.makeMove(map, newPosition))
+        if (this.makeMove(map, newPosition)){
             this.useFood();
+            this.isAttackable= map.getFieldType(newPosition) != 1;
+        }
     }
 
     /**
@@ -119,4 +121,7 @@ public class Soldier extends MilitaryUnit {
     public Integer getAmmunitionAmount(){
         return this.ammunition;
     }
+    public void hideInBuilding(){this.isAttackable=false; }
+    public void exitFromBuilding(){this.isAttackable=true;}
+
 }
