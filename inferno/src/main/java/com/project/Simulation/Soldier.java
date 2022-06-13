@@ -121,7 +121,4 @@ public class Soldier extends MilitaryUnit {
     public Integer getAmmunitionAmount(){
         return this.ammunition;
     }
-    public void hideInBuilding(){this.isAttackable=false; }
-    public void exitFromBuilding(){this.isAttackable=true;}
-
 }
