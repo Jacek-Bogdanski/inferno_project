@@ -4,9 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileWrite {
-    public FileWrite(String path, String conent) {
+    public FileWrite(String path, String content) {
         try {
-            byte[] strToBytes = conent.getBytes();
+            byte[] strToBytes = content.getBytes();
             Files.write(Paths.get(path), strToBytes);
 
         } catch (IOException e) {

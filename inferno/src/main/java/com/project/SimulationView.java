@@ -25,7 +25,7 @@ public class SimulationView extends JPanel {
      * Metoda wykonująca zapis danych wyjściowych do pliku
      */
     public void writeOutput(){
-        new FileWrite("output/output.csv",textOutput);
+        new FileWrite("inferno_output.csv",textOutput);
     }
 
     /**
@@ -109,14 +109,14 @@ public class SimulationView extends JPanel {
         Button refreshButton = new Button("Odśwież wydruk mapy", 20, Colors.black);
         refreshButton.addActionListener(e -> map.printMapToMapArea());
 
-        Button repeatButton = new Button("Powtórz symulację", 20, Colors.black);
-        repeatButton.addActionListener(e -> this.repeat());
+//        Button repeatButton = new Button("Powtórz symulację", 20, Colors.black);
+//        repeatButton.addActionListener(e -> this.repeat());
 
         Button saveButton = new Button("Zapisz dane do pliku", 20, Colors.black);
         saveButton.addActionListener(e -> this.writeOutput());
 
         java.awt.Component[] panelButtons = {
-                refreshButton,continueButton,repeatButton,endButton,saveButton
+                refreshButton,continueButton,endButton,saveButton
         };
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 3));

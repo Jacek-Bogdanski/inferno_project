@@ -4,8 +4,10 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.*;
+import java.util.Timer;
 
 import static com.project.Parameters.*;
+import static java.awt.desktop.UserSessionEvent.Reason.LOCK;
 
 /**
  * Klasa mapy symulacji
@@ -45,6 +47,9 @@ public class SimulationMap {
         this.printMapToMapArea();
     }
 
+
+
+
     /**
      * Funkcja automatycznie wykonująca symulację 
      *
@@ -58,7 +63,7 @@ public class SimulationMap {
         this.startTime = System.currentTimeMillis();
         this.endTime = System.currentTimeMillis();
         System.out.println("### START SYMULACJI ###");
-        if (iterationCount < 0) {
+        if (iterationCount == -1) {
             while (alliveA > 0 && alliveB > 0) {
                 this.handleIteration();
                 // wydruk mapy
@@ -66,7 +71,21 @@ public class SimulationMap {
                     this.printMapToMapArea();
                 if (this.iterationNumber > MAX_ITERATION_COUNT) break;
             }
-
+        }
+        if (iterationCount == -2) {
+            Timer t = new Timer();
+            TimerTask tt = new TimerTask() {
+                @Override
+                public void run() {
+                    handleIteration();
+                    // wydruk mapy
+                    if (PRINT_MAP_WHILE_SIMULATION)
+                        printMapToMapArea();
+                    if (iterationNumber > MAX_ITERATION_COUNT) this.cancel();
+                    if(!(alliveA > 0 && alliveB > 0)) this.cancel();
+                }
+            };
+            t.schedule(tt, new Date(),ITERATION_DURATION);
         }
         for (int i = 0; i < iterationCount; i++) {
             this.handleIteration();
@@ -110,7 +129,8 @@ public class SimulationMap {
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<MilitaryUnit> units = map[x][y].units;
-                for (MilitaryUnit unit : units) {
+                for (int i = 0; i < units.size(); i++) {
+                    MilitaryUnit unit = units.get(i);
                     if (!unit.isAlive)
                         continue;
                     if (unit.iterationNumber == this.iterationNumber)
@@ -337,19 +357,20 @@ public class SimulationMap {
      *
      * @param field pole mapy
      */
-    public void printFieldToMapArea(Field field) {
+    public void printFieldToMapArea(Field field, JTextPane pane) {
+
         switch (field.type) {
             case 1:
-                appendToPane(this.mapArea, "##", new Color(160, 160, 160));
+                appendToPane(pane, "##", new Color(160, 160, 160));
                 break;
             case -1:
                 break;
             default:
                 if (field.units.size() == 0) {
                     if (field.drops.size() > 0)
-                        appendToPane(this.mapArea, "D ", Color.GREEN);
+                        appendToPane(pane, "D ", Color.GREEN);
                     else
-                        appendToPane(this.mapArea, "  ", Color.BLACK);
+                        appendToPane(pane, "  ", Color.BLACK);
                     break;
                 }
 
@@ -373,13 +394,13 @@ public class SimulationMap {
                             color = new Color(80, 80, 80);
                         break;
                 }
-                appendToPane(this.mapArea, unit.symbol, color);
+                appendToPane(pane, unit.symbol, color);
 
                 if (field.units.size() == 1) {
                     if (field.drops.size() > 0)
-                        appendToPane(this.mapArea, "D", Color.GREEN);
+                        appendToPane(pane, "D", Color.GREEN);
                     else
-                        appendToPane(this.mapArea, " ", Color.BLACK);
+                        appendToPane(pane, " ", Color.BLACK);
                     break;
                 }
 
@@ -402,33 +423,38 @@ public class SimulationMap {
                             color2 = new Color(20, 20, 20);
                         break;
                 }
-                appendToPane(this.mapArea, unit2.symbol, color2);
+                appendToPane(pane, unit2.symbol, color2);
 
                 break;
         }
-        appendToPane(this.mapArea, " ", Color.BLACK);
+        appendToPane(pane, " ", Color.BLACK);
     }
 
     /**
      * Metoda aktywująca wydruk mapy w okienku
      */
     public void printMapToMapArea() {
-        appendToPane(this.mapArea, "", Color.BLACK);
-        this.mapArea.setText("");
+        JTextPane pane = new JTextPane();
+        appendToPane(pane, "", Color.BLACK);
+
+
+        pane.setText("");
 
         double time = (double) (this.endTime - this.startTime) / 1000;
 
-        appendToPane(this.mapArea, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
-                + alliveB + " | CZERWONY A, NIEBIESKI B | CZAS OD ROZPOCZĘCIA: " + time + " s\n\n", Color.BLACK);
+        appendToPane(pane, "Iteracja " + this.iterationNumber + " | żywych A: " + alliveA + " | żywych B: "
+                + alliveB + " | CZERWONY A, NIEBIESKI B | \n\n", Color.BLACK);
 
         for (Field[] row : this.map) {
-            appendToPane(this.mapArea, "               |", Color.BLACK);
+            appendToPane(pane, "               |", Color.BLACK);
             for (Field field : row) {
-                this.printFieldToMapArea(field);
+                this.printFieldToMapArea(field,pane);
 
             }
-            appendToPane(this.mapArea, "|\n", Color.BLACK);
+            appendToPane(pane, "|\n", Color.BLACK);
         }
+
+        this.mapArea.setDocument(pane.getDocument());
     }
 
     /**
@@ -560,9 +586,18 @@ public class SimulationMap {
         map.put("alliveGunnersA", String.valueOf(alliveGunnersA));
         map.put("alliveGunnersB", String.valueOf(alliveGunnersB));
 
+        map.put("initialTanksA", String.valueOf(TANK_A_COUNT));
+        map.put("initialTanksB", String.valueOf(TANK_B_COUNT));
+        map.put("initialSoldiersA", String.valueOf(SOLDIER_A_COUNT));
+        map.put("initialSoldiersB", String.valueOf(SOLDIER_B_COUNT));
+        map.put("initialGunnersA", String.valueOf(GUNNER_A_COUNT));
+        map.put("initialGunnersB", String.valueOf(GUNNER_B_COUNT));
+
         map.put("alliveA", String.valueOf(this.alliveA));
-        map.put("alliveB", String.valueOf(this.alliveA));
-        map.put("iteration", String.valueOf(this.iterationNumber));
+        map.put("alliveB", String.valueOf(this.alliveB));
+        map.put("iterationCount", String.valueOf(this.iterationNumber));
+
+        map.put("mapSize", String.valueOf(MAP_SIZE));
 
         return map;
     }
