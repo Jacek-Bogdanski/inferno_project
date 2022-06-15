@@ -18,6 +18,8 @@ task runByJar(type: Exec) {
     commandLine "java", "-jar", jar.archiveFile.get()
 }
 
+
+
 group 'com.project'
 
 
@@ -25,11 +27,17 @@ repositories {
     mavenCentral()
 }
 
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.project.Main'
     }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
+
 
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
@@ -38,6 +46,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
+
+
+
 
 test {
     useJUnitPlatform()
