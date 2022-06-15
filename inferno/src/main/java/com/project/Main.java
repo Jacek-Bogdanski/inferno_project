@@ -1,11 +1,11 @@
 package com.project;
 
-import com.google.gson.Gson;
 
-import java.io.File;import java.lang.reflect.Type;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,6 +30,8 @@ public class Main {
 
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Map<String, String> myMap = gson.fromJson(readStream.getContent(), type);
+
+
 
         myMap.forEach((a,b)->{
             System.out.println(a +" ; "+b);

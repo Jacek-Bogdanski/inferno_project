@@ -9,7 +9,6 @@ public class FileRead {
 
     private String content="";
     public FileRead(String path) {
-
         String fileContent;
         try
         {
