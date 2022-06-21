@@ -1,5 +1,8 @@
 package com.project.Simulation;
 
+/**
+ * Interfejs zbierania dropu z mapy
+ */
 public interface Pickable {
     /**
      * Metoda zwracająca wartość dropu bez jego zmiany
