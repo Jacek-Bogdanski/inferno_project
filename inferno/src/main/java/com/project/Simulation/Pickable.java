@@ -22,7 +22,7 @@ public interface Pickable {
      * Pobranie dostępnej ilości materiału. Zwróci albo oczekiwaną wartośc, albo
      * maksymalną dostępną wartosć.
      * 
-     * @param value oczekiwana wartość
+     * @param value wartość oczekiwana
      * @return wartość oddana
      */
     Integer collect(Integer value);
