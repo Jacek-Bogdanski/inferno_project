@@ -13,6 +13,7 @@ public interface Pickable {
 
     /**
      * Metoda zwracająca typ obiektu
+     * 
      * @return typ dropu
      */
     String getType();

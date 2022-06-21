@@ -69,9 +69,9 @@ public class Soldier extends MilitaryUnit {
             newPosition = this.generateNewPosition(map, this.speed, prevPosition);
         } while (map.getFieldType(newPosition) < 0);
 
-        if (this.makeMove(map, newPosition)){
+        if (this.makeMove(map, newPosition)) {
             this.useFood();
-            this.isAttackable= map.getFieldType(newPosition) != 1;
+            this.isAttackable = map.getFieldType(newPosition) != 1;
         }
     }
 
@@ -101,24 +101,25 @@ public class Soldier extends MilitaryUnit {
     }
 
     public void addFood(Integer value) {
-        if(PRINT_DEBUG_TO_CONSOLE)
+        if (PRINT_DEBUG_TO_CONSOLE)
             System.out
-                .println("Jedzenie [id=" + this.id + "] : przed=" + this.food + ", po=" + (this.food + value));
+                    .println("Jedzenie [id=" + this.id + "] : przed=" + this.food + ", po=" + (this.food + value));
         this.food += value;
     }
 
     public void addAmmo(Integer value) {
-        if(PRINT_DEBUG_TO_CONSOLE)
+        if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Podnoszenie amunicji [id=" + this.id + "] : przed=" + this.ammunition + ", po="
-                + (this.ammunition + value));
+                    + (this.ammunition + value));
         this.ammunition += value;
     }
 
     /**
      * Metoda zwracająca ilość amunicji bez jej zmiany
+     * 
      * @return ammunition amount
      */
-    public Integer getAmmunitionAmount(){
+    public Integer getAmmunitionAmount() {
         return this.ammunition;
     }
 }

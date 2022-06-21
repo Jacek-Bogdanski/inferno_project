@@ -64,21 +64,23 @@ public abstract class MilitaryUnit implements Movable {
         for (Drop drop : drops) {
             switch (drop.type) {
                 case "fuel":
-                    if(this instanceof Tank)
-                       ((Tank) this).addFuel(drop.collect(TANK_FUEL - ((Tank) this).getFuelAmount()));
+                    if (this instanceof Tank)
+                        ((Tank) this).addFuel(drop.collect(TANK_FUEL - ((Tank) this).getFuelAmount()));
                     break;
 
                 case "ammo":
-                    if(this instanceof Tank)
+                    if (this instanceof Tank)
                         ((Tank) this).addAmmo(drop.collect(TANK_AMMUNITION - ((Tank) this).getAmmunitionAmount()));
-                    if(this instanceof Gunner)
-                        ((Gunner) this).addAmmo(drop.collect(GUNNER_AMMUNITION - ((Gunner) this).getAmmunitionAmount()));
-                    if(this instanceof Soldier)
-                        ((Soldier) this).addAmmo(drop.collect(SOLDIER_AMMUNITION - ((Soldier) this).getAmmunitionAmount()));
+                    if (this instanceof Gunner)
+                        ((Gunner) this)
+                                .addAmmo(drop.collect(GUNNER_AMMUNITION - ((Gunner) this).getAmmunitionAmount()));
+                    if (this instanceof Soldier)
+                        ((Soldier) this)
+                                .addAmmo(drop.collect(SOLDIER_AMMUNITION - ((Soldier) this).getAmmunitionAmount()));
                     break;
 
                 case "food":
-                    if(this instanceof Soldier)
+                    if (this instanceof Soldier)
                         ((Soldier) this).addFood(drop.collect(SOLDIER_FOOD - ((Soldier) this).getFoodAmount()));
                     break;
                 default:
@@ -125,10 +127,11 @@ public abstract class MilitaryUnit implements Movable {
         // Ostateczne zaatakowanie wybranej jednostki
         if (unitToAttack == null)
             return;
-        unitToAttack.takeDamage(rand.nextInt(this.damage+1));
-        if(PRINT_DEBUG_TO_CONSOLE)
-            System.out.println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
-                + unitToAttack.hp);
+        unitToAttack.takeDamage(rand.nextInt(this.damage + 1));
+        if (PRINT_DEBUG_TO_CONSOLE)
+            System.out
+                    .println("atak obiektu [id=" + this.id + "] na obiekt [id=" + unitToAttack.id + "] : remaining hp="
+                            + unitToAttack.hp);
     }
 
     /**
@@ -164,8 +167,9 @@ public abstract class MilitaryUnit implements Movable {
         // przeniesienie obiektu
         map.map[prevPosition.x][prevPosition.y].units.remove(this);
         map.map[newPosition.x][newPosition.y].units.add(this);
-        if(PRINT_DEBUG_TO_CONSOLE) {
-            String moveMessage = "ruch postaci [id=" + this.id + "], (" + prevPosition.x + ", " + prevPosition.y + ")->("
+        if (PRINT_DEBUG_TO_CONSOLE) {
+            String moveMessage = "ruch postaci [id=" + this.id + "], (" + prevPosition.x + ", " + prevPosition.y
+                    + ")->("
                     + newPosition.x + ", " + newPosition.y + ")";
             System.out.println(moveMessage);
         }

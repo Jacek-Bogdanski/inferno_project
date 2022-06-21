@@ -19,24 +19,22 @@ public class SimulationView extends JPanel {
 
     JTextPane mapArea;
 
-
     /**
      * Metoda wykonująca zapis danych wyjściowych do pliku
      */
-    public void writeOutput(){
-        new FileWrite("inferno_output.csv",this.map.getOutputCsvContent());
+    public void writeOutput() {
+        new FileWrite("inferno_output.csv", this.map.getOutputCsvContent());
     }
 
     /**
      * Metoda wykonująca ponownie symulację
      */
-    public void repeat(){
+    public void repeat() {
         this.prepareSimulation();
         this.startSimulation();
     }
 
-
-    private void prepareSimulation(){
+    private void prepareSimulation() {
         /*
          * Utworzenie mapy
          */
@@ -45,28 +43,30 @@ public class SimulationView extends JPanel {
 
     }
 
-    private void startSimulation(){
+    private void startSimulation() {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     String outputCsvLine = "";
                     String outputCsvHeaders = "";
+
                     @Override
                     public void run() {
                         map.runSimulation(ITERATION_COUNT);
 
-                        Map<String,String> outputData = map.getOutputData();
-                        if(outputData.size()==0) return;
-                        outputData.forEach((a,b)->{
-                            System.out.println(a+" "+b);
-                            this.outputCsvHeaders = this.outputCsvHeaders+a+";";
-                            this.outputCsvLine = this.outputCsvLine+b+";";
+                        Map<String, String> outputData = map.getOutputData();
+                        if (outputData.size() == 0)
+                            return;
+                        outputData.forEach((a, b) -> {
+                            System.out.println(a + " " + b);
+                            this.outputCsvHeaders = this.outputCsvHeaders + a + ";";
+                            this.outputCsvLine = this.outputCsvLine + b + ";";
                         });
                     }
                 },
-                1000
-        );
+                1000);
 
     }
+
     /**
      * Konstruktor symulacji
      */
@@ -106,14 +106,14 @@ public class SimulationView extends JPanel {
         Button refreshButton = new Button("Odśwież wydruk mapy", 20, Colors.black);
         refreshButton.addActionListener(e -> map.printMapToMapArea());
 
-//        Button repeatButton = new Button("Powtórz symulację", 20, Colors.black);
-//        repeatButton.addActionListener(e -> this.repeat());
+        // Button repeatButton = new Button("Powtórz symulację", 20, Colors.black);
+        // repeatButton.addActionListener(e -> this.repeat());
 
         Button saveButton = new Button("Zapisz dane do pliku", 20, Colors.black);
         saveButton.addActionListener(e -> this.writeOutput());
 
         java.awt.Component[] panelButtons = {
-                refreshButton,continueButton,endButton,saveButton
+                refreshButton, continueButton, endButton, saveButton
         };
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 3));

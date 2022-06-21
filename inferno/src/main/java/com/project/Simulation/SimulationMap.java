@@ -20,16 +20,16 @@ public class SimulationMap {
 
     JTextPane mapArea;
 
-    public  Field[][] map;
+    public Field[][] map;
     int mapSize;
 
     // numer aktualnej iteracji
     private int iterationNumber = 1;
 
     private final Random rand = new Random();
-    private String outputCsvContent ="";
-    private String outputCsvLine ="";
-    private String outputCsvHeaders ="";
+    private String outputCsvContent = "";
+    private String outputCsvLine = "";
+    private String outputCsvHeaders = "";
 
     /**
      * Konstruktor
@@ -44,9 +44,6 @@ public class SimulationMap {
         this.printMapToMapArea();
         writeCsvLine();
     }
-
-
-
 
     /**
      * Funkcja automatycznie wykonująca symulację
@@ -67,7 +64,8 @@ public class SimulationMap {
                 // wydruk mapy
                 if (PRINT_MAP_WHILE_SIMULATION)
                     this.printMapToMapArea();
-                if (this.iterationNumber > MAX_ITERATION_COUNT) break;
+                if (this.iterationNumber > MAX_ITERATION_COUNT)
+                    break;
             }
         }
         if (iterationCount == -2) {
@@ -79,11 +77,13 @@ public class SimulationMap {
                     // wydruk mapy
                     if (PRINT_MAP_WHILE_SIMULATION)
                         printMapToMapArea();
-                    if (iterationNumber > MAX_ITERATION_COUNT) this.cancel();
-                    if(!(alliveA > 0 && alliveB > 0)) this.cancel();
+                    if (iterationNumber > MAX_ITERATION_COUNT)
+                        this.cancel();
+                    if (!(alliveA > 0 && alliveB > 0))
+                        this.cancel();
                 }
             };
-            t.schedule(tt, new Date(),ITERATION_DURATION);
+            t.schedule(tt, new Date(), ITERATION_DURATION);
         }
         for (int i = 0; i < iterationCount; i++) {
             this.handleIteration();
@@ -98,8 +98,8 @@ public class SimulationMap {
     /**
      * Metoda czyszcząca mapę z dropów
      */
-    public void removeAllDrops(){
-// usuwanie pustych dropow
+    public void removeAllDrops() {
+        // usuwanie pustych dropow
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
                 ArrayList<Drop> drops = map[x][y].drops;
@@ -201,22 +201,21 @@ public class SimulationMap {
             }
         }
 
-
         if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Iteracja nr " + this.iterationNumber);
-
 
         writeCsvLine();
     }
 
-    private void writeCsvLine(){
-        this.outputCsvHeaders ="";
-        this.outputCsvLine ="";
-        this.getOutputData().forEach((a,b)->{
-            this.outputCsvHeaders = this.outputCsvHeaders +a+";";
-            this.outputCsvLine = this.outputCsvLine +b+";";
+    private void writeCsvLine() {
+        this.outputCsvHeaders = "";
+        this.outputCsvLine = "";
+        this.getOutputData().forEach((a, b) -> {
+            this.outputCsvHeaders = this.outputCsvHeaders + a + ";";
+            this.outputCsvLine = this.outputCsvLine + b + ";";
         });
-        if(Objects.equals(outputCsvContent, "")) outputCsvContent = this.outputCsvHeaders+"\n";
+        if (Objects.equals(outputCsvContent, ""))
+            outputCsvContent = this.outputCsvHeaders + "\n";
 
         this.outputCsvContent = this.outputCsvContent + this.outputCsvLine + "\n";
     }
@@ -459,7 +458,6 @@ public class SimulationMap {
         JTextPane pane = new JTextPane();
         appendToPane(pane, "", Color.BLACK);
 
-
         pane.setText("");
 
         double time = (double) (this.endTime - this.startTime) / 1000;
@@ -470,7 +468,7 @@ public class SimulationMap {
         for (Field[] row : this.map) {
             appendToPane(pane, "               |", Color.BLACK);
             for (Field field : row) {
-                this.printFieldToMapArea(field,pane);
+                this.printFieldToMapArea(field, pane);
 
             }
             appendToPane(pane, "|\n", Color.BLACK);
@@ -507,8 +505,8 @@ public class SimulationMap {
     void dropFuelOnMap() {
         if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Zrzucam paliwo na mape");
-        int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize)*3;
-        while (fuelCounter >0) {
+        int fuelCounter = (int) (FUEL_DROP_PROBABILITY * mapSize) * 3;
+        while (fuelCounter > 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("fuel", FUEL_DROP_VALUE));
@@ -522,7 +520,7 @@ public class SimulationMap {
     void dropAmmoOnMap() {
         if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Zrzucam amunicje na mape");
-        int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize)*3;
+        int ammunitionCounter = (int) (AMMUNITION_DROP_PROBABILITY * mapSize) * 3;
         while (ammunitionCounter > 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -537,8 +535,8 @@ public class SimulationMap {
     void dropFoodOnMap() {
         if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Zrzucam jedzenie na mape");
-        int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize)*3;
-        System.out.println("zrzucam jedzenia: "+foodCounter);
+        int foodCounter = (int) (FOOD_DROP_PROBABILITY * mapSize) * 3;
+        System.out.println("zrzucam jedzenia: " + foodCounter);
         while (foodCounter > 0) {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
@@ -572,37 +570,36 @@ public class SimulationMap {
         int alliveGunnersA = 0;
         int alliveGunnersB = 0;
 
-         int kills = 0;
-
-
+        int kills = 0;
 
         for (Field[] fields : this.map) {
             for (Field field : fields) {
                 for (MilitaryUnit unit : field.units) {
 
-                    if(unit.isAlive)
-                    switch (unit.team) {
-                        case 'A':
-                            if (unit instanceof Soldier)
-                                alliveSoldiersA++;
-                            if (unit instanceof Tank)
-                                alliveTanksA++;
-                            if (unit instanceof Gunner)
-                                alliveGunnersA++;
+                    if (unit.isAlive)
+                        switch (unit.team) {
+                            case 'A':
+                                if (unit instanceof Soldier)
+                                    alliveSoldiersA++;
+                                if (unit instanceof Tank)
+                                    alliveTanksA++;
+                                if (unit instanceof Gunner)
+                                    alliveGunnersA++;
 
-                            break;
-                        case 'B':
-                            if (unit instanceof Soldier)
-                                alliveSoldiersB++;
-                            if (unit instanceof Tank)
-                                alliveTanksB++;
-                            if (unit instanceof Gunner)
-                                alliveGunnersB++;
-                            break;
-                        default:
-                            break;
-                    }
-                    else kills++;
+                                break;
+                            case 'B':
+                                if (unit instanceof Soldier)
+                                    alliveSoldiersB++;
+                                if (unit instanceof Tank)
+                                    alliveTanksB++;
+                                if (unit instanceof Gunner)
+                                    alliveGunnersB++;
+                                break;
+                            default:
+                                break;
+                        }
+                    else
+                        kills++;
                 }
             }
         }

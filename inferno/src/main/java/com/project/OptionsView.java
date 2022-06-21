@@ -21,7 +21,8 @@ public class OptionsView extends JPanel {
         Label alert = new Label("", 18, Colors.red);
         alert.setVisible(false);
         Label errorOutput = new Label("", 14, Colors.red);
-        Label description = new Label("Po uruchomieniu symulacji, mapa wyświetli się dopiero po wykonaniu obiczeń.", 15, Colors.veryLightGrey);
+        Label description = new Label("Po uruchomieniu symulacji, mapa wyświetli się dopiero po wykonaniu obiczeń.", 15,
+                Colors.veryLightGrey);
         Label copyright = new Label("Copyright © 2022, INFERNO PROJECT. All right reserved.", 10, Colors.veryLightGrey);
 
         /*

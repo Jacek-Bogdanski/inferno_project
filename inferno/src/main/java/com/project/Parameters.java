@@ -9,12 +9,15 @@ public class Parameters {
      */
     public static Integer MAP_SIZE = 60;
 
-    // liczba iteracji, po których automatyczna symulacja (do wyginięcia) zostaje przerwana
+    // liczba iteracji, po których automatyczna symulacja (do wyginięcia) zostaje
+    // przerwana
     public static Integer MAX_ITERATION_COUNT = 99999;
 
     // Liczba iteracji
-    // liczba iteracji równa -1 oznacza trwanie symulacji do wyginięcia jednostek jednej z druzyn.
-    // liczba iteracji równa -2 oznacza automatyczne iterowanie co 1s do wyginięcia...
+    // liczba iteracji równa -1 oznacza trwanie symulacji do wyginięcia jednostek
+    // jednej z druzyn.
+    // liczba iteracji równa -2 oznacza automatyczne iterowanie co 1s do
+    // wyginięcia...
     public static Integer ITERATION_COUNT = -2;
 
     public static boolean PRINT_DEBUG_TO_CONSOLE = false;
