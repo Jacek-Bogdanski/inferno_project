@@ -39,5 +39,4 @@ public interface Movable {
      * @param map obiekt mapy potrzebny do przeniesienia obiektu w inne miejsce
      */
     void move(SimulationMap map);
-
 }

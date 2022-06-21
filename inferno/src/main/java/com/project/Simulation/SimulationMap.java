@@ -7,19 +7,13 @@ import java.util.*;
 import java.util.Timer;
 
 import static com.project.Parameters.*;
-import static java.awt.desktop.UserSessionEvent.Reason.LOCK;
 
 /**
  * Klasa mapy symulacji
  */
 public class SimulationMap {
-
     private Integer alliveA = 0;
     private Integer alliveB = 0;
-
-    private Integer foodCount = 0;
-    private Integer ammoCount = 0;
-    private Integer fuelCount = 0;
 
     private long startTime;
     private long endTime;
@@ -33,6 +27,9 @@ public class SimulationMap {
     private int iterationNumber = 1;
 
     private final Random rand = new Random();
+    private String outputCsvContent ="";
+    private String outputCsvLine ="";
+    private String outputCsvHeaders ="";
 
     /**
      * Konstruktor
@@ -45,13 +42,14 @@ public class SimulationMap {
         this.map = this.generateMap();
         this.fillMap();
         this.printMapToMapArea();
+        writeCsvLine();
     }
 
 
 
 
     /**
-     * Funkcja automatycznie wykonująca symulację 
+     * Funkcja automatycznie wykonująca symulację
      *
      * @param iterationCount liczba iteracji do wykonania
      *                       liczba mniejsza od 0 oznacza wykonywanie symulacji do
@@ -116,6 +114,15 @@ public class SimulationMap {
     public void handleIteration() {
         this.iterationNumber++;
         this.dropItemsOnMap();
+
+        // usunięcie zabitych wcześniej obiektów
+
+        for (int x = 0; x < mapSize; x++) {
+            for (int y = 0; y < mapSize; y++) {
+                ArrayList<MilitaryUnit> units = map[x][y].units;
+                units.removeIf(unit -> unit.hp <= 0);
+            }
+        }
 
         // PRZESUNIĘCIE OBIEKTÓW
         // 1. wejście do danego pola i wyciągnięcie obiektów
@@ -197,6 +204,21 @@ public class SimulationMap {
 
         if (PRINT_DEBUG_TO_CONSOLE)
             System.out.println("Iteracja nr " + this.iterationNumber);
+
+
+        writeCsvLine();
+    }
+
+    private void writeCsvLine(){
+        this.outputCsvHeaders ="";
+        this.outputCsvLine ="";
+        this.getOutputData().forEach((a,b)->{
+            this.outputCsvHeaders = this.outputCsvHeaders +a+";";
+            this.outputCsvLine = this.outputCsvLine +b+";";
+        });
+        if(Objects.equals(outputCsvContent, "")) outputCsvContent = this.outputCsvHeaders+"\n";
+
+        this.outputCsvContent = this.outputCsvContent + this.outputCsvLine + "\n";
     }
 
     /**
@@ -490,7 +512,7 @@ public class SimulationMap {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("fuel", FUEL_DROP_VALUE));
-            fuelCounter--;fuelCount++;
+            fuelCounter--;
         }
     }
 
@@ -505,7 +527,7 @@ public class SimulationMap {
             int x = rand.nextInt(mapSize - 1);
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("ammo", AMMUNITION_DROP_VALUE));
-            ammunitionCounter--;ammoCount++;
+            ammunitionCounter--;
         }
     }
 
@@ -522,7 +544,6 @@ public class SimulationMap {
             int y = rand.nextInt(mapSize - 1);
             map[x][y].drops.add(new Drop("food", FOOD_DROP_VALUE));
             foodCounter--;
-            foodCount++;
         }
 
     }
@@ -551,9 +572,15 @@ public class SimulationMap {
         int alliveGunnersA = 0;
         int alliveGunnersB = 0;
 
+         int kills = 0;
+
+
+
         for (Field[] fields : this.map) {
             for (Field field : fields) {
                 for (MilitaryUnit unit : field.units) {
+
+                    if(unit.isAlive)
                     switch (unit.team) {
                         case 'A':
                             if (unit instanceof Soldier)
@@ -575,6 +602,7 @@ public class SimulationMap {
                         default:
                             break;
                     }
+                    else kills++;
                 }
             }
         }
@@ -593,6 +621,8 @@ public class SimulationMap {
         map.put("initialGunnersA", String.valueOf(GUNNER_A_COUNT));
         map.put("initialGunnersB", String.valueOf(GUNNER_B_COUNT));
 
+        map.put("kills", String.valueOf(kills));
+
         map.put("alliveA", String.valueOf(this.alliveA));
         map.put("alliveB", String.valueOf(this.alliveB));
         map.put("iterationCount", String.valueOf(this.iterationNumber));
@@ -600,5 +630,9 @@ public class SimulationMap {
         map.put("mapSize", String.valueOf(MAP_SIZE));
 
         return map;
+    }
+
+    public String getOutputCsvContent() {
+        return outputCsvContent;
     }
 }

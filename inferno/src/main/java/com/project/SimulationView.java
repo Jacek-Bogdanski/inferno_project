@@ -16,7 +16,6 @@ import static com.project.Parameters.ITERATION_COUNT;
 public class SimulationView extends JPanel {
     SimulationMap map;
     Router parent;
-    String textOutput="";
 
     JTextPane mapArea;
 
@@ -25,7 +24,7 @@ public class SimulationView extends JPanel {
      * Metoda wykonująca zapis danych wyjściowych do pliku
      */
     public void writeOutput(){
-        new FileWrite("inferno_output.csv",textOutput);
+        new FileWrite("inferno_output.csv",this.map.getOutputCsvContent());
     }
 
     /**
@@ -62,8 +61,6 @@ public class SimulationView extends JPanel {
                             this.outputCsvHeaders = this.outputCsvHeaders+a+";";
                             this.outputCsvLine = this.outputCsvLine+b+";";
                         });
-                        if(Objects.equals(textOutput, "")) textOutput = this.outputCsvHeaders+"\n";
-                        textOutput =  textOutput+this.outputCsvLine+"\n";
                     }
                 },
                 1000
